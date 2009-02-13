@@ -11,10 +11,7 @@ import com.integrareti.integraframework.valueobject.SectorVO;
  * @author Thiago Baesso Procaci
  * 
  */
-public class IntegraDomainServiceImpl extends
-		IntegraServiceImpl<Domain, Integer> implements
-		IntegraDomainServiceInterface {
-
+public class IntegraDomainServiceImpl extends IntegraServiceImpl<Domain, Integer> implements IntegraDomainServiceInterface {
 	public DomainDao domainDao;
 
 	/**
@@ -33,11 +30,10 @@ public class IntegraDomainServiceImpl extends
 	 * 
 	 * @param domainName
 	 * @return Returns the admin login of the domain
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Override
-	public Login getGoogleDomainAdminLogin(String domainName)
-			throws Exception {
+	public Login getGoogleDomainAdminLogin(String domainName) throws Exception {
 		return domainDao.getGoogleDomainAdminLogin(domainName);
 	}
 
@@ -45,13 +41,13 @@ public class IntegraDomainServiceImpl extends
 	 * 
 	 * @param sectorVO
 	 * @return Returns the domain by a sector
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Override
 	public Domain getDomain(SectorVO sectorVO) throws Exception {
 		Domain domain = null;
 		domain = domainDao.getDomainByUnitName(sectorVO.getFatherSector());
-		if (domain != null) 
+		if (domain != null)
 			return domain;
 		domain = domainDao.getDomainByUnitName(sectorVO.getSector());
 		return domain;
@@ -64,8 +60,7 @@ public class IntegraDomainServiceImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public Domain getDomainByName(String domainName) throws Exception {		
+	public Domain getDomainByName(String domainName) throws Exception {
 		return domainDao.getDomainByName(domainName);
 	}
-
 }

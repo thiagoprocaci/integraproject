@@ -12,15 +12,13 @@ import org.zkoss.zk.ui.util.Clients;
  */
 @SuppressWarnings("serial")
 public class IceForm extends Form {
-
 	private static final String FORM_ACTION = "http://siga.ufjf.br/index.php/common/authmd5";
 	private static final String URL_VALUE = "http://www.ice.ufjf.br/integra/valida_login.php";
 	private static final String FAIL_URL_VALUE = "http://www.ice.ufjf.br";
-
 	private Textarea user;
 	private Textarea pass;
 	private Textarea successUrl;
-	private Textarea failUrl;	
+	private Textarea failUrl;
 
 	/**
 	 * Creates a new IceForm
@@ -57,5 +55,4 @@ public class IceForm extends Form {
 		failUrl.setValue(FAIL_URL_VALUE);
 		Clients.submitForm(this);
 	}
-
 }

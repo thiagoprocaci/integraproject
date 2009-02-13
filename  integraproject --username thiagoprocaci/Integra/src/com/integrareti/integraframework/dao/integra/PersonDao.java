@@ -7,19 +7,18 @@ import com.integrareti.integraframework.business.Person;
 
 /**
  * This interface offers methods to manipulates person at integra database
+ * 
  * @author Thiago
  * 
  */
 public interface PersonDao extends GenericDao<Person, Integer> {
-
 	/**
 	 * 
 	 * @param domainName
 	 * @return Returns the people from a domain
 	 * @throws Exception
 	 */
-	public List<Person> getGoogleDomainAdmins(String domainName)
-			throws Exception;
+	public List<Person> getGoogleDomainAdmins(String domainName) throws Exception;
 
 	/**
 	 * 
@@ -27,9 +26,8 @@ public interface PersonDao extends GenericDao<Person, Integer> {
 	 * @return Returns a person by google account
 	 * @throws Exception
 	 */
-	public Person getByGoogleAccount(String googleAccount, String domainName)
-			throws Exception;
-	
+	public Person getByGoogleAccount(String googleAccount, String domainName) throws Exception;
+
 	/**
 	 * 
 	 * @param registry
@@ -37,7 +35,7 @@ public interface PersonDao extends GenericDao<Person, Integer> {
 	 * @throws Exception
 	 */
 	public Person getByRegistry(String registry) throws Exception;
-	
+
 	/**
 	 * 
 	 * @param registry
@@ -45,16 +43,15 @@ public interface PersonDao extends GenericDao<Person, Integer> {
 	 * @throws Exception
 	 */
 	public List<Group> getGroups(String registry) throws Exception;
-	
-	
+
 	/**
 	 * 
 	 * @param registries
 	 * @return Returns a list of person by a list of registries
-	 *  @throws Exception
+	 * @throws Exception
 	 */
 	public List<Person> getByRegistry(List<String> registries) throws Exception;
-	
+
 	/**
 	 * 
 	 * @param domainName
@@ -65,10 +62,10 @@ public interface PersonDao extends GenericDao<Person, Integer> {
 
 	/**
 	 * Checks if a person exists in integra database
+	 * 
 	 * @param registry
-	 * @return Returns id if person exist 
+	 * @return Returns id if person exist
 	 * @throws Exception
 	 */
 	public Integer isPersonSaved(String registry) throws Exception;
-	
 }

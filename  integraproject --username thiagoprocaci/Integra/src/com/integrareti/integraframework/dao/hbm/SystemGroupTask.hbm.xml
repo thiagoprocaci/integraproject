@@ -13,8 +13,8 @@
 			access="property" />
 		<property name="description" type="string" column="description"
 			access="property" />
-		<property name="createTime" type="java.util.Calendar" column="createTime"
-			access="property" />
+		<property name="createTime" type="java.util.Calendar"
+			column="createTime" access="property" />
 		<set name="errors" cascade="all-delete-orphan" batch-size="20"
 			lazy="false" inverse="true">
 			<key column="systemTaskID" />

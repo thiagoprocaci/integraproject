@@ -11,7 +11,6 @@ import com.integrareti.integraframework.service.siga.SigaService;
  * 
  */
 public class LoginController {
-
 	private SigaService sigaService;
 	private GoogleUserAccountServiceInterface personService;
 
@@ -21,11 +20,9 @@ public class LoginController {
 	 * @param sigaService
 	 * @param personService
 	 */
-	public LoginController(SigaService sigaService,
-			GoogleUserAccountServiceInterface personService) {
+	public LoginController(SigaService sigaService, GoogleUserAccountServiceInterface personService) {
 		this.sigaService = sigaService;
 		this.personService = personService;
-
 	}
 
 	/**
@@ -36,8 +33,7 @@ public class LoginController {
 	 * @return Returns
 	 * @throws Exception
 	 */
-	public Person integraLogin(String username, String password)
-			throws Exception {
+	public Person integraLogin(String username, String password) throws Exception {
 		Person person = personService.getByRegistry(username);
 		if (person != null) {
 			if (sigaLogin(username, password))
@@ -57,5 +53,4 @@ public class LoginController {
 	public boolean sigaLogin(String username, String password) throws Exception {
 		return sigaService.loginPerson(username, password);
 	}
-
 }

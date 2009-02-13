@@ -24,13 +24,11 @@ import com.integrareti.integraframework.controller.teacher.MyGroupsController;
  */
 @SuppressWarnings("serial")
 public class MyGroupsTree extends Tree {
-
 	private static final String TEACHER_WINDOW_URL = "/zul/secure/teacher/myGroupsWindow.zul";
 	private MyGroupsController myGroupsController;
 
 	public MyGroupsTree() {
-		myGroupsController = (MyGroupsController) SpringUtil
-				.getBean("myGroupsController");
+		myGroupsController = (MyGroupsController) SpringUtil.getBean("myGroupsController");
 		initMyGroups();
 	}
 
@@ -46,13 +44,10 @@ public class MyGroupsTree extends Tree {
 	}
 
 	public void initMyGroups() {
-
 		boolean newChildren = false;
 		List<Group> myGroups = null;
 		try {
-			myGroups = myGroupsController
-					.getGroupsByParticipant((Person) SecurityContextHolder
-							.getContext().getAuthentication().getPrincipal());
+			myGroups = myGroupsController.getGroupsByParticipant((Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -63,11 +58,9 @@ public class MyGroupsTree extends Tree {
 		} else {
 			children.getChildren().clear();
 		}
-
 		for (Group group : myGroups) {
 			Treeitem item = new Treeitem();
 			item.setValue(TEACHER_WINDOW_URL + "?groupId=" + group.getId());
-
 			Treerow row = new Treerow();
 			Treecell cell = new Treecell(group.toString());
 			cell.addEventListener("onClick", new EventListener() {
@@ -83,11 +76,9 @@ public class MyGroupsTree extends Tree {
 		}
 		if (newChildren)
 			appendChild(children);
-
 	}
 
 	public void onGroupUpdate(Event e) {
 		initMyGroups();
 	}
-
 }

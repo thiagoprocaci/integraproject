@@ -23,7 +23,6 @@ import com.integrareti.integraframework.valueobject.PersonVO;
  */
 @SuppressWarnings("serial")
 public class VerifyAccountWindow extends AbstractWindow {
-
 	private GoogleAccountController createAccountController;
 	private PersonVO personVO;
 	private Textbox username;
@@ -38,10 +37,8 @@ public class VerifyAccountWindow extends AbstractWindow {
 	 */
 	public void onCreate() {
 		// init variables
-		createAccountController = (GoogleAccountController) SpringUtil
-				.getBean("googleAccountController");
-		loginController = (LoginController) SpringUtil
-				.getBean("loginController");
+		createAccountController = (GoogleAccountController) SpringUtil.getBean("googleAccountController");
+		loginController = (LoginController) SpringUtil.getBean("loginController");
 		personVO = null;
 		verifyWindow = getFellow("loginWindow"); // direct child
 		username = (Textbox) verifyWindow.getFellow("username");// indirect
@@ -49,12 +46,10 @@ public class VerifyAccountWindow extends AbstractWindow {
 		password = (Textbox) verifyWindow.getFellow("password");
 		String domain = getDesktop().getExecution().getParameter("domain");
 		if (domain == null)
-			throw new RuntimeException(
-					"The domain must be set as url parameter 'domain' ");
+			throw new RuntimeException("The domain must be set as url parameter 'domain' ");
 		acsForm = new AcsForm(domain);
 		acsForm.setId("acsFrom");
 		appendChild(acsForm);
-
 	}
 
 	/**
@@ -67,39 +62,32 @@ public class VerifyAccountWindow extends AbstractWindow {
 			return;
 		} else
 			try {
-				if (!loginController.sigaLogin(username.getText().trim(),
-						password.getText())) {
+				if (!loginController.sigaLogin(username.getText().trim(), password.getText())) {
 					setPermanentWarnning("Login inválido - Tente novamente");
 					password.setRawValue(null);
 				} else {
-					if (createAccountController.isPersonSaved(username
-							.getText().trim()) != null) {
+					if (createAccountController.isPersonSaved(username.getText().trim()) != null) {
 						setPermanentWarnning("Usuário já cadastrado.");
 					} else {
 						// login ok
 						// getting the person's data
 						setPermanentWarnning(null);
-						personVO = createAccountController
-								.getPersonBasicsData(username.getText().trim());
+						personVO = createAccountController.getPersonBasicsData(username.getText().trim());
 						personVO.setRegistry(username.getText().trim());
 						personVO.setPassword(password.getText());
-						Domain domain = createAccountController
-						.getDomain(personVO.getSector());						
-						if(domain == null){
+						Domain domain = createAccountController.getDomain(personVO.getSector());
+						if (domain == null) {
 							domain = createAccountController.getDomainByName("ice.ufjf.br");
 							setPermanentWarnning("Usuário não tem vinculo com o ICE.");
 							return;
 						}
 						acsForm.setRelayStateByDomain(domain.getName());
-						Sessions.getCurrent()
-								.setAttribute("personVO", personVO);
+						Sessions.getCurrent().setAttribute("personVO", personVO);
 						verifyWindow.setVisible(false);
 						if (createWindow != null)
 							createWindow.detach();
 						// first time at system
-						createWindow = Executions.createComponents(
-								"/zul/signin/createAccountWindow.zul", this,
-								null);
+						createWindow = Executions.createComponents("/zul/signin/createAccountWindow.zul", this, null);
 						this.appendChild(createWindow);
 					}
 				}
@@ -108,7 +96,6 @@ public class VerifyAccountWindow extends AbstractWindow {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 	}
 
 	/**
@@ -123,5 +110,4 @@ public class VerifyAccountWindow extends AbstractWindow {
 			return false;
 		return true;
 	}
-
 }

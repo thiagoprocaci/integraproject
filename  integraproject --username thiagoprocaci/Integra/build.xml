@@ -19,8 +19,8 @@
 			<include name="servlet*.jar" />
 		</fileset>
 		<fileset dir="${appserver.home}/shared/lib">
-					<include name="*.jar" />
-				</fileset>
+			<include name="*.jar" />
+		</fileset>
 		<pathelement path="${build.dir}" />
 	</path>
 
@@ -85,27 +85,27 @@
 	<!--target name="testBusinessClasses" depends="build"
 		description="Run JUnit Tests">
 		<junit printsummary="on" fork="false" haltonfailure="false"
-			failureproperty="tests.failed" showoutput="true">
-			<classpath refid="master-classpath" />
-			<formatter type="brief" usefile="false" />
-
-			<batchtest>
-				<fileset dir="${build.dir}">
-					<include name="**/Test*.*" />
-				</fileset>
-			</batchtest>
-
+		failureproperty="tests.failed" showoutput="true">
+		<classpath refid="master-classpath" />
+		<formatter type="brief" usefile="false" />
+		
+		<batchtest>
+		<fileset dir="${build.dir}">
+		<include name="**/Test*.*" />
+		</fileset>
+		</batchtest>
+		
 		</junit>
-
+		
 		<fail if="tests.failed">
-			tests.failed=${tests.failed}
-			***********************************************************
-			***********************************************************
-			**** One or more tests failed! Check the output ... ****
-			***********************************************************
-			***********************************************************
+		tests.failed=${tests.failed}
+		***********************************************************
+		***********************************************************
+		**** One or more tests failed! Check the output ... ****
+		***********************************************************
+		***********************************************************
 		</fail>
-	</target-->
+		</target-->
 
 	<!-- ============================================================== -->
 	<!-- Tomcat tasks - remove these if you don't have Tomcat installed -->
@@ -196,117 +196,115 @@
 		</delete>
 	</target>
 	<!-- End Tomcat tasks -->
-    <!--target name="createTables">
-        <echo message="CREATE TABLES USING: ${db.driver} ${db.url}"/>
-        <sql driver="${db.driver}"
-             url="${db.url}"
-             userid="${db.user}"
-             password="${db.pw}"
-             onerror="continue">  
-            <classpath refid="master-classpath"/>
+	<!--target name="createTables">
+		<echo message="CREATE TABLES USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		url="${db.url}"
+		userid="${db.user}"
+		password="${db.pw}"
+		onerror="continue">  
+		<classpath refid="master-classpath"/>
+		
+		CREATE TABLE products (
+		id INTEGER NOT NULL PRIMARY KEY,
+		description varchar(255),
+		price decimal(15,2)
+		);
+		CREATE INDEX products_description ON products(description);
+		
+		</sql> 
+		</target>
+		
+		<target name="dropTables">
+		<echo message="DROP TABLES USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		url="${db.url}"
+		userid="${db.user}"
+		password="${db.pw}"
+		onerror="continue">  
+		<classpath refid="master-classpath"/>
+		
+		DROP TABLE products;
+		
+		</sql> 
+		</target>
+		
+		<target name="loadData">
+		<echo message="LOAD DATA USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		url="${db.url}"
+		userid="${db.user}"
+		password="${db.pw}"
+		onerror="continue">  
+		<classpath refid="master-classpath"/>
+		
+		INSERT INTO products (id, description, price) values(1, 'Lamp', 5.78);
+		INSERT INTO products (id, description, price) values(2, 'Table', 75.29);
+		INSERT INTO products (id, description, price) values(3, 'Chair', 22.81);
+		COMMIT;
+		SHUTDOWN
+		
+		</sql> 
+		</target>
+		
+		<target name="printData">
+		<echo message="PRINT DATA USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		url="${db.url}"
+		userid="${db.user}"
+		password="${db.pw}"
+		onerror="continue"
+		print="true">  
+		<classpath refid="master-classpath"/>
+		
+		SELECT * FROM products;
+		
+		</sql> 
+		</target>
+		
+		<target name="clearData">
+		<echo message="CLEAR DATA USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		url="${db.url}"
+		userid="${db.user}"
+		password="${db.pw}"
+		onerror="continue">  
+		<classpath refid="master-classpath"/>
+		
+		DELETE FROM products;
+		
+		</sql> 
+		</target>
+	-->
 
-        CREATE TABLE products (
-          id INTEGER NOT NULL PRIMARY KEY,
-          description varchar(255),
-          price decimal(15,2)
-        );
-        CREATE INDEX products_description ON products(description);
+	<target name="test" depends="build" description="Run JUnit Tests">
+		<junit printsummary="on" fork="false" haltonfailure="false"
+			failureproperty="tests.failed" showoutput="true">
+			<classpath refid="master-classpath" />
+			<formatter type="brief" usefile="false" />
 
-        </sql> 
-    </target>
+			<batchtest>
+				<fileset dir="${build.dir}">
+					<include name="**/Test*.*" />
+				</fileset>
+			</batchtest>
 
-    <target name="dropTables">
-        <echo message="DROP TABLES USING: ${db.driver} ${db.url}"/>
-        <sql driver="${db.driver}"
-             url="${db.url}"
-             userid="${db.user}"
-             password="${db.pw}"
-             onerror="continue">  
-            <classpath refid="master-classpath"/>
+		</junit>
 
-        DROP TABLE products;
-
-        </sql> 
-    </target>
-
-    <target name="loadData">
-        <echo message="LOAD DATA USING: ${db.driver} ${db.url}"/>
-        <sql driver="${db.driver}"
-             url="${db.url}"
-             userid="${db.user}"
-             password="${db.pw}"
-             onerror="continue">  
-            <classpath refid="master-classpath"/>
-
-        INSERT INTO products (id, description, price) values(1, 'Lamp', 5.78);
-        INSERT INTO products (id, description, price) values(2, 'Table', 75.29);
-        INSERT INTO products (id, description, price) values(3, 'Chair', 22.81);
-        COMMIT;
-        SHUTDOWN
-
-        </sql> 
-    </target>
-
-    <target name="printData">
-        <echo message="PRINT DATA USING: ${db.driver} ${db.url}"/>
-        <sql driver="${db.driver}"
-             url="${db.url}"
-             userid="${db.user}"
-             password="${db.pw}"
-             onerror="continue"
-             print="true">  
-            <classpath refid="master-classpath"/>
-
-        SELECT * FROM products;
-
-        </sql> 
-    </target>
-
-    <target name="clearData">
-        <echo message="CLEAR DATA USING: ${db.driver} ${db.url}"/>
-        <sql driver="${db.driver}"
-             url="${db.url}"
-             userid="${db.user}"
-             password="${db.pw}"
-             onerror="continue">  
-            <classpath refid="master-classpath"/>
-
-        DELETE FROM products;
-
-        </sql> 
-    </target>
-    -->
-
-    <target name="test" depends="build" description="Run JUnit Tests">
-        <junit printsummary="on"
-               fork="false"
-               haltonfailure="false"
-               failureproperty="tests.failed"
-               showoutput="true">
-            <classpath refid="master-classpath"/>
-            <formatter type="brief" usefile="false"/>
-
-            <batchtest>
-                <fileset dir="${build.dir}">
-                    <include name="**/Test*.*"/>
-                </fileset>
-            </batchtest>
-
-        </junit>
-
-        <fail if="tests.failed">
-        ***********************************************************
-        ***********************************************************
-        ****  One or more tests failed!  Check the output ...  ****
-        ***********************************************************
-        ***********************************************************
-        </fail>
-    </target>
+		<fail if="tests.failed">
+			***********************************************************
+			***********************************************************
+			**** One or more tests failed! Check the output ... ****
+			***********************************************************
+			***********************************************************
+		</fail>
+	</target>
 	<!-- ================================= 
-          target: deployreload              
-         ================================= -->
-    <target name="deployreload" depends="deploy,reload" description="--> description">
-        
-    </target>
+		target: deployreload              
+		================================= -->
+	<target name="deployreload" depends="deploy,reload"
+		description="--> description">
+
+	</target>
 
 </project>

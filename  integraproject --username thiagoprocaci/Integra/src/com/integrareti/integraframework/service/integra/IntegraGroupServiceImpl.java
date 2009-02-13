@@ -31,9 +31,7 @@ import com.integrareti.integraframework.service.google.GoogleEmailListServiceInt
  * @author Thiago Baesso Procaci
  * 
  */
-public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
-		implements IntegraGroupServiceInterface {
-
+public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer> implements IntegraGroupServiceInterface {
 	private GroupDao groupDao;
 	private GroupDao groupDaoJDBC;
 	private GoogleEmailListServiceInterface googleEmailListServiceInterface;
@@ -45,8 +43,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * 
 	 * @param groupDao
 	 */
-	public IntegraGroupServiceImpl(GroupDao groupDao,
-			GoogleEmailListServiceInterface googleEmailListServiceInterface) {
+	public IntegraGroupServiceImpl(GroupDao groupDao, GoogleEmailListServiceInterface googleEmailListServiceInterface) {
 		super(groupDao);
 		this.groupDao = groupDao;
 		this.googleEmailListServiceInterface = googleEmailListServiceInterface;
@@ -95,20 +92,15 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 *         (object)>
 	 */
 	@Override
-	public Map<String, Group> addParticipantToGroupAndEmailList(Group group,
-			Set<Person> addedPeople) {
+	public Map<String, Group> addParticipantToGroupAndEmailList(Group group, Set<Person> addedPeople) {
 		Map<String, Group> map = new HashMap<String, Group>(0);
 		// log
-		final GroupLog groupLog = new GroupLog(group.getName(), group
-				.getDescription(), group.getDomain());
-		transactionTemplate
-				.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRED);
-		Map<String, Group> m = addParticipantToGroupAndEmailList(group,
-				addedPeople, groupLog);
+		final GroupLog groupLog = new GroupLog(group.getName(), group.getDescription(), group.getDomain());
+		transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRED);
+		Map<String, Group> m = addParticipantToGroupAndEmailList(group, addedPeople, groupLog);
 		if (!m.isEmpty())
 			map.putAll(m);
-		transactionTemplate
-				.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
+		transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
 		try {
 			// saving log
 			groupLogDao.save(groupLog);
@@ -127,20 +119,15 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 *         (object)>
 	 */
 	@Override
-	public Map<String, Group> createEmailListToGroup(Group group,
-			Set<Person> addedPeople) {
+	public Map<String, Group> createEmailListToGroup(Group group, Set<Person> addedPeople) {
 		Map<String, Group> map = new HashMap<String, Group>(0);
 		// log
-		final GroupLog groupLog = new GroupLog(group.getName(), group
-				.getDescription(), group.getDomain());
-		transactionTemplate
-				.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRED);
-		Map<String, Group> m = createEmailListToGroup(group, addedPeople,
-				groupLog);
+		final GroupLog groupLog = new GroupLog(group.getName(), group.getDescription(), group.getDomain());
+		transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRED);
+		Map<String, Group> m = createEmailListToGroup(group, addedPeople, groupLog);
 		if (!m.isEmpty())
 			map.putAll(m);
-		transactionTemplate
-				.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
+		transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
 		try {
 			// saving log
 			groupLogDao.save(groupLog);
@@ -159,20 +146,15 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 *         (object)>
 	 */
 	@Override
-	public Map<String, Group> removeParticipantFromGroupAndEmailList(
-			Group group, Set<Person> removedPeople) {
+	public Map<String, Group> removeParticipantFromGroupAndEmailList(Group group, Set<Person> removedPeople) {
 		Map<String, Group> map = new HashMap<String, Group>(0);
 		// log
-		final GroupLog groupLog = new GroupLog(group.getName(), group
-				.getDescription(), group.getDomain());
-		transactionTemplate
-				.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRED);
-		Map<String, Group> m = removeParticipantFromGroupAndEmailList(group,
-				removedPeople, groupLog);
+		final GroupLog groupLog = new GroupLog(group.getName(), group.getDescription(), group.getDomain());
+		transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRED);
+		Map<String, Group> m = removeParticipantFromGroupAndEmailList(group, removedPeople, groupLog);
 		if (!m.isEmpty())
 			map.putAll(m);
-		transactionTemplate
-				.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
+		transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
 		try {
 			// saving log
 			groupLogDao.save(groupLog);
@@ -189,8 +171,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 */
 	@Override
 	public Group mergeGroup(Group group) throws Exception {
-		group = (Group) groupDao.getHibernateSession().merge(
-				groupDao.getById(group.getId()));
+		group = (Group) groupDao.getHibernateSession().merge(groupDao.getById(group.getId()));
 		group.getParticipants();
 		return group;
 	}
@@ -214,8 +195,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public Group getGroupByNameAndDomainName(String groupName, String domainName)
-			throws Exception {
+	public Group getGroupByNameAndDomainName(String groupName, String domainName) throws Exception {
 		return groupDao.getGroupByNameAndDomainName(groupName, domainName);
 	}
 
@@ -248,11 +228,10 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByParticipant(Person participant)
-			throws Exception {
+	public List<Group> getGroupsByParticipant(Person participant) throws Exception {
 		return groupDao.getGroupsByParticipant(participant);
 	}
-	
+
 	/**
 	 * 
 	 * @param groupName
@@ -260,8 +239,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public Integer getGroupIdByName(String groupName,
-			boolean stillOpenConnection) throws Exception {
+	public Integer getGroupIdByName(String groupName, boolean stillOpenConnection) throws Exception {
 		if (!isConnectionOpenJDBC())
 			openConnection();
 		Integer id = groupDaoJDBC.getGroupIdByName(groupName);
@@ -278,8 +256,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws DataAccessException
 	 */
 	@Override
-	public List<Group> getAllGroupsWithoutEmailListByDomainName(
-			String domainName) throws Exception {
+	public List<Group> getAllGroupsWithoutEmailListByDomainName(String domainName) throws Exception {
 		return groupDao.getAllGroupsWithoutEmailListByDomainName(domainName);
 	}
 
@@ -290,8 +267,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByDescription(String description)
-			throws Exception {
+	public List<Group> getGroupsByDescription(String description) throws Exception {
 		return groupDao.getGroupsByDescription(description);
 	}
 
@@ -302,8 +278,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByPiecesOfNames(List<String> names)
-			throws Exception {
+	public List<Group> getGroupsByPiecesOfNames(List<String> names) throws Exception {
 		return groupDao.getGroupsByPiecesOfNames(names);
 	}
 
@@ -315,8 +290,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			String name) throws Exception {
+	public List<Group> getGroupsByDescriptionAndName(String description, String name) throws Exception {
 		return groupDao.getGroupsByDescriptionAndName(description, name);
 	}
 
@@ -328,8 +302,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			List<String> names) throws Exception {
+	public List<Group> getGroupsByDescriptionAndName(String description, List<String> names) throws Exception {
 		return groupDao.getGroupsByDescriptionAndName(description, names);
 	}
 
@@ -343,34 +316,22 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	@Override
 	public Map<String, Group> deleteGroupWithEmailLists(final Group group) {
 		// log
-		final GroupLog groupLog = new GroupLog(group.getName(), group
-				.getDescription(), group.getDomain());
+		final GroupLog groupLog = new GroupLog(group.getName(), group.getDescription(), group.getDomain());
 		// return type
 		final Map<String, Group> map = new HashMap<String, Group>();
 		for (final EmailList emailList : group.getEmailLists()) {
 			// defining the current task
-			final SystemGroupTask task = new SystemGroupTask(
-					SystemGroupTask.DELETE_EMAIL_LIST_FROM_GROUP,
-					SystemGroupTask.getDeleteListFromGroupDescription(group,
-							emailList), groupLog);
+			final SystemGroupTask task = new SystemGroupTask(SystemGroupTask.DELETE_EMAIL_LIST_FROM_GROUP, SystemGroupTask.getDeleteListFromGroupDescription(group, emailList), groupLog);
 			groupLog.addTask(task);
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-				protected void doInTransactionWithoutResult(
-						TransactionStatus status) {
+				protected void doInTransactionWithoutResult(TransactionStatus status) {
 					try {
-						googleEmailListServiceInterface
-								.deleteEmailListOnlyAtIntegra(emailList);
-						googleEmailListServiceInterface
-								.deleteEmailListOnlyAtGoogle(emailList);
+						googleEmailListServiceInterface.deleteEmailListOnlyAtIntegra(emailList);
+						googleEmailListServiceInterface.deleteEmailListOnlyAtGoogle(emailList);
 					} catch (Exception ex) {
-						map.put("Group: " + group.getName()
-								+ " - can not delete group.emailList : "
-								+ emailList.getName(), group);
+						map.put("Group: " + group.getName() + " - can not delete group.emailList : " + emailList.getName(), group);
 						// error log
-						task.addError(new SystemGroupError(ExceptionUtil
-								.formatMessage(ex), SystemGroupError
-								.getDeleteEmailListFromGroupErrorDescription(
-										group, emailList), task));
+						task.addError(new SystemGroupError(ExceptionUtil.formatMessage(ex), SystemGroupError.getDeleteEmailListFromGroupErrorDescription(group, emailList), task));
 						status.setRollbackOnly();
 						ex.printStackTrace();
 					}
@@ -379,21 +340,14 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 		}
 		if (map.isEmpty()) {
 			// defining task
-			SystemGroupTask task = new SystemGroupTask(
-					SystemGroupTask.DELETE_GROUP, SystemGroupTask
-							.getDeleteGroupDescription(group), groupLog);
+			SystemGroupTask task = new SystemGroupTask(SystemGroupTask.DELETE_GROUP, SystemGroupTask.getDeleteGroupDescription(group), groupLog);
 			groupLog.addTask(task);
 			try {
 				super.delete(group);
 			} catch (Exception e) {
-				map
-						.put("Group: " + group.getName()
-								+ " - can not delete group : "
-								+ group.getName(), group);
+				map.put("Group: " + group.getName() + " - can not delete group : " + group.getName(), group);
 				// error log
-				task.addError(new SystemGroupError(ExceptionUtil
-						.formatMessage(e), SystemGroupError
-						.getDeleteGroupErrorDescription(group), task));
+				task.addError(new SystemGroupError(ExceptionUtil.formatMessage(e), SystemGroupError.getDeleteGroupErrorDescription(group), task));
 				e.printStackTrace();
 			}
 		}
@@ -414,8 +368,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getPageByDomainName(String domainName, int first,
-			int offset) throws Exception {
+	public List<Group> getPageByDomainName(String domainName, int first, int offset) throws Exception {
 		return groupDao.getPageByDomainName(domainName, first, offset);
 	}
 
@@ -428,10 +381,8 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(
-			String domainName, int first, int offset) throws Exception {
-		return groupDao.getPageOfGroupsWithoutEmailListByDomainName(domainName,
-				first, offset);
+	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(String domainName, int first, int offset) throws Exception {
+		return groupDao.getPageOfGroupsWithoutEmailListByDomainName(domainName, first, offset);
 	}
 
 	/**
@@ -464,8 +415,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public Long countGroupsWithoutEmailListByDomainName(String domain)
-			throws Exception {
+	public Long countGroupsWithoutEmailListByDomainName(String domain) throws Exception {
 		return groupDao.countGroupsWithoutEmailListByDomainName(domain);
 	}
 
@@ -511,44 +461,30 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public Map<String, Group> saveGroupAndUpDateEmailLists(final Group group,
-			final Set<Person> addedPeople, final Set<Person> removedPeople,
-			final Set<Person> addOwners, final Set<Person> removedOwners)
-			throws Exception {
+	public Map<String, Group> saveGroupAndUpDateEmailLists(final Group group, final Set<Person> addedPeople, final Set<Person> removedPeople, final Set<Person> addOwners, final Set<Person> removedOwners) throws Exception {
 		// log
-		final GroupLog groupLog = new GroupLog(group.getName(), group
-				.getDescription(), group.getDomain());
-		transactionTemplate
-				.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
+		final GroupLog groupLog = new GroupLog(group.getName(), group.getDescription(), group.getDomain());
+		transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRES_NEW);
 		// this variables will help to build the method`s return
 		List<Map<String, Group>> listMapErros = new ArrayList<Map<String, Group>>();
 		Map<String, Group> map = new HashMap<String, Group>();
-
 		// checking basics datas
 		if (group == null)
 			throw new Exception("The group must be not null");
-		if (addedPeople == null || removedPeople == null || addOwners == null
-				|| removedOwners == null)
+		if (addedPeople == null || removedPeople == null || addOwners == null || removedOwners == null)
 			throw new Exception("All sets must be not null");
-
 		// when is a new group without any emailList or recipients
-		if (addedPeople.isEmpty() && removedPeople.isEmpty()
-				&& addOwners.isEmpty() && removedOwners.isEmpty()) {
+		if (addedPeople.isEmpty() && removedPeople.isEmpty() && addOwners.isEmpty() && removedOwners.isEmpty()) {
 			// adding a new task for log
-			SystemGroupTask task = new SystemGroupTask(
-					SystemGroupTask.SAVE_GROUP, SystemGroupTask
-							.getSaveGroupDescription(group), groupLog);
+			SystemGroupTask task = new SystemGroupTask(SystemGroupTask.SAVE_GROUP, SystemGroupTask.getSaveGroupDescription(group), groupLog);
 			groupLog.addTask(task);
 			try {
 				groupDao.save(group);
 			} catch (Exception e) {
 				e.printStackTrace();
-				map.put("The Group " + group.getName() + " could not be saved",
-						group);
+				map.put("The Group " + group.getName() + " could not be saved", group);
 				// getting the error log for the task
-				task.addError(new SystemGroupError(ExceptionUtil
-						.formatMessage(e), SystemGroupError
-						.getSaveGroupErrorDescription(group), task));
+				task.addError(new SystemGroupError(ExceptionUtil.formatMessage(e), SystemGroupError.getSaveGroupErrorDescription(group), task));
 			}
 			try {
 				// saving log
@@ -562,8 +498,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 			addedPeople.addAll(addOwners);
 		Map<String, Group> mapAux = null;
 		// removing participants
-		mapAux = removeParticipantFromGroupAndEmailList(group, removedPeople,
-				groupLog);
+		mapAux = removeParticipantFromGroupAndEmailList(group, removedPeople, groupLog);
 		if (!mapAux.isEmpty())
 			listMapErros.add(mapAux);
 		// creating email lists if necessary
@@ -574,8 +509,7 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 		}
 		// adding new participants
 		if (listMapErros.isEmpty()) {
-			mapAux = addParticipantToGroupAndEmailList(group, addedPeople,
-					groupLog);
+			mapAux = addParticipantToGroupAndEmailList(group, addedPeople, groupLog);
 			if (!mapAux.isEmpty())
 				listMapErros.add(mapAux);
 		}
@@ -585,24 +519,17 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 				group.addOwner(person);
 			for (Person person : removedOwners)
 				group.removerOwner(person);
-			SystemGroupTask task = new SystemGroupTask(
-					SystemGroupTask.SAVE_GROUP_OWNERS, SystemGroupTask
-							.getSaveGroupDescription(group), groupLog);
+			SystemGroupTask task = new SystemGroupTask(SystemGroupTask.SAVE_GROUP_OWNERS, SystemGroupTask.getSaveGroupDescription(group), groupLog);
 			groupLog.addTask(task);
 			try {
 				groupDao.getHibernateSession().merge(group);
 			} catch (Exception e) {
 				Map<String, Group> m = new HashMap<String, Group>();
-				m.put(
-						"The group owners could not be saved: "
-								+ group.getName(), group);
-				task.addError(new SystemGroupError(ExceptionUtil
-						.formatMessage(e), SystemGroupError
-						.getSaveGroupOwnersErrorDescription(group), task));
+				m.put("The group owners could not be saved: " + group.getName(), group);
+				task.addError(new SystemGroupError(ExceptionUtil.formatMessage(e), SystemGroupError.getSaveGroupOwnersErrorDescription(group), task));
 				listMapErros.add(m);
 			}
 		}
-
 		try {
 			// saving log
 			groupLogDao.save(groupLog);
@@ -623,12 +550,10 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @return Returns a map of errors <String (error description),Group
 	 *         (object)>
 	 */
-	private Map<String, Group> createEmailListToGroup(final Group group,
-			final Set<Person> addedPeople, final GroupLog groupLog) {
+	private Map<String, Group> createEmailListToGroup(final Group group, final Set<Person> addedPeople, final GroupLog groupLog) {
 		final Map<String, Group> errors = new HashMap<String, Group>();
 		int aux = group.getEmailLists().size();
-		int numberOfEmailLists = group.getNumberOfNeededEmailLists(addedPeople
-				.size());
+		int numberOfEmailLists = group.getNumberOfNeededEmailLists(addedPeople.size());
 		for (int i = 0; i < numberOfEmailLists; i++) {
 			final EmailList emailList = new EmailList();
 			emailList.setDomain(group.getDomain());
@@ -639,28 +564,17 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 			else
 				emailList.setName(group.getName() + aux);
 			group.addEmailList(emailList);
-			final SystemGroupTask task = new SystemGroupTask(
-					SystemGroupTask.ADD_EMAIL_LIST_TO_GROUP,
-					SystemGroupTask.getAddEmailListToGroupDescription(group,
-							emailList), groupLog);
+			final SystemGroupTask task = new SystemGroupTask(SystemGroupTask.ADD_EMAIL_LIST_TO_GROUP, SystemGroupTask.getAddEmailListToGroupDescription(group, emailList), groupLog);
 			groupLog.addTask(task);
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-				protected void doInTransactionWithoutResult(
-						TransactionStatus status) {
+				protected void doInTransactionWithoutResult(TransactionStatus status) {
 					try { // saving at both database
-						googleEmailListServiceInterface
-								.saveOnlyAtIntegra(emailList);
+						googleEmailListServiceInterface.saveOnlyAtIntegra(emailList);
 						groupDao.save(group);
-						googleEmailListServiceInterface
-								.saveEmailListOnlyAtGoogle(emailList);
+						googleEmailListServiceInterface.saveEmailListOnlyAtGoogle(emailList);
 					} catch (Exception ex) {
-						errors.put("Group: " + group.getName()
-								+ " - Emaillist  " + emailList.getName()
-								+ " could not be created", group);
-						task.addError(new SystemGroupError(ExceptionUtil
-								.formatMessage(ex), SystemGroupError
-								.getAddEmailListToGroupErrorDescription(group,
-										emailList), task));
+						errors.put("Group: " + group.getName() + " - Emaillist  " + emailList.getName() + " could not be created", group);
+						task.addError(new SystemGroupError(ExceptionUtil.formatMessage(ex), SystemGroupError.getAddEmailListToGroupErrorDescription(group, emailList), task));
 						status.setRollbackOnly();
 						ex.printStackTrace();
 					}
@@ -678,67 +592,32 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @return Returns a map of errors <String (error description),Group
 	 *         (object)>
 	 */
-	private Map<String, Group> removeParticipantFromGroupAndEmailList(
-			final Group group, final Set<Person> removedPeople,
-			final GroupLog groupLog) {
+	private Map<String, Group> removeParticipantFromGroupAndEmailList(final Group group, final Set<Person> removedPeople, final GroupLog groupLog) {
 		final Map<String, Group> errors = new HashMap<String, Group>();
 		if (removedPeople != null && !removedPeople.isEmpty()) {
-			for (Iterator<Person> iterator = removedPeople.iterator(); iterator
-					.hasNext();) {
+			for (Iterator<Person> iterator = removedPeople.iterator(); iterator.hasNext();) {
 				final Person person = (Person) iterator.next();
 				if (group.getParticipants().contains(person)) {
 					group.getParticipants().remove(person);
 					group.getOwners().remove(person);
 					for (final EmailList emailList : group.getEmailLists()) {
 						if (emailList.getRecipients().contains(person)) {
-							final SystemGroupTask task = new SystemGroupTask(
-									SystemGroupTask.REMOVE_PARTICIPANT_FROM_GROUP,
-									SystemGroupTask
-											.getRemoveParticipantFromGroupDescription(
-													group, emailList, person),
-									groupLog);
+							final SystemGroupTask task = new SystemGroupTask(SystemGroupTask.REMOVE_PARTICIPANT_FROM_GROUP, SystemGroupTask.getRemoveParticipantFromGroupDescription(group, emailList, person), groupLog);
 							groupLog.addTask(task);
-							transactionTemplate
-									.execute(new TransactionCallbackWithoutResult() {
-										protected void doInTransactionWithoutResult(
-												TransactionStatus status) {
-											try { // saving at both database
-												googleEmailListServiceInterface
-														.saveOnlyAtIntegra(emailList);
-												groupDao.getHibernateSession()
-														.merge(group);
-												googleEmailListServiceInterface
-														.removeRecipient(
-																emailList,
-																person);
-											} catch (Exception ex) {
-												errors
-														.put(
-																"Group: "
-																		+ group
-																				.getName()
-																		+ "- remove participant error - EmailList: "
-																		+ emailList
-																				.getName()
-																		+ " Recipient: "
-																		+ person
-																				.getRegistry(),
-																group);
-												task
-														.addError(new SystemGroupError(
-																ExceptionUtil
-																		.formatMessage(ex),
-																SystemGroupError
-																		.getRemoveParticipantFromGroupErrorDescription(
-																				group,
-																				emailList,
-																				person),
-																task));
-												status.setRollbackOnly();
-												ex.printStackTrace();
-											}
-										}
-									});
+							transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+								protected void doInTransactionWithoutResult(TransactionStatus status) {
+									try { // saving at both database
+										googleEmailListServiceInterface.saveOnlyAtIntegra(emailList);
+										groupDao.getHibernateSession().merge(group);
+										googleEmailListServiceInterface.removeRecipient(emailList, person);
+									} catch (Exception ex) {
+										errors.put("Group: " + group.getName() + "- remove participant error - EmailList: " + emailList.getName() + " Recipient: " + person.getRegistry(), group);
+										task.addError(new SystemGroupError(ExceptionUtil.formatMessage(ex), SystemGroupError.getRemoveParticipantFromGroupErrorDescription(group, emailList, person), task));
+										status.setRollbackOnly();
+										ex.printStackTrace();
+									}
+								}
+							});
 							iterator.remove();
 							break;
 						}
@@ -757,13 +636,10 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	 * @return Returns a map of errors <String (error description),Group
 	 *         (object)>
 	 */
-	private Map<String, Group> addParticipantToGroupAndEmailList(
-			final Group group, final Set<Person> addedPeople,
-			final GroupLog groupLog) {
+	private Map<String, Group> addParticipantToGroupAndEmailList(final Group group, final Set<Person> addedPeople, final GroupLog groupLog) {
 		final Map<String, Group> errors = new HashMap<String, Group>();
 		if (addedPeople != null && !addedPeople.isEmpty()) {
-			for (Iterator<Person> iterator = addedPeople.iterator(); iterator
-					.hasNext();) {
+			for (Iterator<Person> iterator = addedPeople.iterator(); iterator.hasNext();) {
 				final Person person = (Person) iterator.next();
 				int sizeBefore = group.getParticipants().size();
 				group.getParticipants().add(person);
@@ -773,54 +649,22 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 				else { // saving at both database
 					for (final EmailList emailList : group.getEmailLists()) {
 						if (emailList.getRecipients().size() < EmailList.LIMIT_RECIPIENTS) {
-							final SystemGroupTask task = new SystemGroupTask(
-									SystemGroupTask.ADD_PARTICIPANTS_TO_GROUP,
-									SystemGroupTask
-											.getAddParticipantsToGroupDescription(
-													group, emailList, person),
-									groupLog);
+							final SystemGroupTask task = new SystemGroupTask(SystemGroupTask.ADD_PARTICIPANTS_TO_GROUP, SystemGroupTask.getAddParticipantsToGroupDescription(group, emailList, person), groupLog);
 							groupLog.addTask(task);
-							transactionTemplate
-									.execute(new TransactionCallbackWithoutResult() {
-										protected void doInTransactionWithoutResult(
-												TransactionStatus status) {
-											try { // saving at both database
-												googleEmailListServiceInterface
-														.saveOnlyAtIntegra(emailList);
-												groupDao.getHibernateSession()
-														.merge(group);
-												googleEmailListServiceInterface
-														.addRecipient(
-																emailList,
-																person);
-											} catch (Exception ex) {
-												errors
-														.put(
-																"Group: "
-																		+ group
-																				.getName()
-																		+ " add participant error - EmailList: "
-																		+ emailList
-																				.getName()
-																		+ " Recipient: "
-																		+ person
-																				.getRegistry(),
-																group);
-												task
-														.addError(new SystemGroupError(
-																ExceptionUtil
-																		.formatMessage(ex),
-																SystemGroupError
-																		.getAddParticipantToGroupErrorDescription(
-																				group,
-																				emailList,
-																				person),
-																task));
-												status.setRollbackOnly();
-												ex.printStackTrace();
-											}
-										}
-									});
+							transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+								protected void doInTransactionWithoutResult(TransactionStatus status) {
+									try { // saving at both database
+										googleEmailListServiceInterface.saveOnlyAtIntegra(emailList);
+										groupDao.getHibernateSession().merge(group);
+										googleEmailListServiceInterface.addRecipient(emailList, person);
+									} catch (Exception ex) {
+										errors.put("Group: " + group.getName() + " add participant error - EmailList: " + emailList.getName() + " Recipient: " + person.getRegistry(), group);
+										task.addError(new SystemGroupError(ExceptionUtil.formatMessage(ex), SystemGroupError.getAddParticipantToGroupErrorDescription(group, emailList, person), task));
+										status.setRollbackOnly();
+										ex.printStackTrace();
+									}
+								}
+							});
 							iterator.remove();
 							break;
 						}
@@ -840,5 +684,4 @@ public class IntegraGroupServiceImpl extends IntegraServiceImpl<Group, Integer>
 	private boolean isConnectionOpenJDBC() throws SQLException {
 		return ((GroupDaoJDBC) groupDaoJDBC).isConnectionOpen();
 	}
-
 }

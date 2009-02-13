@@ -27,7 +27,6 @@ import com.integrareti.integraframework.valueobject.SectorVO;
  * 
  */
 public class GoogleAccountController {
-
 	protected GoogleUserAccountServiceInterface personService;
 	protected SigaService sigaService;
 	protected IntegraDomainServiceInterface domainService;
@@ -38,11 +37,7 @@ public class GoogleAccountController {
 	/**
 	 * Creates a new GoogleAccountController
 	 */
-	public GoogleAccountController(SigaService sigaService,
-			GoogleUserAccountServiceInterface personService,
-			IntegraDomainServiceInterface domainService,
-			IntegraUserGroupServiceInterface userGroupService,
-			IntegraDeletedGoogleUserInterface deletedGoogleUserService) {
+	public GoogleAccountController(SigaService sigaService, GoogleUserAccountServiceInterface personService, IntegraDomainServiceInterface domainService, IntegraUserGroupServiceInterface userGroupService, IntegraDeletedGoogleUserInterface deletedGoogleUserService) {
 		this.sigaService = sigaService;
 		this.personService = personService;
 		this.domainService = domainService;
@@ -55,8 +50,7 @@ public class GoogleAccountController {
 	 * 
 	 * @return saved person
 	 */
-	public void save(PersonVO personVO) throws AppsForYourDomainException,
-			Exception {
+	public void save(PersonVO personVO) throws AppsForYourDomainException, Exception {
 		Person person = getPerson(personVO);
 		personService.save(person);
 	}
@@ -95,19 +89,16 @@ public class GoogleAccountController {
 	 * @throws Exception
 	 * @throws DataAccessException
 	 */
-	public List<String> validUsernames(List<String> usernames, String domainName)
-			throws Exception {
+	public List<String> validUsernames(List<String> usernames, String domainName) throws Exception {
 		List<String> aux = new ArrayList<String>(usernames.size());
-		List<String> list = deletedGoogleUserService
-				.getDeletedGoogleAccountUntilFiveDaysAgoByDomainName(domainName);
+		List<String> list = deletedGoogleUserService.getDeletedGoogleAccountUntilFiveDaysAgoByDomainName(domainName);
 		int count = 1;
 		for (Iterator<String> it = usernames.iterator(); it.hasNext();) {
 			String string = it.next();
 			String auxS = string;
 			while (personService.getByGoogleAccount(auxS, domainName) != null || list.contains(auxS)) {
 				auxS = string + count;
-				if (personService.getByGoogleAccount(auxS, domainName) == null
-						&& !list.contains(auxS))
+				if (personService.getByGoogleAccount(auxS, domainName) == null && !list.contains(auxS))
 					break;
 				count++;
 			}
@@ -201,9 +192,7 @@ public class GoogleAccountController {
 		Person person = new Person();
 		person.setId(personVO.getId());
 		person.setGivenName(personVO.getGivenName());
-		person.getUserGroups().addAll(
-				userGroupService.getByName(personVO.getUserPositionGroups()
-						.toArray(new String[0])));
+		person.getUserGroups().addAll(userGroupService.getByName(personVO.getUserPositionGroups().toArray(new String[0])));
 		person.setPassword(StringUtil.SHA1Encrypt(personVO.getPassword()));
 		person.setFamilyName(personVO.getFamilyName());
 		person.setRegistry(personVO.getRegistry());
@@ -214,7 +203,7 @@ public class GoogleAccountController {
 			person.setDomain(personVO.getDomain());
 		return person;
 	}
-	
+
 	/**
 	 * 
 	 * @param domainName

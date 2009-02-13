@@ -10,7 +10,6 @@ import com.integrareti.integraframework.dao.siga.SigaDao;
 import com.integrareti.integraframework.dao.siga.SigaDaoJDBC;
 
 public class SigaDatabase {
-
 	private SigaDao sigaDao;
 
 	public static void main(String[] args) {
@@ -18,21 +17,19 @@ public class SigaDatabase {
 	}
 
 	public SigaDatabase() {
-
 		sigaDao = new SigaDaoJDBC();
 		try {
 			sigaDao.openConnection();
-			//List<String> noList = new ArrayList<String>();
+			// List<String> noList = new ArrayList<String>();
 			for (int i = 1998; i < 2008; i++) {
-				List<String> rs = sigaDao.getRegistriesBySubjectCode("MAT127", i+"", "1", "A");
-				System.out.println(i+" "+ rs.size());
+				List<String> rs = sigaDao.getRegistriesBySubjectCode("MAT127", i + "", "1", "A");
+				System.out.println(i + " " + rs.size());
 				for (String string : rs) {
 					System.out.println(string);
 				}
 				System.out.println("------------------------------------");
-			}			
+			}
 			sigaDao.closeConnection();
-
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -42,10 +39,8 @@ public class SigaDatabase {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
-			
 			e.printStackTrace();
 		}
-
 	}
 
 	public void test2() {
@@ -53,16 +48,12 @@ public class SigaDatabase {
 		String DB_URL = "jdbc:oracle:thin:@athenas.cpd.ufjf.br:1521:ufjf";
 		String DB_USER = "integrare";
 		String DB_PASS = "hewlett2";
-
 		java.sql.Connection connection = null;
 		try {
 			Class.forName(JDBC_DRIVER).newInstance();
 			connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-
 			Statement st = connection.createStatement();
-			ResultSet rs = (ResultSet) st
-					.executeQuery("select p.nome from cm_pessoa p, ga_aluno a where p.idpessoa=a.idpessoa and a.matricula='200515070'");
-
+			ResultSet rs = (ResultSet) st.executeQuery("select p.nome from cm_pessoa p, ga_aluno a where p.idpessoa=a.idpessoa and a.matricula='200515070'");
 			while (rs.next()) {
 				String s = rs.getString("nome");
 				System.out.println(s);
@@ -80,5 +71,4 @@ public class SigaDatabase {
 	public void setSigaDao(SigaDao sigaDao) {
 		this.sigaDao = sigaDao;
 	}
-
 }

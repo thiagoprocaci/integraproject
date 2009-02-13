@@ -7,7 +7,6 @@ package com.integrareti.integraframework.exceptions;
  * 
  */
 public class ExceptionUtil {
-
 	/**
 	 * 
 	 * @param e
@@ -19,5 +18,4 @@ public class ExceptionUtil {
 		s += " Cause: " + e.getCause();
 		return s;
 	}
-
 }

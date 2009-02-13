@@ -11,10 +11,7 @@ import com.integrareti.integraframework.dao.integra.UserGroupDao;
  * @author Thiago
  * 
  */
-public class IntegraUserGroupServiceImpl extends
-		IntegraServiceImpl<UserGroup, Integer> implements
-		IntegraUserGroupServiceInterface {
-
+public class IntegraUserGroupServiceImpl extends IntegraServiceImpl<UserGroup, Integer> implements IntegraUserGroupServiceInterface {
 	private UserGroupDao userGroupDao;
 
 	/**
@@ -32,12 +29,10 @@ public class IntegraUserGroupServiceImpl extends
 	 * @param group
 	 *            names
 	 * @return <code>List<UserGroup></code> each one with name = name[x]
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Override
 	public List<UserGroup> getByName(String... name) throws Exception {
 		return userGroupDao.getByName(name);
 	}
-
-
 }

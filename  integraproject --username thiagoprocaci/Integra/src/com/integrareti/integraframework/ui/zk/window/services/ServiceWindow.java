@@ -20,7 +20,6 @@ import com.integrareti.integraframework.ui.zk.window.AbstractWindow;
  */
 @SuppressWarnings("serial")
 public class ServiceWindow extends AbstractWindow {
-
 	private IceAppsController iceAppsController;
 	private IceForm iceForm;
 	private AcsForm acsForm;
@@ -34,18 +33,14 @@ public class ServiceWindow extends AbstractWindow {
 	 */
 	public void onCreate() {
 		relayState = null;
-		domainName = ((Person) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal()).getDomain().getName();
-		googleAccount = ((Person) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal()).getGoogleAccount();
-		registry = ((Person) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal()).getRegistry();
+		domainName = ((Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getDomain().getName();
+		googleAccount = ((Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getGoogleAccount();
+		registry = ((Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getRegistry();
 		acsForm = new AcsForm(domainName);
 		appendChild(acsForm);
 		iceForm = new IceForm();
 		appendChild(iceForm);
-		iceAppsController = (IceAppsController) SpringUtil
-				.getBean("iceAppsController");
+		iceAppsController = (IceAppsController) SpringUtil.getBean("iceAppsController");
 	}
 
 	/**
@@ -53,26 +48,23 @@ public class ServiceWindow extends AbstractWindow {
 	 */
 	public void onClickMail() {
 		relayState = AcsForm.GOOGLE_MAIL_BASE_URL + domainName;
-		acsForm.submitFormInAnotherWin(SingleSignOn.getInstance().getAuthSSO(
-				domainName, googleAccount), relayState);
+		acsForm.submitFormInAnotherWin(SingleSignOn.getInstance().getAuthSSO(domainName, googleAccount), relayState);
 	}
-	
+
 	/**
 	 * onClick Sites
 	 */
-	public void onClickSites(){
+	public void onClickSites() {
 		relayState = AcsForm.GOOGLE_SITES_BASE_URL + domainName;
-		acsForm.submitFormInAnotherWin(SingleSignOn.getInstance().getAuthSSO(
-				domainName, googleAccount), relayState);
+		acsForm.submitFormInAnotherWin(SingleSignOn.getInstance().getAuthSSO(domainName, googleAccount), relayState);
 	}
-	
+
 	/**
 	 * Onclick calendar
 	 */
 	public void onClickCalendar() {
 		relayState = AcsForm.GOOGLE_CALENDAR_BASE_URL + domainName;
-		acsForm.submitFormInAnotherWin(SingleSignOn.getInstance().getAuthSSO(
-				domainName, googleAccount), relayState);
+		acsForm.submitFormInAnotherWin(SingleSignOn.getInstance().getAuthSSO(domainName, googleAccount), relayState);
 	}
 
 	/**
@@ -80,8 +72,7 @@ public class ServiceWindow extends AbstractWindow {
 	 */
 	public void onClickDocs() {
 		relayState = AcsForm.GOOGLE_DOCS_BASE_URL + domainName;
-		acsForm.submitFormInAnotherWin(SingleSignOn.getInstance().getAuthSSO(
-				domainName, googleAccount), relayState);
+		acsForm.submitFormInAnotherWin(SingleSignOn.getInstance().getAuthSSO(domainName, googleAccount), relayState);
 	}
 
 	/**
@@ -100,9 +91,7 @@ public class ServiceWindow extends AbstractWindow {
 			String pass = iceAppsController.getPersonPassword(registry);
 			iceForm.submitForm(registry, pass);
 		} catch (Exception e) {
-			addHtmlWarning("warning",
-					"Ocorreu um erro ao tentar acessar os aplicativos ICE", "",
-					HtmlWarning.ERROR);
+			addHtmlWarning("warning", "Ocorreu um erro ao tentar acessar os aplicativos ICE", "", HtmlWarning.ERROR);
 			e.printStackTrace();
 		}
 	}

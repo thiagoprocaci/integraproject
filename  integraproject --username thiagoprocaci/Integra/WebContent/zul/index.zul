@@ -2,11 +2,10 @@
 
 <window xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:zk="http://www.zkoss.org/2005/zk" border="normal" title="Main"
-	style="margin:auto" id="mainWindow" width="400px"
-	>
+	style="margin:auto" id="mainWindow" width="400px">
 
-  <div align="center">
-		<label id="label"  value="Acesso Negado"/>
+	<div align="center">
+		<label id="label" value="Acesso Negado" />
 	</div>
-  
+
 </window>

@@ -14,12 +14,10 @@ import org.zkoss.zul.Html;
  */
 @SuppressWarnings("serial")
 public class HtmlWarning extends Html {
-
 	// STATIC CONSTANTS
 	public static final int WARNING = 0;
 	public static final int INFORMATION = 1;
 	public static final int ERROR = 2;
-
 	private List<String> warnings = new ArrayList<String>(10);
 	private String title;
 	private int type;

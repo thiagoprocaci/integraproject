@@ -21,7 +21,6 @@ import com.integrareti.integraframework.valueobject.SectorVO;
  * 
  */
 public class SigaServiceImpl implements SigaService {
-
 	private SigaDao sigaDao;
 
 	/**
@@ -42,8 +41,7 @@ public class SigaServiceImpl implements SigaService {
 	 * @throws Exception
 	 */
 	@Override
-	public boolean loginPerson(String username, String password)
-			throws Exception {
+	public boolean loginPerson(String username, String password) throws Exception {
 		if (username == null || password == null)
 			return false;
 		boolean login = false;
@@ -71,19 +69,14 @@ public class SigaServiceImpl implements SigaService {
 		p.setUserPositionGroups(sigaDao.getUserPositionGroups(registry));
 		if (p.getUserPositionGroups() != null && !p.getUserPositionGroups().isEmpty()) {
 			if (p.getUserPositionGroups().contains(UserGroup.PROFESSOR_GROUP)) {
-				p.setDeptoOrCourse(sigaDao.getDepartamentName(registry, p
-						.getUserPositionGroups()));
+				p.setDeptoOrCourse(sigaDao.getDepartamentName(registry, p.getUserPositionGroups()));
 			} else {
 				if (p.getUserPositionGroups().contains(UserGroup.STUDENT_GROUP)) {
-					p.setDeptoOrCourse(sigaDao.getCourseName(registry, p
-							.getUserPositionGroups()));
+					p.setDeptoOrCourse(sigaDao.getCourseName(registry, p.getUserPositionGroups()));
 				}
 			}
-			p.setSector(sigaDao.getPersonSector(registry, p
-					.getUserPositionGroups()));
-			p.setName(sigaDao
-					.getPersonName(registry, p.getUserPositionGroups()));
-
+			p.setSector(sigaDao.getPersonSector(registry, p.getUserPositionGroups()));
+			p.setName(sigaDao.getPersonName(registry, p.getUserPositionGroups()));
 		} else
 			p = null;
 		sigaDao.closeConnection();
@@ -100,8 +93,7 @@ public class SigaServiceImpl implements SigaService {
 	 * 
 	 */
 	@Override
-	public String getCourseName(String registry, List<String> userGroups)
-			throws Exception {
+	public String getCourseName(String registry, List<String> userGroups) throws Exception {
 		if (registry == null || userGroups == null || userGroups.isEmpty())
 			return null;
 		String aux = null;
@@ -119,8 +111,7 @@ public class SigaServiceImpl implements SigaService {
 	 * @throws Exception
 	 */
 	@Override
-	public String getDepartamentName(String registry, List<String> userGroups)
-			throws Exception {
+	public String getDepartamentName(String registry, List<String> userGroups) throws Exception {
 		if (registry == null || userGroups == null || userGroups.isEmpty())
 			return null;
 		String aux = null;
@@ -139,8 +130,7 @@ public class SigaServiceImpl implements SigaService {
 	 * 
 	 */
 	@Override
-	public String getPersonName(String registry, List<String> userGroups)
-			throws Exception {
+	public String getPersonName(String registry, List<String> userGroups) throws Exception {
 		if (registry == null || userGroups == null || userGroups.size() == 0)
 			return null;
 		String aux = null;
@@ -180,8 +170,7 @@ public class SigaServiceImpl implements SigaService {
 	 * 
 	 */
 	@Override
-	public SectorVO getPersonSector(String registry, List<String> userGroups)
-			throws Exception {
+	public SectorVO getPersonSector(String registry, List<String> userGroups) throws Exception {
 		if (registry == null || userGroups == null || userGroups.isEmpty())
 			return null;
 		SectorVO aux = null;
@@ -203,15 +192,11 @@ public class SigaServiceImpl implements SigaService {
 	 * 
 	 */
 	@Override
-	public List<GroupVO> getSubjects(String registry, List<String> userGroups,
-			String year, String semester) throws Exception {
-		if (registry == null || userGroups == null || userGroups.isEmpty()
-				|| year == null || semester == null
-				|| (!semester.equals("1") && !semester.equals("2")))
+	public List<GroupVO> getSubjects(String registry, List<String> userGroups, String year, String semester) throws Exception {
+		if (registry == null || userGroups == null || userGroups.isEmpty() || year == null || semester == null || (!semester.equals("1") && !semester.equals("2")))
 			return new ArrayList<GroupVO>(0);
 		sigaDao.openConnection();
-		List<GroupVO> list = sigaDao.getSubjects(registry, userGroups, year,
-				semester);
+		List<GroupVO> list = sigaDao.getSubjects(registry, userGroups, year, semester);
 		sigaDao.closeConnection();
 		return list;
 	}
@@ -246,17 +231,12 @@ public class SigaServiceImpl implements SigaService {
 	 * 
 	 */
 	@Override
-	public boolean hasPersonLinkWithSector(String registry, String year,
-			String semester, String sector, List<String> userGroups)
-			throws Exception {
-		if (registry == null || year == null || semester == null
-				|| sector == null || userGroups == null || userGroups.isEmpty()
-				|| (!semester.equals("1") && !semester.equals("2")))
+	public boolean hasPersonLinkWithSector(String registry, String year, String semester, String sector, List<String> userGroups) throws Exception {
+		if (registry == null || year == null || semester == null || sector == null || userGroups == null || userGroups.isEmpty() || (!semester.equals("1") && !semester.equals("2")))
 			return false;
 		boolean aux = false;
 		sigaDao.openConnection();
-		aux = sigaDao.hasPersonLinkWithSector(registry, year, semester, sector,
-				userGroups);
+		aux = sigaDao.hasPersonLinkWithSector(registry, year, semester, sector, userGroups);
 		sigaDao.closeConnection();
 		return aux;
 	}
@@ -272,15 +252,11 @@ public class SigaServiceImpl implements SigaService {
 	 * 
 	 */
 	@Override
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom) throws Exception {
-		if (subjectCode == null || year == null || semester == null
-				|| subjectCode == null
-				|| (!semester.equals("1") && !semester.equals("2")))
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom) throws Exception {
+		if (subjectCode == null || year == null || semester == null || subjectCode == null || (!semester.equals("1") && !semester.equals("2")))
 			return new ArrayList<String>(0);
 		sigaDao.openConnection();
-		List<String> list = sigaDao.getRegistriesBySubjectCode(subjectCode,
-				year, semester, classroom);
+		List<String> list = sigaDao.getRegistriesBySubjectCode(subjectCode, year, semester, classroom);
 		sigaDao.closeConnection();
 		return list;
 	}
@@ -294,14 +270,11 @@ public class SigaServiceImpl implements SigaService {
 	 * @throws Exception
 	 */
 	@Override
-	public List<GroupVO> getSubjectByPeriodAndSector(String year,
-			String semester, String sector) throws Exception {
-		if (sector == null || year == null || semester == null
-				|| (!semester.equals("1") && !semester.equals("2")))
+	public List<GroupVO> getSubjectByPeriodAndSector(String year, String semester, String sector) throws Exception {
+		if (sector == null || year == null || semester == null || (!semester.equals("1") && !semester.equals("2")))
 			return new ArrayList<GroupVO>(0);
 		sigaDao.openConnection();
-		List<GroupVO> list = sigaDao.getSubjectByPeriodAndSector(year,
-				semester, sector);
+		List<GroupVO> list = sigaDao.getSubjectByPeriodAndSector(year, semester, sector);
 		sigaDao.closeConnection();
 		return list;
 	}
@@ -316,15 +289,11 @@ public class SigaServiceImpl implements SigaService {
 	 * 
 	 */
 	@Override
-	public List<String> getRegistriesBySubjectCode(List<String> subjectsCode,
-			String year, String semester, String classroom) throws Exception {
-		if (subjectsCode == null || year == null || semester == null
-				|| subjectsCode.isEmpty() || classroom == null
-				|| (!semester.equals("1") && !semester.equals("2")))
+	public List<String> getRegistriesBySubjectCode(List<String> subjectsCode, String year, String semester, String classroom) throws Exception {
+		if (subjectsCode == null || year == null || semester == null || subjectsCode.isEmpty() || classroom == null || (!semester.equals("1") && !semester.equals("2")))
 			return new ArrayList<String>(0);
 		sigaDao.openConnection();
-		List<String> list = sigaDao.getRegistriesBySubjectCode(subjectsCode,
-				year, semester, classroom);
+		List<String> list = sigaDao.getRegistriesBySubjectCode(subjectsCode, year, semester, classroom);
 		sigaDao.closeConnection();
 		return list;
 	}
@@ -357,15 +326,11 @@ public class SigaServiceImpl implements SigaService {
 	 * 
 	 */
 	@Override
-	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year,
-			String semester, String sector, String department) throws Exception {
-		if (year == null || semester == null || sector == null
-				|| department == null
-				|| (!semester.equals("1") && !semester.equals("2")))
+	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year, String semester, String sector, String department) throws Exception {
+		if (year == null || semester == null || sector == null || department == null || (!semester.equals("1") && !semester.equals("2")))
 			return new ArrayList<GroupVO>(0);
 		sigaDao.openConnection();
-		List<GroupVO> list = sigaDao.getSubjectByPeriodAndSectorAndDepartment(
-				year, semester, sector, department);
+		List<GroupVO> list = sigaDao.getSubjectByPeriodAndSectorAndDepartment(year, semester, sector, department);
 		sigaDao.closeConnection();
 		return list;
 	}
@@ -380,16 +345,11 @@ public class SigaServiceImpl implements SigaService {
 	 * @throws Exception
 	 */
 	@Override
-	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year,
-			String semester, String subjectCode, String sector)
-			throws Exception {
-		if (year == null || semester == null || sector == null
-				|| subjectCode == null
-				|| (!semester.equals("1") && !semester.equals("2")))
+	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year, String semester, String subjectCode, String sector) throws Exception {
+		if (year == null || semester == null || sector == null || subjectCode == null || (!semester.equals("1") && !semester.equals("2")))
 			return new ArrayList<GroupVO>(0);
 		sigaDao.openConnection();
-		List<GroupVO> list = sigaDao.getSubjectByPeriodAndSectorAndSubjectCode(
-				year, semester, subjectCode, sector);
+		List<GroupVO> list = sigaDao.getSubjectByPeriodAndSectorAndSubjectCode(year, semester, subjectCode, sector);
 		sigaDao.closeConnection();
 		return list;
 	}
@@ -427,8 +387,7 @@ public class SigaServiceImpl implements SigaService {
 				List<String> userGroups = new ArrayList<String>();
 				for (UserGroup u : person.getUserGroups())
 					userGroups.add(u.getName());
-				person.setName(sigaDao.getPersonName(person.getRegistry(),
-						userGroups));
+				person.setName(sigaDao.getPersonName(person.getRegistry(), userGroups));
 			}
 		}
 		sigaDao.closeConnection();
@@ -445,13 +404,11 @@ public class SigaServiceImpl implements SigaService {
 	 * @throws Exception
 	 */
 	@Override
-	public List<NameVO> getSubjectOwner(String subjectCode, String year,
-			String semester, String classroom) throws Exception {
+	public List<NameVO> getSubjectOwner(String subjectCode, String year, String semester, String classroom) throws Exception {
 		if (subjectCode == null || year == null || semester == null)
 			return new ArrayList<NameVO>(0);
 		sigaDao.openConnection();
-		List<NameVO> list = sigaDao.getSubjectOwner(subjectCode, year,
-				semester, classroom);
+		List<NameVO> list = sigaDao.getSubjectOwner(subjectCode, year, semester, classroom);
 		sigaDao.closeConnection();
 		return list;
 	}
@@ -468,16 +425,11 @@ public class SigaServiceImpl implements SigaService {
 	 * @throws Exception
 	 */
 	@Override
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom,
-			List<String> registriesNotWanted) throws Exception {
-		if (subjectCode == null || year == null || semester == null
-				|| subjectCode == null || registriesNotWanted == null
-				|| (!semester.equals("1") && !semester.equals("2")))
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom, List<String> registriesNotWanted) throws Exception {
+		if (subjectCode == null || year == null || semester == null || subjectCode == null || registriesNotWanted == null || (!semester.equals("1") && !semester.equals("2")))
 			return new ArrayList<String>(0);
 		sigaDao.openConnection();
-		List<String> list = sigaDao.getRegistriesBySubjectCode(subjectCode,
-				year, semester, classroom, registriesNotWanted);
+		List<String> list = sigaDao.getRegistriesBySubjectCode(subjectCode, year, semester, classroom, registriesNotWanted);
 		sigaDao.closeConnection();
 		return list;
 	}
@@ -489,17 +441,12 @@ public class SigaServiceImpl implements SigaService {
 	 * @throws Exception
 	 */
 	@Override
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom,
-			boolean stillOpenConnection) throws Exception {
-		if (subjectCode == null || year == null || semester == null
-				|| subjectCode == null
-				|| (!semester.equals("1") && !semester.equals("2")))
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom, boolean stillOpenConnection) throws Exception {
+		if (subjectCode == null || year == null || semester == null || subjectCode == null || (!semester.equals("1") && !semester.equals("2")))
 			return new ArrayList<String>(0);
 		if (!sigaDao.isConnectionOpen())
 			sigaDao.openConnection();
-		List<String> list = sigaDao.getRegistriesBySubjectCode(subjectCode,
-				year, semester, classroom);
+		List<String> list = sigaDao.getRegistriesBySubjectCode(subjectCode, year, semester, classroom);
 		if (!stillOpenConnection)
 			sigaDao.closeConnection();
 		return list;
@@ -515,15 +462,12 @@ public class SigaServiceImpl implements SigaService {
 	 * @throws Exception
 	 */
 	@Override
-	public List<NameVO> getSubjectOwner(String subjectCode, String year,
-			String semester, String classroom, boolean stillOpenConnection)
-			throws Exception {
+	public List<NameVO> getSubjectOwner(String subjectCode, String year, String semester, String classroom, boolean stillOpenConnection) throws Exception {
 		if (subjectCode == null || year == null || semester == null)
 			return new ArrayList<NameVO>(0);
 		if (!sigaDao.isConnectionOpen())
 			sigaDao.openConnection();
-		List<NameVO> list = sigaDao.getSubjectOwner(subjectCode, year,
-				semester, classroom);
+		List<NameVO> list = sigaDao.getSubjectOwner(subjectCode, year, semester, classroom);
 		if (!stillOpenConnection)
 			sigaDao.closeConnection();
 		return list;

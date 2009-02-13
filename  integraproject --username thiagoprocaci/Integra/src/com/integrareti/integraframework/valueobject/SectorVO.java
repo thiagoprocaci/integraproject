@@ -9,8 +9,7 @@ import java.io.Serializable;
  * 
  */
 @SuppressWarnings("serial")
-public class SectorVO implements Serializable{
-
+public class SectorVO implements Serializable {
 	private String fatherSector;
 	private String sector;
 
@@ -29,7 +28,6 @@ public class SectorVO implements Serializable{
 	 * Creates a new sectorVO
 	 */
 	public SectorVO() {
-
 	}
 
 	/**
@@ -65,5 +63,4 @@ public class SectorVO implements Serializable{
 	public void setSector(String sector) {
 		this.sector = sector;
 	}
-
 }

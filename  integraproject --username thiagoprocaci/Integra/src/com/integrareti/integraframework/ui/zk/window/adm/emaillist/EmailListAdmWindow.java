@@ -22,7 +22,6 @@ import com.integrareti.integraframework.ui.zk.window.AnnotateDataBinderWindow;
 
 @SuppressWarnings("serial")
 public class EmailListAdmWindow extends AnnotateDataBinderWindow {
-
 	private List<Group> groups;
 	private GroupImportController groupImportController;
 	private EmailListController emailListController;
@@ -32,15 +31,12 @@ public class EmailListAdmWindow extends AnnotateDataBinderWindow {
 
 	@Override
 	public void doOnCreate() {
-		groupImportController = (GroupImportController) SpringUtil
-				.getBean("groupImportController");
-		emailListController = (EmailListController) SpringUtil
-				.getBean("emailListController");
+		groupImportController = (GroupImportController) SpringUtil.getBean("groupImportController");
+		emailListController = (EmailListController) SpringUtil.getBean("emailListController");
 		lbxGroups = (Listbox) getFellow("lbxGroups");
 		showRG = (Radiogroup) getFellow("showRG");
 		lastSelected = 0;
 		groups = loadGroupsWithEmailListOrNot(false);
-
 	}
 
 	public void refreshSelected(Component c) {
@@ -57,18 +53,13 @@ public class EmailListAdmWindow extends AnnotateDataBinderWindow {
 
 	@SuppressWarnings("unchecked")
 	public void createEmailLists() {
-		List<Group> groups = new ArrayList<Group>(lbxGroups.getSelectedItems()
-				.size());
-		for (Iterator<Listitem> it = lbxGroups.getSelectedItems().iterator(); it
-				.hasNext();) {
+		List<Group> groups = new ArrayList<Group>(lbxGroups.getSelectedItems().size());
+		for (Iterator<Listitem> it = lbxGroups.getSelectedItems().iterator(); it.hasNext();) {
 			Listitem item = (Listitem) it.next();
-			Group group = (Group) lbxGroups.getModel().getElementAt(
-					item.getIndex());
+			Group group = (Group) lbxGroups.getModel().getElementAt(item.getIndex());
 			groups.add(group);
 		}
-
-		Map<String, EmailList> errors = emailListController
-				.createEmailLists(groups);
+		Map<String, EmailList> errors = emailListController.createEmailLists(groups);
 		List<String> errorlist = new ArrayList<String>();
 		Iterator<String> keyIterator = errors.keySet().iterator();
 		while (keyIterator.hasNext()) {
@@ -76,27 +67,21 @@ public class EmailListAdmWindow extends AnnotateDataBinderWindow {
 			errorlist.add(key);
 		}
 		if (errors.size() > 0) {
-			addHtmlWarning("warnings",
-					"Erro criando as seguntes listas de e-mail", errorlist,
-					HtmlWarning.ERROR);
+			addHtmlWarning("warnings", "Erro criando as seguntes listas de e-mail", errorlist, HtmlWarning.ERROR);
 		} else {
-			addHtmlWarning("warnings",
-					"Lista(s) de email criada(s) com sucesso", "",
-					HtmlWarning.INFORMATION);
+			addHtmlWarning("warnings", "Lista(s) de email criada(s) com sucesso", "", HtmlWarning.INFORMATION);
 		}
 	}
 
 	public void updateRecipients() {
-		List<Group> groups = new ArrayList<Group>(lbxGroups.getSelectedItems()
-				.size());
+		List<Group> groups = new ArrayList<Group>(lbxGroups.getSelectedItems().size());
 		/*
 		 * for (Iterator<Listitem> it =
 		 * lbxGroups.getSelectedItems().iterator(); it .hasNext();) { Listitem
 		 * item = (Listitem) it.next(); Group group = (Group)
 		 * lbxGroups.getModel().getElementAt( item.getIndex()); }
 		 */
-		Map<String, Person> errors = emailListController
-				.addParticipants(groups);
+		Map<String, Person> errors = emailListController.addParticipants(groups);
 		List<String> errorlist = new ArrayList<String>();
 		Iterator<String> keyIterator = errors.keySet().iterator();
 		while (keyIterator.hasNext()) {
@@ -105,13 +90,9 @@ public class EmailListAdmWindow extends AnnotateDataBinderWindow {
 			errorlist.add(person.getEmail() + ": " + key);
 		}
 		if (errors.size() > 0) {
-			addHtmlWarning("warnings",
-					"Erro incluindo os seguntes recipientes", errorlist,
-					HtmlWarning.ERROR);
+			addHtmlWarning("warnings", "Erro incluindo os seguntes recipientes", errorlist, HtmlWarning.ERROR);
 		} else {
-			addHtmlWarning("warnings",
-					"Recipiente(s) atualizado(s) com sucesso", "",
-					HtmlWarning.INFORMATION);
+			addHtmlWarning("warnings", "Recipiente(s) atualizado(s) com sucesso", "", HtmlWarning.INFORMATION);
 		}
 	}
 
@@ -122,7 +103,6 @@ public class EmailListAdmWindow extends AnnotateDataBinderWindow {
 			lastSelected = selectedIndex;
 			if (selectedIndex == 0) {
 				this.groups = loadGroupsWithEmailListOrNot(false);
-
 			} else if (selectedIndex == 1) {
 				this.groups = loadGroupsWithEmailListOrNot(true);
 			}
@@ -133,17 +113,14 @@ public class EmailListAdmWindow extends AnnotateDataBinderWindow {
 
 	private List<Group> loadGroupsWithEmailListOrNot(boolean with) {
 		List<Group> groups = null;
-		String domainName = ((Person) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal()).getDomain().getName();
+		String domainName = ((Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getDomain().getName();
 		try {
 			if (with)
 				groups = groupImportController.getGroups(domainName);
 			else
-				groups = groupImportController
-						.getGroupsWithoutEmailList(domainName);
+				groups = groupImportController.getGroupsWithoutEmailList(domainName);
 		} catch (Exception e) {
-			addHtmlWarning("warnings", "Erro ao carregar grupos ", e
-					.getMessage(), HtmlWarning.ERROR);
+			addHtmlWarning("warnings", "Erro ao carregar grupos ", e.getMessage(), HtmlWarning.ERROR);
 			e.printStackTrace();
 		}
 		return groups;
@@ -156,5 +133,4 @@ public class EmailListAdmWindow extends AnnotateDataBinderWindow {
 	public void setLastSelected(int lastSelected) {
 		this.lastSelected = lastSelected;
 	}
-
 }

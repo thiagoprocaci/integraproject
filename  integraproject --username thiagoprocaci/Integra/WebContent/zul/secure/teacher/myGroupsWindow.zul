@@ -24,7 +24,7 @@
 				</row>
 				<row>
 					Responsável(ies):
-					 <label value="@{groupOwners}"></label> 
+					<label value="@{groupOwners}"></label>
 				</row>
 			</rows>
 		</grid>

@@ -8,7 +8,6 @@ import com.integrareti.integraframework.dao.integra.DeletedGoogleUserDao;
 import com.integrareti.integraframework.dao.integra.DomainDao;
 
 public class DeletedGoogleUserDaoTest extends BasicIntegraTestCase {
-
 	private DeletedGoogleUserDao deletedGoogleUserDao;
 	private DomainDao domainDao;
 
@@ -24,15 +23,13 @@ public class DeletedGoogleUserDaoTest extends BasicIntegraTestCase {
 		super.tearDown();
 	}
 
-
 	public void testSave() {
 		boolean b = true;
 		try {
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DATE, -5);
 			DeletedGoogleUser deletedGoogleUser = new DeletedGoogleUser();
-			deletedGoogleUser.setDomain(domainDao
-					.getDomainByName("ice.ufjf.br"));
+			deletedGoogleUser.setDomain(domainDao.getDomainByName("ice.ufjf.br"));
 			deletedGoogleUser.setExclusionDate(cal);
 			deletedGoogleUser.setDeletedGoogleAccount("cavuco2");
 			deletedGoogleUserDao.save(deletedGoogleUser);
@@ -46,8 +43,7 @@ public class DeletedGoogleUserDaoTest extends BasicIntegraTestCase {
 	public void testGetUntilFiveDaysAgo() {
 		boolean b = true;
 		try {
-			List<DeletedGoogleUser> list = deletedGoogleUserDao
-					.getDeletedGoogleUserUntilFiveDaysAgoByDomainName("ice.ufjf.br");
+			List<DeletedGoogleUser> list = deletedGoogleUserDao.getDeletedGoogleUserUntilFiveDaysAgoByDomainName("ice.ufjf.br");
 			for (DeletedGoogleUser deletedGoogleUser : list)
 				System.out.println(deletedGoogleUser.getDeletedGoogleAccount());
 		} catch (Exception e) {
@@ -56,5 +52,4 @@ public class DeletedGoogleUserDaoTest extends BasicIntegraTestCase {
 		}
 		assertEquals(true, b);
 	}
-	
 }

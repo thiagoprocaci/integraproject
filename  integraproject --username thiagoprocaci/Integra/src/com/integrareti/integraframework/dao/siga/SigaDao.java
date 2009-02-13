@@ -15,7 +15,6 @@ import com.integrareti.integraframework.valueobject.SectorVO;
  * 
  */
 public interface SigaDao {
-
 	/**
 	 * 
 	 * @param registry
@@ -23,8 +22,7 @@ public interface SigaDao {
 	 * @return Returns the name
 	 * @throws ConnectionDataBaseException
 	 */
-	public String getPersonName(String registry, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception;
+	public String getPersonName(String registry, List<String> userGroups) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -35,8 +33,7 @@ public interface SigaDao {
 	 * @throws ConnectionDataBaseException
 	 * 
 	 */
-	public String getCourseName(String registry, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception;
+	public String getCourseName(String registry, List<String> userGroups) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -45,8 +42,7 @@ public interface SigaDao {
 	 * @return Returns the departament
 	 * @throws ConnectionDataBaseException
 	 */
-	public String getDepartamentName(String registry, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception;
+	public String getDepartamentName(String registry, List<String> userGroups) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * Authentication at system
@@ -56,8 +52,7 @@ public interface SigaDao {
 	 * @return true or false
 	 * @throws ConnectionDataBaseException
 	 */
-	public boolean loginPerson(String username, String password)
-			throws ConnectionDataBaseException, Exception;
+	public boolean loginPerson(String username, String password) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -66,8 +61,7 @@ public interface SigaDao {
 	 * @return Returns siga's userGroups of a person
 	 * @throws ConnectionDataBaseException
 	 */
-	public List<String> getUserPositionGroups(String registry)
-			throws ConnectionDataBaseException, Exception;
+	public List<String> getUserPositionGroups(String registry) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -79,9 +73,7 @@ public interface SigaDao {
 	 * @return Returns a list groupVO with the subjects
 	 * @throws ConnectionDataBaseException
 	 */
-	public List<GroupVO> getSubjects(String registry, List<String> userGroups,
-			String year, String semester) throws ConnectionDataBaseException,
-			Exception;
+	public List<GroupVO> getSubjects(String registry, List<String> userGroups, String year, String semester) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -90,8 +82,7 @@ public interface SigaDao {
 	 * @return Returns personVO with encrypted password (MD5)
 	 * @throws ConnectionDataBaseException
 	 */
-	public String getPersonPassword(String registry)
-			throws ConnectionDataBaseException, Exception;
+	public String getPersonPassword(String registry) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * Open database connection
@@ -101,8 +92,7 @@ public interface SigaDao {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public void openConnection() throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, SQLException;
+	public void openConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
 
 	/**
 	 * Close the database connection
@@ -120,8 +110,7 @@ public interface SigaDao {
 	 * @throws ConnectionDataBaseException
 	 * 
 	 */
-	public SectorVO getPersonSector(String registry, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception;
+	public SectorVO getPersonSector(String registry, List<String> userGroups) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -132,9 +121,7 @@ public interface SigaDao {
 	 * @return Returns all registry of people that is studying a subject
 	 * @throws ConnectionDataBaseException
 	 */
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom)
-			throws ConnectionDataBaseException, Exception;
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -145,24 +132,21 @@ public interface SigaDao {
 	 * @return Returns all registry of people that is studying a list of subject
 	 * @throws ConnectionDataBaseException
 	 */
-	public List<String> getRegistriesBySubjectCode(List<String> subjectsCode,
-			String year, String semester, String classroom)
-			throws ConnectionDataBaseException, Exception;
-	
+	public List<String> getRegistriesBySubjectCode(List<String> subjectsCode, String year, String semester, String classroom) throws ConnectionDataBaseException, Exception;
+
 	/**
 	 * 
 	 * @param subjectCode
 	 * @param year
 	 * @param semester
 	 * @param classroom
-	 * @param registriesNotWanted (registries that doesn't need to return)
+	 * @param registriesNotWanted
+	 *            (registries that doesn't need to return)
 	 * @return Returns all registry of people that is studying a list of subject
 	 * @throws ConnectionDataBaseException
 	 * @throws Exception
 	 */
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom, List<String> registriesNotWanted)
-			throws ConnectionDataBaseException, Exception;
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom, List<String> registriesNotWanted) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -171,9 +155,7 @@ public interface SigaDao {
 	 * @param sector
 	 * @return Returns all subject of a period and sector
 	 */
-	public List<GroupVO> getSubjectByPeriodAndSector(String year,
-			String semester, String sector) throws ConnectionDataBaseException,
-			Exception;
+	public List<GroupVO> getSubjectByPeriodAndSector(String year, String semester, String sector) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -184,9 +166,7 @@ public interface SigaDao {
 	 * @return Returns all subject of a period , sector and departament
 	 * @throws ConnectionDataBaseException
 	 */
-	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year,
-			String semester, String sector, String department)
-			throws ConnectionDataBaseException, Exception;
+	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year, String semester, String sector, String department) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -197,9 +177,7 @@ public interface SigaDao {
 	 *         subject code
 	 * @throws ConnectionDataBaseException
 	 */
-	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year,
-			String semester, String subjectCode, String sector)
-			throws ConnectionDataBaseException, Exception;
+	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year, String semester, String subjectCode, String sector) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -212,9 +190,7 @@ public interface SigaDao {
 	 * @return Returns true if person param registry has link to param sector
 	 * @throws ConnectionDataBaseException
 	 */
-	public boolean hasPersonLinkWithSector(String registry, String year,
-			String semester, String sector, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception;
+	public boolean hasPersonLinkWithSector(String registry, String year, String semester, String sector, List<String> userGroups) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -222,8 +198,7 @@ public interface SigaDao {
 	 * @return Returns a list of departament name by sector
 	 * @throws ConnectionDataBaseException
 	 */
-	public List<String> getDepartamentsBySector(String sector)
-			throws ConnectionDataBaseException, Exception;
+	public List<String> getDepartamentsBySector(String sector) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
@@ -231,23 +206,23 @@ public interface SigaDao {
 	 * @return Returns a list of nameVO object with the name and registry by
 	 *         name (using like primitive)
 	 */
-	public List<NameVO> getNameAndRegistryByName(String name)
-			throws ConnectionDataBaseException, Exception;
+	public List<NameVO> getNameAndRegistryByName(String name) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * 
 	 * @param subjectCode
 	 * @param year
 	 * @param semester
-	 * @return Returns a list of nameVOs(registry,name) representing the subject owners
+	 * @return Returns a list of nameVOs(registry,name) representing the subject
+	 *         owners
 	 * @throws ConnectionDataBaseException
 	 * @throws Exception
 	 */
-	public List<NameVO> getSubjectOwner(String subjectCode, String year,
-			String semester,String classroom) throws ConnectionDataBaseException, Exception;
+	public List<NameVO> getSubjectOwner(String subjectCode, String year, String semester, String classroom) throws ConnectionDataBaseException, Exception;
 
 	/**
 	 * Checks if siga database connection is open
+	 * 
 	 * @return True if open. False if close
 	 */
 	public boolean isConnectionOpen() throws SQLException;

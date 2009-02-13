@@ -6,7 +6,6 @@ import com.integrareti.integraframework.business.Person;
 import com.integrareti.integraframework.exceptions.UsernameException;
 
 public class TestUsername {
-
 	public static void main(String[] args) {
 		new TestUsername();
 	}
@@ -24,6 +23,5 @@ public class TestUsername {
 		} catch (UsernameException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }

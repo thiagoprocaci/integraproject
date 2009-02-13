@@ -104,12 +104,9 @@ body {
 	cursor: pointer;
 }
 
-
-
-.no-zk-grid   {
-	background: #E0ECFF ;
+.no-zk-grid {
+	background: #E0ECFF;
 }
-
 
 .start {
 	background: #FFFFDD;
@@ -126,7 +123,6 @@ body {
 
 .rwt-integra-window {
 	width: 0px;
-	
 }
 
 .integra-window {
@@ -134,20 +130,19 @@ body {
 	margin: 0pt;
 	padding: 0px;
 }
-.integra-window .title a, .title a:visited, .title a:hover {
-	color:black;
-	text-decoration: none;
 
+.integra-window .title a,.title a:visited,.title a:hover {
+	color: black;
+	text-decoration: none;
 }
 
 .mwt-integra-window {
 	font-weight: bold;
 	padding-left: 5px;
-	background-image:
-		url(../img/bg_windowgradient.gif);
+	background-image: url(../img/bg_windowgradient.gif);
 	background-repeat: repeat-x;
 }
 
 .wc-integra-window {
-	padding:5px;
+	padding: 5px;
 }

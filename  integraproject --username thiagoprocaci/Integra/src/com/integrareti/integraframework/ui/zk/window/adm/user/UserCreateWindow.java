@@ -30,16 +30,13 @@ import com.integrareti.integraframework.valueobject.PersonVO;
  */
 @SuppressWarnings("serial")
 public class UserCreateWindow extends AnnotateDataBinderWindow {
-
 	// controller
 	private GoogleAccountController googleAccountController;
-
 	// bind variables
 	private List<String> usernames;
 	private PersonVO personVO;
 	private String selectedUsername;
 	private List<Domain> domains;
-
 	// view compoments
 	private Grid googleAccountGrid;
 	private Window usernamesWindow;
@@ -49,8 +46,7 @@ public class UserCreateWindow extends AnnotateDataBinderWindow {
 
 	@Override
 	public void doOnCreate() {
-		googleAccountController = (GoogleAccountController) SpringUtil
-				.getBean("googleAccountController");
+		googleAccountController = (GoogleAccountController) SpringUtil.getBean("googleAccountController");
 		googleAccountGrid = (Grid) getFellow("googleAccountGrid");
 		usernamesWindow = (Window) getFellow("usernamesWindow");
 		btnSave = (Button) getFellow("btnSave");
@@ -63,8 +59,7 @@ public class UserCreateWindow extends AnnotateDataBinderWindow {
 		try {
 			domains = googleAccountController.getAllDomains();
 		} catch (Exception e) {
-			addHtmlWarning("warning", "Erro ao tentar buscar domínios", "",
-					HtmlWarning.ERROR);
+			addHtmlWarning("warning", "Erro ao tentar buscar domínios", "", HtmlWarning.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -82,9 +77,7 @@ public class UserCreateWindow extends AnnotateDataBinderWindow {
 	 * @param e
 	 */
 	public void onNewUser(Event e) {
-		((Include) Executions.getCurrent().getDesktop().getPage("main")
-				.getFellow("include"))
-				.setSrc("/zul/secure/adm/users/userCreateWindow.zul");
+		((Include) Executions.getCurrent().getDesktop().getPage("main").getFellow("include")).setSrc("/zul/secure/adm/users/userCreateWindow.zul");
 	}
 
 	/**
@@ -93,9 +86,7 @@ public class UserCreateWindow extends AnnotateDataBinderWindow {
 	 * @param e
 	 */
 	public void onEditUser(Event e) {
-		((Include) Executions.getCurrent().getDesktop().getPage("main")
-				.getFellow("include"))
-				.setSrc("/zul/secure/adm/users/userEditWindow.zul");
+		((Include) Executions.getCurrent().getDesktop().getPage("main").getFellow("include")).setSrc("/zul/secure/adm/users/userEditWindow.zul");
 	}
 
 	/**
@@ -138,53 +129,41 @@ public class UserCreateWindow extends AnnotateDataBinderWindow {
 	 */
 	@SuppressWarnings("unchecked")
 	public void searchUser() {
-		String registry = ((Textbox) getFellow("registryTextBox")).getText()
-				.trim();
+		String registry = ((Textbox) getFellow("registryTextBox")).getText().trim();
 		personVO = null;
 		// checking if person is saved
 		try {
 			if (googleAccountController.isPersonSaved(registry) != null) {
-				addHtmlWarning("warning", "Usuário já cadastrado", "",
-						HtmlWarning.WARNING);
+				addHtmlWarning("warning", "Usuário já cadastrado", "", HtmlWarning.WARNING);
 				googleAccountGrid.setVisible(false);
 				usernamesWindow.setVisible(false);
 				btnSave.setVisible(false);
 			} else {
 				// checking person exist
-				personVO = googleAccountController
-						.getPersonBasicsData(registry);
+				personVO = googleAccountController.getPersonBasicsData(registry);
 				if (personVO == null) {
-					addHtmlWarning("warning", "Usuário não encontrado", "",
-							HtmlWarning.WARNING);
+					addHtmlWarning("warning", "Usuário não encontrado", "", HtmlWarning.WARNING);
 					googleAccountGrid.setVisible(false);
 					usernamesWindow.setVisible(false);
 					btnSave.setVisible(false);
 				} else {
 					// random password
 					domainListBox.setSelectedIndex(0);
-					personVO.setPassword(new GregorianCalendar().getTime()
-							.toString());
-					personVO.setDomain(googleAccountController
-							.getDomain(personVO.getSector()));
+					personVO.setPassword(new GregorianCalendar().getTime().toString());
+					personVO.setDomain(googleAccountController.getDomain(personVO.getSector()));
 					if (personVO.getDomain() == null)
-						personVO.setDomain((Domain) domainListBox
-								.getSelectedItem().getValue());
+						personVO.setDomain((Domain) domainListBox.getSelectedItem().getValue());
 					else {
 						// setting the domain at domainListBox
 						List<Listitem> list = domainListBox.getItems();
 						for (Listitem listitem : list) {
-							if (personVO.getDomain().equals(
-									(Domain) listitem.getValue())) {
+							if (personVO.getDomain().equals((Domain) listitem.getValue())) {
 								domainListBox.setSelectedItem(listitem);
 								break;
 							}
 						}
 					}
-					usernames = googleAccountController.validUsernames(
-							googleAccountController
-									.getPossiblesUsernames(personVO), personVO
-									.getDomain().getName());
-
+					usernames = googleAccountController.validUsernames(googleAccountController.getPossiblesUsernames(personVO), personVO.getDomain().getName());
 					clearHtmlWarnings("warning");
 					updateBoundComponents(components);
 					googleAccountGrid.setVisible(true);
@@ -194,9 +173,7 @@ public class UserCreateWindow extends AnnotateDataBinderWindow {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			addHtmlWarning("warning",
-					"Ocorreu um erro ao tentar acessar o banco de dados", "",
-					HtmlWarning.ERROR);
+			addHtmlWarning("warning", "Ocorreu um erro ao tentar acessar o banco de dados", "", HtmlWarning.ERROR);
 			googleAccountGrid.setVisible(false);
 			usernamesWindow.setVisible(false);
 			btnSave.setVisible(false);
@@ -215,20 +192,16 @@ public class UserCreateWindow extends AnnotateDataBinderWindow {
 	 */
 	public void save() {
 		if (selectedUsername == null)
-			addHtmlWarning("warning", "Escolha um nome de usuário.", "",
-					HtmlWarning.WARNING);
+			addHtmlWarning("warning", "Escolha um nome de usuário.", "", HtmlWarning.WARNING);
 		else {
 			personVO.setGoogleAccount(selectedUsername);
 			personVO.setDomain(getSelectedDomain());
 			try {
 				googleAccountController.save(personVO);
-				addHtmlWarning("warning", "Usuário criado com sucesso", "",
-						HtmlWarning.INFORMATION);
+				addHtmlWarning("warning", "Usuário criado com sucesso", "", HtmlWarning.INFORMATION);
 				personVO = null;
 			} catch (Exception e) {
-				addHtmlWarning("warning",
-						"Erro ao tentar salvar. Tente novamente mais tarde",
-						"", HtmlWarning.ERROR);
+				addHtmlWarning("warning", "Erro ao tentar salvar. Tente novamente mais tarde", "", HtmlWarning.ERROR);
 				e.printStackTrace();
 			}
 			googleAccountGrid.setVisible(false);
@@ -236,5 +209,4 @@ public class UserCreateWindow extends AnnotateDataBinderWindow {
 			btnSave.setVisible(false);
 		}
 	}
-
 }

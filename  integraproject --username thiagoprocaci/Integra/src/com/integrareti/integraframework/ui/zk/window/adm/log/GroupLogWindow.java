@@ -33,10 +33,8 @@ import com.integrareti.integraframework.ui.zk.window.AbstractWindow;
  */
 @SuppressWarnings("serial")
 public class GroupLogWindow extends AbstractWindow {
-
 	// controller
 	private GroupLogController groupLogController;
-
 	// view components
 	private Datebox dbBegin;
 	private Datebox dbEnd;
@@ -50,8 +48,7 @@ public class GroupLogWindow extends AbstractWindow {
 		this.dbBegin = (Datebox) getFellow("dbBegin");
 		this.dbEnd = (Datebox) getFellow("dbEnd");
 		this.cbxError = (Checkbox) getFellow("cbxError");
-		this.groupLogController = (GroupLogController) SpringUtil
-				.getBean("groupLogController");		
+		this.groupLogController = (GroupLogController) SpringUtil.getBean("groupLogController");
 	}
 
 	/**
@@ -63,14 +60,11 @@ public class GroupLogWindow extends AbstractWindow {
 		Date endDate = dbEnd.getValue();
 		// checking dates
 		if (beginDate == null || endDate == null) {
-			addHtmlWarning("warning", "Defina corretamente as datas", "",
-					HtmlWarning.WARNING);
+			addHtmlWarning("warning", "Defina corretamente as datas", "", HtmlWarning.WARNING);
 			return;
 		}
 		if (beginDate.after(endDate)) {
-			addHtmlWarning("warning",
-					"A data de inicio deve anterior a data de fim", "",
-					HtmlWarning.WARNING);
+			addHtmlWarning("warning", "A data de inicio deve anterior a data de fim", "", HtmlWarning.WARNING);
 			return;
 		}
 		List<GroupLog> groupsLog = new ArrayList<GroupLog>(0);
@@ -78,26 +72,18 @@ public class GroupLogWindow extends AbstractWindow {
 			// needs filter?
 			if (cbxError.isChecked())
 				// search only logs with errors
-				groupsLog = groupLogController.getGroupLogByPeriodWithErrors(
-						beginDate, endDate);
+				groupsLog = groupLogController.getGroupLogByPeriodWithErrors(beginDate, endDate);
 			else
 				// search all logs
-				groupsLog = groupLogController.getGroupLogByPeriod(beginDate,
-						endDate);
+				groupsLog = groupLogController.getGroupLogByPeriod(beginDate, endDate);
 		} catch (Exception e) {
 			e.printStackTrace();
-			addHtmlWarning(
-					"warning",
-					"O sistema identificou uma falha de banco de dados. Tente novamente mais tarde ou aguarde por reparos",
-					"", HtmlWarning.ERROR);
+			addHtmlWarning("warning", "O sistema identificou uma falha de banco de dados. Tente novamente mais tarde ou aguarde por reparos", "", HtmlWarning.ERROR);
 		}
 		if (groupsLog.isEmpty())
-			addHtmlWarning("warning", "Nenhum resultado encontrado", "",
-					HtmlWarning.WARNING);
+			addHtmlWarning("warning", "Nenhum resultado encontrado", "", HtmlWarning.WARNING);
 		else
-			addHtmlWarning("warning", groupsLog.size()
-					+ " resultado(s) encontrado(s)", "",
-					HtmlWarning.INFORMATION);
+			addHtmlWarning("warning", groupsLog.size() + " resultado(s) encontrado(s)", "", HtmlWarning.INFORMATION);
 		buildTree(groupsLog);
 	}
 
@@ -110,8 +96,7 @@ public class GroupLogWindow extends AbstractWindow {
 	private void buildTree(List<GroupLog> groupsLog) {
 		// clear tree
 		List<AbstractComponent> components = this.getChildren();
-		for (Iterator<AbstractComponent> iterator = components.iterator(); iterator
-				.hasNext();)
+		for (Iterator<AbstractComponent> iterator = components.iterator(); iterator.hasNext();)
 			if (iterator.next() instanceof Tree) {
 				iterator.remove();
 				break;
@@ -130,15 +115,11 @@ public class GroupLogWindow extends AbstractWindow {
 				treeitemRoot.setOpen(false);
 				treechildrenRoot.appendChild(treeitemRoot);
 				Treerow treerowDescriptor = new Treerow();
-				Treecell treecellDescriptor = new Treecell(groupLog
-						.getGroupName()
-						+ " - " + groupLog.getGroupDescription());
+				Treecell treecellDescriptor = new Treecell(groupLog.getGroupName() + " - " + groupLog.getGroupDescription());
 				treerowDescriptor.appendChild(treecellDescriptor);
 				treeitemRoot.appendChild(treerowDescriptor);
-
 				Treechildren treechildren = new Treechildren();
 				treeitemRoot.appendChild(treechildren);
-
 				// build date of log
 				for (int i = 0; i < 2; i++) {
 					Treeitem treeitem = new Treeitem();
@@ -146,46 +127,32 @@ public class GroupLogWindow extends AbstractWindow {
 					Treerow treerowLogDate = new Treerow();
 					String aux = null;
 					if (i == 0)
-						aux = "Data inicio: "
-								+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-										.format(groupLog.getBeginTime()
-												.getTime());
+						aux = "Data inicio: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(groupLog.getBeginTime().getTime());
 					else
-						aux = "Data fim: "
-								+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-										.format(groupLog.getEndTime().getTime());
-
+						aux = "Data fim: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(groupLog.getEndTime().getTime());
 					Treecell treecellLogDate = new Treecell(aux);
 					treerowLogDate.appendChild(treecellLogDate);
 					treeitem.appendChild(treerowLogDate);
 					treechildren.appendChild(treeitem);
 				}
-
 				// build tasks
 				for (SystemGroupTask task : groupLog.getTasks()) {
 					Treeitem treeitem = new Treeitem();
 					treeitem.setOpen(false);
 					Treerow treerowTask = new Treerow();
-					Treecell treecellTask = new Treecell("Tarefa - Data: "
-							+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-									.format(task.getCreateTime().getTime()));
+					Treecell treecellTask = new Treecell("Tarefa - Data: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(task.getCreateTime().getTime()));
 					treerowTask.appendChild(treecellTask);
 					treeitem.appendChild(treerowTask);
 					treechildren.appendChild(treeitem);
-
 					Treechildren treechildrenTask = new Treechildren();
 					treeitem.appendChild(treechildrenTask);
-
 					Treeitem treeitemTaskDescriptor = new Treeitem();
 					treeitemTaskDescriptor.setOpen(false);
 					Treerow treerowTaskDescription = new Treerow();
-					Treecell treecellTaskDescriptor = new Treecell(task
-							.getName()
-							+ " - " + task.getDescription());
+					Treecell treecellTaskDescriptor = new Treecell(task.getName() + " - " + task.getDescription());
 					treerowTaskDescription.appendChild(treecellTaskDescriptor);
 					treeitemTaskDescriptor.appendChild(treerowTaskDescription);
 					treechildrenTask.appendChild(treeitemTaskDescriptor);
-
 					// building errors
 					if (!task.getErrors().isEmpty()) {
 						Treechildren treechildrenError = new Treechildren();
@@ -194,40 +161,26 @@ public class GroupLogWindow extends AbstractWindow {
 							Treeitem treeitemError = new Treeitem();
 							treeitemError.setOpen(false);
 							Treerow treerowError = new Treerow();
-							Treecell treecellError = new Treecell(
-									"Erro - Data: "
-											+ new SimpleDateFormat(
-													"dd/MM/yyyy HH:mm:ss")
-													.format(error.getTime()
-															.getTime()));
+							Treecell treecellError = new Treecell("Erro - Data: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(error.getTime().getTime()));
 							treerowError.appendChild(treecellError);
 							treeitemError.appendChild(treerowError);
 							treechildrenError.appendChild(treeitemError);
-
 							Treechildren treechildrenErrorDescriptor = new Treechildren();
-							treeitemError
-									.appendChild(treechildrenErrorDescriptor);
-
+							treeitemError.appendChild(treechildrenErrorDescriptor);
 							Treeitem treeitemErrorDescriptor = new Treeitem();
 							treeitemErrorDescriptor.setOpen(false);
 							Treerow treerowErrorDescriptor = new Treerow();
-							Treecell treecellErrorDescriptor = new Treecell(
-									error.getDescription());
-							treerowErrorDescriptor
-									.appendChild(treecellErrorDescriptor);
-							treeitemErrorDescriptor
-									.appendChild(treerowErrorDescriptor);
-							treechildrenErrorDescriptor
-									.appendChild(treeitemErrorDescriptor);
+							Treecell treecellErrorDescriptor = new Treecell(error.getDescription());
+							treerowErrorDescriptor.appendChild(treecellErrorDescriptor);
+							treeitemErrorDescriptor.appendChild(treerowErrorDescriptor);
+							treechildrenErrorDescriptor.appendChild(treeitemErrorDescriptor);
 						}
 					}
 				}
-
 			}
 			tree.appendChild(treechildrenRoot);
 			this.appendChild(tree);
 		} else
 			tree = null;
-
-	}	
+	}
 }

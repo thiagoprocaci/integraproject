@@ -15,7 +15,6 @@ import java.util.Set;
  */
 @SuppressWarnings("serial")
 public class Group implements Identifiable<Integer> {
-
 	// variables declaration
 	private boolean active;
 	private boolean manuallyCreated;
@@ -336,8 +335,9 @@ public class Group implements Identifiable<Integer> {
 			return false;
 		return true;
 	}
+
 	@Override
-	public String toString() {	
-		return getName() + " - (" + getParticipants().size() + ")" ;
+	public String toString() {
+		return getName() + " - (" + getParticipants().size() + ")";
 	}
 }

@@ -12,15 +12,13 @@ import com.integrareti.integraframework.business.Person;
  * 
  */
 public interface EmailListDao extends GenericDao<EmailList, Integer> {
-
 	/**
 	 * 
 	 * @param domainName
 	 * @return Returns the email lists of a domain
 	 * @throws Exception
 	 */
-	public List<EmailList> getEmailListsByDomainName(String domainName)
-			throws Exception;
+	public List<EmailList> getEmailListsByDomainName(String domainName) throws Exception;
 
 	/**
 	 * 
@@ -28,8 +26,7 @@ public interface EmailListDao extends GenericDao<EmailList, Integer> {
 	 * @return Returns email lists by name
 	 * @throws Exception
 	 */
-	public List<EmailList> getEmailListByName(String emailListName)
-			throws Exception;
+	public List<EmailList> getEmailListByName(String emailListName) throws Exception;
 
 	/**
 	 * 
@@ -38,8 +35,7 @@ public interface EmailListDao extends GenericDao<EmailList, Integer> {
 	 * @return Returns a email list by name and domain
 	 * @throws Exception
 	 */
-	public EmailList getEmailListByNameAndDomain(String emailListName,
-			String domainName) throws Exception;
+	public EmailList getEmailListByNameAndDomain(String emailListName, String domainName) throws Exception;
 
 	/**
 	 * Checks if a email list contains a person
@@ -49,8 +45,7 @@ public interface EmailListDao extends GenericDao<EmailList, Integer> {
 	 * @return true if contains. False if don't contain
 	 * @throws Exception
 	 */
-	public boolean containsPerson(Person person, EmailList emailList)
-			throws Exception;
+	public boolean containsPerson(Person person, EmailList emailList) throws Exception;
 
 	/**
 	 * 
@@ -58,9 +53,8 @@ public interface EmailListDao extends GenericDao<EmailList, Integer> {
 	 * @return Returns the recipients of the email list
 	 * @throws Exception
 	 */
-	public List<Person> getRecipients(EmailList emailList)
-			throws Exception;
-	
+	public List<Person> getRecipients(EmailList emailList) throws Exception;
+
 	/**
 	 * 
 	 * @param domainName

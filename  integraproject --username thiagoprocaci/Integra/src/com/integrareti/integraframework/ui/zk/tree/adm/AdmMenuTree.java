@@ -1,6 +1,5 @@
 package com.integrareti.integraframework.ui.zk.tree.adm;
 
-
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treeitem;
@@ -12,12 +11,10 @@ import org.zkoss.zul.Treeitem;
  */
 @SuppressWarnings("serial")
 public class AdmMenuTree extends Tree {
-
 	/**
 	 * Creates a new AdmMenuTree
 	 */
 	public AdmMenuTree() {
-
 	}
 
 	/**
@@ -30,6 +27,4 @@ public class AdmMenuTree extends Tree {
 			inc.setSrc((String) item.getValue());
 		}
 	}
-
-
 }

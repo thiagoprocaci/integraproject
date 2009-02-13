@@ -5,9 +5,7 @@ import com.integrareti.integraframework.business.Person;
 import com.integrareti.integraframework.service.google.GoogleEmailListServiceInterface;
 
 public class TestService implements Runnable {
-
-	private GoogleEmailListServiceInterface emlService;	
-
+	private GoogleEmailListServiceInterface emlService;
 	private Person addPerson;
 	private EmailList addEmList;
 
@@ -24,7 +22,5 @@ public class TestService implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

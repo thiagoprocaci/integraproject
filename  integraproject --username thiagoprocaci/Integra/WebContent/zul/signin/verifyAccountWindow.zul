@@ -7,8 +7,7 @@
 	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
 	xmlns:n="http://www.zkoss.org/2005/zk/native"
 	use="com.integrareti.integraframework.ui.zk.window.signin.VerifyAccountWindow"
-	style="margin:15px 25px 0px 25px ;" id="verifyWin"
-	>
+	style="margin:15px 25px 0px 25px ;" id="verifyWin">
 	<n:div>
 		<n:img src="../../img/header_short.jpg" />
 		<n:img src="../../img/logo_ufjf.gif"
@@ -36,7 +35,8 @@
 					</row>
 					<row>
 						Senha:
-						<textbox id="password" type="password" onOK="verifyWin.verify()"/>
+						<textbox id="password" type="password"
+							onOK="verifyWin.verify()" />
 					</row>
 					<row spans="2">
 						<div align="center">

@@ -150,10 +150,11 @@
 								</h:tr>
 								<h:tr>
 									<h:td align="left">
-										<h:span> 
+										<h:span>
 											<h:a target="blank"
 												href="http://sites.google.com/a/ice.ufjf.br/integra/ajuda-integra">
-												Precisa de ajuda para uso? Clique aqui!
+												Precisa de ajuda para
+												uso? Clique aqui!
 											</h:a>
 										</h:span>
 									</h:td>

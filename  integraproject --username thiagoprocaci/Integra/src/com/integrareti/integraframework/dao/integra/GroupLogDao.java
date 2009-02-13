@@ -12,21 +12,19 @@ import com.integrareti.integraframework.business.log.GroupLog;
  * 
  */
 public interface GroupLogDao extends GenericDao<GroupLog, Integer> {
-
 	/**
 	 * 
 	 * @param begin
 	 * @param end
 	 * @return Returns groupLogs by period
 	 */
-	public List<GroupLog> getByPeriod(Date begin,Date end) throws Exception;
-	
+	public List<GroupLog> getByPeriod(Date begin, Date end) throws Exception;
+
 	/**
 	 * 
 	 * @param begin
 	 * @param end
 	 * @return Returns groupLogs by period with errors
 	 */
-	public List<GroupLog> getByPeriodWithErrors(Date begin,Date end) throws Exception;
-	
+	public List<GroupLog> getByPeriodWithErrors(Date begin, Date end) throws Exception;
 }

@@ -13,7 +13,7 @@
 		class="com.integrareti.integraframework.dao.SigaDaoHibernate"
 		autowire="byType" />
 
-	<!-- ########### SESSION FACTORY ########## -->	
+	<!-- ########### SESSION FACTORY ########## -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource">
@@ -33,11 +33,11 @@
 		</property>
 		<!--<property name="mappingDirectoryLocations">
 			<list>
-				<value>
-
-				</value>
+			<value>
+			
+			</value>
 			</list>
-		</property>-->	
+			</property>-->
 
 	</bean>
 

@@ -11,9 +11,7 @@ import com.integrareti.integraframework.business.Person;
  * @author Thiago Baesso Procaci
  * 
  */
-public class EmailListDaoHibernate extends
-		GenericDaoHibernate<EmailList, Integer> implements EmailListDao {
-
+public class EmailListDaoHibernate extends GenericDaoHibernate<EmailList, Integer> implements EmailListDao {
 	/**
 	 * 
 	 * @param emailListName
@@ -22,10 +20,8 @@ public class EmailListDaoHibernate extends
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<EmailList> getEmailListByName(String emailListName)
-			throws Exception {
-		return getHibernateTemplate().find(
-				"SELECT e FROM EmailList e WHERE e.name=?", emailListName);
+	public List<EmailList> getEmailListByName(String emailListName) throws Exception {
+		return getHibernateTemplate().find("SELECT e FROM EmailList e WHERE e.name=?", emailListName);
 	}
 
 	/**
@@ -37,12 +33,8 @@ public class EmailListDaoHibernate extends
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public EmailList getEmailListByNameAndDomain(String emailListName,
-			String domainName) throws Exception {
-		List<EmailList> list = (List<EmailList>) getHibernateTemplate()
-				.find(
-						"SELECT e FROM EmailList e WHERE e.name = ? AND e.domain.name = ?",
-						new String[] { emailListName, domainName });
+	public EmailList getEmailListByNameAndDomain(String emailListName, String domainName) throws Exception {
+		List<EmailList> list = (List<EmailList>) getHibernateTemplate().find("SELECT e FROM EmailList e WHERE e.name = ? AND e.domain.name = ?", new String[] { emailListName, domainName });
 		if (list != null && !list.isEmpty()) {
 			return list.get(0);
 		}
@@ -57,11 +49,8 @@ public class EmailListDaoHibernate extends
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<EmailList> getEmailListsByDomainName(String domainName)
-			throws Exception {
-		return getHibernateTemplate()
-				.find("SELECT e FROM EmailList e WHERE e.domain.name = ?",
-						domainName);
+	public List<EmailList> getEmailListsByDomainName(String domainName) throws Exception {
+		return getHibernateTemplate().find("SELECT e FROM EmailList e WHERE e.domain.name = ?", domainName);
 	}
 
 	/**
@@ -73,12 +62,8 @@ public class EmailListDaoHibernate extends
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean containsPerson(Person person, EmailList emailList)
-			throws Exception {
-		List<Integer> list = getHibernateTemplate()
-				.find(
-						"SELECT p.id FROM Person p, EmailList e WHERE p in elements(e.recipients) AND p=? AND e=?",
-						new Object[] { person, emailList });
+	public boolean containsPerson(Person person, EmailList emailList) throws Exception {
+		List<Integer> list = getHibernateTemplate().find("SELECT p.id FROM Person p, EmailList e WHERE p in elements(e.recipients) AND p=? AND e=?", new Object[] { person, emailList });
 		if (!list.isEmpty()) {
 			return true;
 		}
@@ -93,10 +78,8 @@ public class EmailListDaoHibernate extends
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Person> getRecipients(EmailList emailList)
-			throws Exception {
-		List<Person> list = getHibernateTemplate().find(
-				"SELECT e.recipients FROM EmailList e WHERE e=?", emailList);
+	public List<Person> getRecipients(EmailList emailList) throws Exception {
+		List<Person> list = getHibernateTemplate().find("SELECT e.recipients FROM EmailList e WHERE e=?", emailList);
 		return list;
 	}
 
@@ -108,8 +91,7 @@ public class EmailListDaoHibernate extends
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<EmailList> getAllByDomainName(String domainName) throws Exception {		
+	public List<EmailList> getAllByDomainName(String domainName) throws Exception {
 		return getHibernateTemplate().find("FROM EmailList el WHERE el.domain.name = ?", domainName);
 	}
-
 }

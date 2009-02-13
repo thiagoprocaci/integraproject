@@ -7,7 +7,7 @@
 	xmlns:n="http://www.zkoss.org/2005/zk/native" id="groupImportWindow"
 	use="com.integrareti.integraframework.ui.zk.window.adm.group.GroupImportWindow"
 	title="Importar Grupos" border="normal" Sclass="integra-window">
-	<style src="/css/main.css"/>
+	<style src="/css/main.css" />
 	<vbox width="100%">
 		<html id="warning"
 			use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
@@ -111,9 +111,9 @@
 			</listitem>
 		</listbox>
 	</vbox>
-	
-	 
-        
+
+
+
 	<zscript>
 		void setVisibleVBoxs(boolean vboxCodeDis, boolean vBoxDep){
 		vboxDepto.setVisible(vBoxDep); filterDepto.setVisible(vBoxDep);

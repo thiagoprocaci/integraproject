@@ -9,6 +9,7 @@
 			<column name="unitID" />
 			<generator class="native" />
 		</id>
-		<property name="name" type="string" column="unitName" unique="true" />
+		<property name="name" type="string" column="unitName"
+			unique="true" />
 	</class>
 </hibernate-mapping>

@@ -97,8 +97,7 @@
 		<property name="objectDefinitionSource">
 			<value>
 				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
-				PATTERN_TYPE_APACHE_ANT 
-				/zul/secure/adm**=ROLE_ADMIN
+				PATTERN_TYPE_APACHE_ANT /zul/secure/adm**=ROLE_ADMIN
 				/zul/secure/teacher**=ROLE_ADMIN,ROLE_PROFESSOR,ROLE_EMPLOYEE,ROLE_STUDENT
 				/zul/secure/**=ROLE_ADMIN,ROLE_PROFESSOR,ROLE_EMPLOYEE,ROLE_STUDENT
 			</value>

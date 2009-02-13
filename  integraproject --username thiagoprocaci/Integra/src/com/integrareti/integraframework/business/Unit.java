@@ -8,7 +8,6 @@ package com.integrareti.integraframework.business;
  */
 @SuppressWarnings("serial")
 public class Unit implements Identifiable<Integer> {
-
 	private Integer id;
 	private String name;
 
@@ -16,7 +15,6 @@ public class Unit implements Identifiable<Integer> {
 	 * Creates a new Unit
 	 */
 	public Unit() {
-
 	}
 
 	/**

@@ -13,9 +13,7 @@ import com.integrareti.integraframework.business.Person;
  * @author Thiago Baesso Procaci
  * 
  */
-public interface IntegraGroupServiceInterface extends
-		IntegraServiceInterface<Group, Integer> {
-
+public interface IntegraGroupServiceInterface extends IntegraServiceInterface<Group, Integer> {
 	/**
 	 * 
 	 * @param groupName
@@ -31,8 +29,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns a group by a name and domain name
 	 * @throws Exception
 	 */
-	public Group getGroupByNameAndDomainName(String groupName, String domainName)
-			throws Exception;
+	public Group getGroupByNameAndDomainName(String groupName, String domainName) throws Exception;
 
 	/**
 	 * 
@@ -48,8 +45,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns the group id by name - using JDBC
 	 * @throws Exception
 	 */
-	public Integer getGroupIdByName(String groupName,
-			boolean stillOpenConnection) throws Exception;
+	public Integer getGroupIdByName(String groupName, boolean stillOpenConnection) throws Exception;
 
 	/**
 	 * 
@@ -57,8 +53,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns all groups without email list by domain name
 	 * @throws Exception
 	 */
-	public List<Group> getAllGroupsWithoutEmailListByDomainName(
-			String domainName) throws Exception;
+	public List<Group> getAllGroupsWithoutEmailListByDomainName(String domainName) throws Exception;
 
 	/**
 	 * 
@@ -66,8 +61,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns groups by description
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByDescription(String description)
-			throws Exception;
+	public List<Group> getGroupsByDescription(String description) throws Exception;
 
 	/**
 	 * 
@@ -76,8 +70,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns groups by description end name (using like)
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			String name) throws Exception;
+	public List<Group> getGroupsByDescriptionAndName(String description, String name) throws Exception;
 
 	/**
 	 * 
@@ -86,8 +79,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns groups by description end name (using like)
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			List<String> names) throws Exception;
+	public List<Group> getGroupsByDescriptionAndName(String description, List<String> names) throws Exception;
 
 	/**
 	 * Saves a group and updates the email lists if necessary
@@ -96,9 +88,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns a map of errors <String (error description),Group (object
 	 *         value)>
 	 */
-	public Map<String, Group> saveGroupAndUpDateEmailLists(Group group,
-			Set<Person> addedPeople, Set<Person> removedPeople,
-			Set<Person> addOwners, Set<Person> removedOwners) throws Exception;
+	public Map<String, Group> saveGroupAndUpDateEmailLists(Group group, Set<Person> addedPeople, Set<Person> removedPeople, Set<Person> addOwners, Set<Person> removedOwners) throws Exception;
 
 	/**
 	 * Deletes a group
@@ -117,8 +107,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns a page of groups without emaillist by domain
 	 * @throws Exception
 	 */
-	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(
-			String domainName, int first, int offset) throws Exception;
+	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(String domainName, int first, int offset) throws Exception;
 
 	/**
 	 * 
@@ -128,8 +117,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns a page of groups by domain name
 	 * @throws Exception
 	 */
-	public List<Group> getPageByDomainName(String domainName, int first,
-			int offset) throws Exception;
+	public List<Group> getPageByDomainName(String domainName, int first, int offset) throws Exception;
 
 	/**
 	 * 
@@ -145,8 +133,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns the number of groups without emaillist by domain name
 	 * @throws Exception
 	 */
-	public Long countGroupsWithoutEmailListByDomainName(String domain)
-			throws Exception;
+	public Long countGroupsWithoutEmailListByDomainName(String domain) throws Exception;
 
 	/**
 	 * 
@@ -155,7 +142,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @throws Exception
 	 */
 	public List<Group> getGroupsByOwner(Person owner) throws Exception;
-	
+
 	/**
 	 * 
 	 * @param participant
@@ -170,8 +157,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns groups by pieces of name - using like primitive
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByPiecesOfNames(List<String> names)
-			throws Exception;
+	public List<Group> getGroupsByPiecesOfNames(List<String> names) throws Exception;
 
 	/**
 	 * 
@@ -190,8 +176,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns a map of errors <String (error description),Group
 	 *         (object)>
 	 */
-	public Map<String, Group> createEmailListToGroup(final Group group,
-			final Set<Person> addedPeople);
+	public Map<String, Group> createEmailListToGroup(final Group group, final Set<Person> addedPeople);
 
 	/**
 	 * Adds participants to group and email list
@@ -201,8 +186,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns a map of errors <String (error description),Group
 	 *         (object)>
 	 */
-	public Map<String, Group> addParticipantToGroupAndEmailList(
-			final Group group, final Set<Person> addedPeople);
+	public Map<String, Group> addParticipantToGroupAndEmailList(final Group group, final Set<Person> addedPeople);
 
 	/**
 	 * Removes participants from group and email list
@@ -212,8 +196,7 @@ public interface IntegraGroupServiceInterface extends
 	 * @return Returns a map of errors <String (error description),Group
 	 *         (object)>
 	 */
-	public Map<String, Group> removeParticipantFromGroupAndEmailList(
-			final Group group, final Set<Person> removedPeople);
+	public Map<String, Group> removeParticipantFromGroupAndEmailList(final Group group, final Set<Person> removedPeople);
 
 	/**
 	 * Merge group
@@ -223,5 +206,4 @@ public interface IntegraGroupServiceInterface extends
 	 * @return merged group
 	 */
 	public Group mergeGroup(Group group) throws Exception;
-
 }

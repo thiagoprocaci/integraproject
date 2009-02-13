@@ -15,7 +15,6 @@ import com.integrareti.integraframework.util.SsoUtil;
  * 
  */
 public class RequestGoogle {
-
 	// private constants
 	private static final RequestGoogle INSTANCE = new RequestGoogle();
 	private static final String AUTHN_REQUEST_TEMPLATE = "AuthnRequestTemplate.xml";
@@ -25,7 +24,6 @@ public class RequestGoogle {
 	 * Empty Contructor
 	 */
 	private RequestGoogle() {
-
 	}
 
 	/**
@@ -41,7 +39,6 @@ public class RequestGoogle {
 	 * @return Returns a new RequestGoogle
 	 */
 	public String getRequestGoogle(String domainName) throws SamlException {
-
 		// creates a new request
 		String acsURI = "https://www.google.com/a/" + domainName + "/acs";
 		// Create the AuthnRequest XML from above parameters
@@ -61,26 +58,19 @@ public class RequestGoogle {
 	 * @return
 	 * @throws SamlException
 	 */
-	private String createAuthnRequest(String acsURL, String providerName)
-			throws SamlException {
-
+	private String createAuthnRequest(String acsURL, String providerName) throws SamlException {
 		String file_path = "";
 		try {
-			file_path = "/"+ URLDecoder.decode(getClass().getResource(
-			"/com/integrareti/integraframework/service/google/sso/template/").toString()
-			+ AUTHN_REQUEST_TEMPLATE, "UTF-8");
+			file_path = "/" + URLDecoder.decode(getClass().getResource("/com/integrareti/integraframework/service/google/sso/template/").toString() + AUTHN_REQUEST_TEMPLATE, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
 		file_path = file_path.replace("file:/", "");
-		
 		String authnRequest = SsoUtil.readFileContents(file_path);
 		authnRequest = authnRequest.replace("<PROVIDER_NAME>", providerName);
 		authnRequest = authnRequest.replace("<ACS_URL>", acsURL);
 		authnRequest = authnRequest.replace("<AUTHN_ID>", SsoUtil.createID());
-		authnRequest = authnRequest.replace("<ISSUE_INSTANT>", SsoUtil
-				.getDateAndTime());
+		authnRequest = authnRequest.replace("<ISSUE_INSTANT>", SsoUtil.getDateAndTime());
 		return authnRequest;
 	}
 
@@ -95,14 +85,9 @@ public class RequestGoogle {
 		try {
 			return RequestUtil.encodeMessage(authnRequest);
 		} catch (UnsupportedEncodingException e) {
-			throw new SamlException(
-					"Error encoding SAML Request into URL: Check encoding scheme - "
-							+ e.getMessage());
+			throw new SamlException("Error encoding SAML Request into URL: Check encoding scheme - " + e.getMessage());
 		} catch (IOException e) {
-			throw new SamlException(
-					"Error encoding SAML Request into URL: Check encoding scheme - "
-							+ e.getMessage());
+			throw new SamlException("Error encoding SAML Request into URL: Check encoding scheme - " + e.getMessage());
 		}
 	}
-
 }

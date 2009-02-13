@@ -6,12 +6,11 @@ import com.integrareti.integraframework.authentication.UserGroup;
 
 /**
  * This interface offers methods to manipulates usergroups st integra database
+ * 
  * @author Thiago
- *
+ * 
  */
-public class UserGroupDaoHibernate extends
-		GenericDaoHibernate<UserGroup, Integer> implements UserGroupDao {
-
+public class UserGroupDaoHibernate extends GenericDaoHibernate<UserGroup, Integer> implements UserGroupDao {
 	/**
 	 * 
 	 * @param name
@@ -19,8 +18,7 @@ public class UserGroupDaoHibernate extends
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<UserGroup> getByName(String... names)
-			throws Exception {
+	public List<UserGroup> getByName(String... names) throws Exception {
 		String sql = "From UserGroup ug WHERE ug.name = ? ";
 		for (int i = 0; i < names.length - 1; i++) {
 			sql += "OR ug.name = ? ";

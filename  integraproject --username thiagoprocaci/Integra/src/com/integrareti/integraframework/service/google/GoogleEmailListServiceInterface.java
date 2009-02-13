@@ -17,9 +17,7 @@ import com.integrareti.integraframework.service.integra.IntegraServiceInterface;
  * @author Thiago Baesso Procaci
  * 
  */
-public interface GoogleEmailListServiceInterface extends
-		IntegraServiceInterface<EmailList, Integer> {
-
+public interface GoogleEmailListServiceInterface extends IntegraServiceInterface<EmailList, Integer> {
 	/**
 	 * 
 	 * @param name
@@ -27,8 +25,7 @@ public interface GoogleEmailListServiceInterface extends
 	 * @return Returns an email list by name and domain
 	 * @throws DataAccessException
 	 */
-	public EmailList getEmailListByNameAndDomain(String name, String domainName)
-			throws Exception;
+	public EmailList getEmailListByNameAndDomain(String name, String domainName) throws Exception;
 
 	/**
 	 * Adds a new recipient to email list
@@ -37,8 +34,7 @@ public interface GoogleEmailListServiceInterface extends
 	 * @param recipient
 	 * @throws ServiceException
 	 */
-	public Person addRecipient(EmailList emailList, Person recipient)
-			throws Exception;
+	public Person addRecipient(EmailList emailList, Person recipient) throws Exception;
 
 	/**
 	 * Adds a set of recipient to email list
@@ -47,8 +43,7 @@ public interface GoogleEmailListServiceInterface extends
 	 * @param recipient
 	 * @return nod added <code>Person</code>s
 	 */
-	public List<Person> addRecipients(EmailList emailList,
-			Set<Person> recipients) throws Exception;
+	public List<Person> addRecipients(EmailList emailList, Set<Person> recipients) throws Exception;
 
 	/**
 	 * Removes recipients from email list
@@ -56,8 +51,7 @@ public interface GoogleEmailListServiceInterface extends
 	 * @param emailList
 	 * @param recipients
 	 */
-	public List<Person> removeRecipients(EmailList emailList,
-			List<Person> recipients) throws Exception;
+	public List<Person> removeRecipients(EmailList emailList, List<Person> recipients) throws Exception;
 
 	/**
 	 * Removes recipients from email list
@@ -65,8 +59,7 @@ public interface GoogleEmailListServiceInterface extends
 	 * @param emailList
 	 * @param recipients
 	 */
-	public List<Person> removeRecipients(EmailList emailList,
-			Set<Person> recipients) throws Exception;
+	public List<Person> removeRecipients(EmailList emailList, Set<Person> recipients) throws Exception;
 
 	/**
 	 * Removes a recipients from email list
@@ -74,8 +67,7 @@ public interface GoogleEmailListServiceInterface extends
 	 * @param emailList
 	 * @param recipient
 	 */
-	public Person removeRecipient(EmailList emailList, Person recipient)
-			throws Exception;
+	public Person removeRecipient(EmailList emailList, Person recipient) throws Exception;
 
 	/**
 	 * Saves an email list only at google
@@ -99,8 +91,7 @@ public interface GoogleEmailListServiceInterface extends
 	 * @param emailList
 	 * @throws Exception
 	 */
-	public void deleteEmailListOnlyAtIntegra(EmailList emailList)
-			throws Exception;
+	public void deleteEmailListOnlyAtIntegra(EmailList emailList) throws Exception;
 
 	/**
 	 * Deletes an email list only at google
@@ -108,8 +99,7 @@ public interface GoogleEmailListServiceInterface extends
 	 * @param emailList
 	 * @throws Exception
 	 */
-	public void deleteEmailListOnlyAtGoogle(EmailList emailList)
-			throws Exception;
+	public void deleteEmailListOnlyAtGoogle(EmailList emailList) throws Exception;
 
 	/**
 	 * Checks if an email list has a valid name at its domain
@@ -119,5 +109,4 @@ public interface GoogleEmailListServiceInterface extends
 	 * @throws Exception
 	 */
 	public boolean validateEmailListName(EmailList emailList) throws Exception;
-
 }

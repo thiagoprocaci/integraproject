@@ -39,10 +39,8 @@ import com.integrareti.integraframework.ui.zk.window.AnnotateDataBinderWindow;
  */
 @SuppressWarnings("serial")
 public class UserEditWindow extends AnnotateDataBinderWindow {
-
 	// controller
 	private UserEditController userEditController;
-
 	// bind variables
 	private List<Person> searchedPeople;
 	private List<Group> groups;
@@ -50,22 +48,19 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	private Person selectedPerson;
 	private String userGroups;
 	private boolean admin;
-
 	// view components
 	private Listbox lbxUsers;
 	private Listbox lbxGroups;
 	private List<Component> personBindComponents;
 	private Grid userGrid;
 	private Vbox vBoxButtons;
-
 	// business variables
 	private Set<Group> removedGroups;
 	private Set<Group> addedGroups;
 
 	@Override
 	public void doOnCreate() {
-		userEditController = (UserEditController) SpringUtil
-				.getBean("userEditController");
+		userEditController = (UserEditController) SpringUtil.getBean("userEditController");
 		// bind variables
 		searchedPeople = null;
 		userGroups = null;
@@ -85,8 +80,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 		personBindComponents.add(getFellow("lblUserGroups"));
 		personBindComponents.add(getFellow("lbxGroups"));
 		personBindComponents.add(getFellow("cbxAdmin"));
-		personBindComponents.add(getFellow("deleteWinConfimation").getFellow(
-				"lbldeleteWin"));
+		personBindComponents.add(getFellow("deleteWinConfimation").getFellow("lbldeleteWin"));
 		// business variables
 		removedGroups = new HashSet<Group>(0);
 		addedGroups = new HashSet<Group>(0);
@@ -108,9 +102,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	 * @param e
 	 */
 	public void onNewUser(Event e) {
-		((Include) Executions.getCurrent().getDesktop().getPage("main")
-				.getFellow("include"))
-				.setSrc("/zul/secure/adm/users/userCreateWindow.zul");
+		((Include) Executions.getCurrent().getDesktop().getPage("main").getFellow("include")).setSrc("/zul/secure/adm/users/userCreateWindow.zul");
 	}
 
 	/**
@@ -119,9 +111,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	 * @param e
 	 */
 	public void onEditUser(Event e) {
-		((Include) Executions.getCurrent().getDesktop().getPage("main")
-				.getFellow("include"))
-				.setSrc("/zul/secure/adm/users/userEditWindow.zul");
+		((Include) Executions.getCurrent().getDesktop().getPage("main").getFellow("include")).setSrc("/zul/secure/adm/users/userEditWindow.zul");
 	}
 
 	/**
@@ -129,12 +119,10 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	 */
 	public void searchPerson() {
 		clearHtmlWarnings("warning");
-		String registry = ((Textbox) getFellow("registryTextBox")).getText()
-				.trim();
+		String registry = ((Textbox) getFellow("registryTextBox")).getText().trim();
 		if (StringUtils.hasText(registry)) {
 			try {
-				selectedPerson = userEditController
-						.getPersonByRegistry(registry);
+				selectedPerson = userEditController.getPersonByRegistry(registry);
 				if (selectedPerson != null) {
 					searchedPeople = null;
 					groups = userEditController.getPersonGroups(selectedPerson);
@@ -149,8 +137,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 					userGrid.setVisible(false);
 					lbxGroups.setVisible(false);
 					vBoxButtons.setVisible(false);
-					addHtmlWarning("warning", "Nenhum resultado encontrado",
-							"", HtmlWarning.WARNING);
+					addHtmlWarning("warning", "Nenhum resultado encontrado", "", HtmlWarning.WARNING);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -163,7 +150,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 					searchedPeople = userEditController.getPersonByName(name);
 					if (!searchedPeople.isEmpty()) {
 						if (searchedPeople.size() != 1) {
-							updateBoundComponent(lbxUsers);							
+							updateBoundComponent(lbxUsers);
 							lbxUsers.setVisible(true);
 							userGrid.setVisible(false);
 							lbxGroups.setVisible(false);
@@ -183,9 +170,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 						userGrid.setVisible(false);
 						lbxGroups.setVisible(false);
 						vBoxButtons.setVisible(false);
-						addHtmlWarning("warning",
-								"Nenhum resultado encontrado", "",
-								HtmlWarning.WARNING);
+						addHtmlWarning("warning", "Nenhum resultado encontrado", "", HtmlWarning.WARNING);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -196,8 +181,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 				userGrid.setVisible(false);
 				lbxGroups.setVisible(false);
 				vBoxButtons.setVisible(false);
-				addHtmlWarning("warning", "Informe o nome ou a matricula", "",
-						HtmlWarning.WARNING);
+				addHtmlWarning("warning", "Informe o nome ou a matricula", "", HtmlWarning.WARNING);
 			}
 		}
 		// clear textboxs
@@ -230,13 +214,10 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	 * Searches groups
 	 */
 	public void searchGroups() {
-		String clue = ((Textbox) getFellow("groupSearchTextBox")).getText()
-				.trim();
+		String clue = ((Textbox) getFellow("groupSearchTextBox")).getText().trim();
 		// no text
 		if (!StringUtils.hasText(clue)) {
-			addHtmlWarning("warning",
-					"Informe alguma dica para a busca de grupos", "",
-					HtmlWarning.WARNING);
+			addHtmlWarning("warning", "Informe alguma dica para a busca de grupos", "", HtmlWarning.WARNING);
 			return;
 		}
 		try {
@@ -248,8 +229,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 						break;
 				}
 			if (groupsSearched.isEmpty())
-				addHtmlWarning("warning", "Nenhum resultado encontrado", "",
-						HtmlWarning.WARNING);
+				addHtmlWarning("warning", "Nenhum resultado encontrado", "", HtmlWarning.WARNING);
 			else
 				initPopupWinGroups();
 		} catch (Exception e) {
@@ -257,7 +237,6 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 			showDataBaseMessageError();
 			return;
 		}
-
 	}
 
 	/**
@@ -266,12 +245,10 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	public void delete() {
 		try {
 			userEditController.delete(selectedPerson);
-			addHtmlWarning("warning", "Usuário excluido com sucesso", "",
-					HtmlWarning.INFORMATION);
+			addHtmlWarning("warning", "Usuário excluido com sucesso", "", HtmlWarning.INFORMATION);
 		} catch (Exception e) {
 			if (e instanceof DeleteUserException)
-				addHtmlWarning("warning", "Você não pode se excluir", "",
-						HtmlWarning.WARNING);
+				addHtmlWarning("warning", "Você não pode se excluir", "", HtmlWarning.WARNING);
 			else {
 				e.printStackTrace();
 				showDataBaseMessageError();
@@ -284,8 +261,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 		Window win = (Window) getFellow("deleteWinConfimation");
 		win.doEmbedded();
 		win.setVisible(false);
-		Events.sendEvent(new Event("onGroupUpdate", Path
-				.getComponent("//main/menuWindow/myGroups")));
+		Events.sendEvent(new Event("onGroupUpdate", Path.getComponent("//main/menuWindow/myGroups")));
 	}
 
 	/**
@@ -293,14 +269,9 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	 */
 	public void save() {
 		if (((Checkbox) getFellow("cbxAdmin")).isChecked()) {
-			if (!selectedPerson.getUserGroups().contains(
-					new UserGroup(UserGroup.DOMAIN_ADMIN_GROUP))) {
+			if (!selectedPerson.getUserGroups().contains(new UserGroup(UserGroup.DOMAIN_ADMIN_GROUP))) {
 				try {
-					selectedPerson
-							.getUserGroups()
-							.addAll(
-									userEditController
-											.getUserGroupByName(UserGroup.DOMAIN_ADMIN_GROUP));
+					selectedPerson.getUserGroups().addAll(userEditController.getUserGroupByName(UserGroup.DOMAIN_ADMIN_GROUP));
 				} catch (Exception e) {
 					e.printStackTrace();
 					showDataBaseMessageError();
@@ -308,11 +279,9 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 				}
 			}
 		} else
-			selectedPerson.getUserGroups().remove(
-					new UserGroup(UserGroup.DOMAIN_ADMIN_GROUP));
+			selectedPerson.getUserGroups().remove(new UserGroup(UserGroup.DOMAIN_ADMIN_GROUP));
 		try {
-			Map<String, Group> errors = userEditController.save(selectedPerson,
-					removedGroups, addedGroups);
+			Map<String, Group> errors = userEditController.save(selectedPerson, removedGroups, addedGroups);
 			if (!errors.isEmpty())
 				showDataBaseMessageError();
 		} catch (Exception e) {
@@ -323,8 +292,7 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 		userGrid.setVisible(false);
 		lbxGroups.setVisible(false);
 		vBoxButtons.setVisible(false);
-		Events.sendEvent(new Event("onGroupUpdate", Path
-				.getComponent("//main/menuWindow/myGroups")));
+		Events.sendEvent(new Event("onGroupUpdate", Path.getComponent("//main/menuWindow/myGroups")));
 	}
 
 	/**
@@ -334,15 +302,13 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	public void removeGroups() {
 		try {
 			Set<Listitem> listItens = lbxGroups.getSelectedItems();
-			List<Group> personGroups = userEditController
-					.getPersonGroups(selectedPerson);
+			List<Group> personGroups = userEditController.getPersonGroups(selectedPerson);
 			for (Listitem listitem : listItens) {
 				Group g = (Group) listitem.getValue();
 				groups.remove(g);
 				addedGroups.remove(g);
 				if (personGroups.contains(g))
 					removedGroups.add(g);
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -352,7 +318,6 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	}
 
 	// begin - popupWin groups methods
-
 	/**
 	 * Sets visible false popupWin groups - close the popup window
 	 */
@@ -380,10 +345,8 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	public void popupWinGroupsOnOk() {
 		Window popupWin = (Window) getFellow("popupWinGroups");
 		try {
-			List<Group> personGroups = userEditController
-					.getPersonGroups(selectedPerson);
-			Set<Listitem> listItens = ((Listbox) popupWin
-					.getFellow("lbxGroupsSearched")).getSelectedItems();
+			List<Group> personGroups = userEditController.getPersonGroups(selectedPerson);
+			Set<Listitem> listItens = ((Listbox) popupWin.getFellow("lbxGroupsSearched")).getSelectedItems();
 			for (Listitem listitem : listItens) {
 				Group g = (Group) listitem.getValue();
 				groups.add(g);
@@ -400,15 +363,13 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	}
 
 	// end - popupWin groups methods
-
 	/**
 	 * updates the bind variable - userGroups
 	 */
 	private void upDateUserGroups() {
 		admin = false;
 		StringBuilder builder = new StringBuilder();
-		for (Iterator<UserGroup> iterator = selectedPerson.getUserGroups()
-				.iterator(); iterator.hasNext();) {
+		for (Iterator<UserGroup> iterator = selectedPerson.getUserGroups().iterator(); iterator.hasNext();) {
 			UserGroup userGroup = iterator.next();
 			builder.append(userGroup.getName());
 			if (iterator.hasNext())
@@ -423,10 +384,6 @@ public class UserEditWindow extends AnnotateDataBinderWindow {
 	 * Shows a dataBase message error
 	 */
 	private void showDataBaseMessageError() {
-		addHtmlWarning(
-				"warning",
-				"O sistema identificou uma falha de banco de dados. Tente novamente mais tarde ou aguarde por reparos",
-				"", HtmlWarning.ERROR);
+		addHtmlWarning("warning", "O sistema identificou uma falha de banco de dados. Tente novamente mais tarde ou aguarde por reparos", "", HtmlWarning.ERROR);
 	}
-
 }

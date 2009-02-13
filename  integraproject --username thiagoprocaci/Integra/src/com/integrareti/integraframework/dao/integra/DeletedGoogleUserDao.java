@@ -6,11 +6,11 @@ import com.integrareti.integraframework.business.DeletedGoogleUser;
 
 /**
  * This interface offers methods manipulates DeletedGoogleUser`s datas
+ * 
  * @author Thiago Baesso Procaci
- *
+ * 
  */
 public interface DeletedGoogleUserDao extends GenericDao<DeletedGoogleUser, Integer> {
-
 	/**
 	 * 
 	 * @return Returns all DeletedGoogleUser until five days ago
@@ -21,7 +21,5 @@ public interface DeletedGoogleUserDao extends GenericDao<DeletedGoogleUser, Inte
 	 * 
 	 * @return Returns all deleted Google account until five days ago
 	 */
-	public List<String> getDeletedGoogleAccountUntilFiveDaysAgoByDomainName(
-			String domainName) throws Exception;
-	
+	public List<String> getDeletedGoogleAccountUntilFiveDaysAgoByDomainName(String domainName) throws Exception;
 }

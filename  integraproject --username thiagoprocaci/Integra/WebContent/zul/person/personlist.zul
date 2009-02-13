@@ -5,7 +5,8 @@
 	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
 	use="com.integrareti.integraframework.ui.zk.window.AnnotateDataBinderListWindow"
 	editWindowPath="/zul/person/editperson.zul" title="Usuários"
-	border="normal" className="com.integrareti.integraframework.business.Person"
+	border="normal"
+	className="com.integrareti.integraframework.business.Person"
 	id="_list">
 
 	<timer onTimer="_list.bindComponents()" delay="300000"
@@ -38,7 +39,7 @@
 			<listheader label="Sobrenome" />
 			<listheader label="E-mail" />
 			<listheader label="Matrícula" />
-			</listhead>
+		</listhead>
 		<a:bind _var="thisObject" />
 		<listitem onDoubleClick="_list.onEditObject()">
 			<a:bind label="thisObject.givenName" />

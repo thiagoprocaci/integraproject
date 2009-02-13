@@ -9,7 +9,6 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 
 public abstract class AnnotateDataBinderWindow extends AbstractWindow {
-
 	private Map<String, Object> bindObjects = new HashMap<String, Object>();
 	private AnnotateDataBinder binder;
 
@@ -37,7 +36,6 @@ public abstract class AnnotateDataBinderWindow extends AbstractWindow {
 	 * @see tagamaframework.window.AnnotateDataBinderWindow#doAfterBind()
 	 */
 	public void doOnCreate() {
-
 	}
 
 	/**
@@ -48,7 +46,6 @@ public abstract class AnnotateDataBinderWindow extends AbstractWindow {
 		binder = new AnnotateDataBinder(this);
 		Iterator<String> itKeys = bindObjects.keySet().iterator();
 		Iterator<Object> itValues = bindObjects.values().iterator();
-
 		// default bind name: "object"
 		while (itKeys.hasNext()) {
 			setVariable((String) itKeys.next(), itValues.next(), true);
@@ -68,7 +65,7 @@ public abstract class AnnotateDataBinderWindow extends AbstractWindow {
 		Iterator<String> itKeys = bindObjects.keySet().iterator();
 		Iterator<Object> itValues = bindObjects.values().iterator();
 		// default bind name: "object"
-		while (itKeys.hasNext()) 
+		while (itKeys.hasNext())
 			setVariable((String) itKeys.next(), itValues.next(), true);
 		// binder load
 		getBinder().loadComponent(component);
@@ -143,5 +140,4 @@ public abstract class AnnotateDataBinderWindow extends AbstractWindow {
 	 * Any operations to be done before the binding action
 	 */
 	public abstract void doBeforeBind();
-
 }

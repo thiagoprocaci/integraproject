@@ -24,7 +24,6 @@ import com.integrareti.integraframework.valueobject.SectorVO;
  * 
  */
 public class SigaDaoJDBC implements SigaDao {
-
 	// PRIVATE CONSTANTS
 	private static final String FIRST_SEMESTER = "1";
 	private static final String SECOND_SEMESTER = "3";
@@ -55,19 +54,13 @@ public class SigaDaoJDBC implements SigaDao {
 	private String getPersonNameSQL(String registry, List<String> userGroups) {
 		if (registry != null && userGroups != null) {
 			if (userGroups.contains(UserGroup.STUDENT_GROUP)) {
-				return "select p.nome from cm_pessoa p, ga_aluno a where p.idpessoa=a.idpessoa and a.matricula='"
-						+ registry.trim() + "'";
+				return "select p.nome from cm_pessoa p, ga_aluno a where p.idpessoa=a.idpessoa and a.matricula='" + registry.trim() + "'";
 			}
-
 			if (userGroups.contains(UserGroup.PROFESSOR_GROUP)) {
-				return "select p.nome from cm_pessoa p, ga_docente a where p.idpessoa=a.idpessoa and a.idvinc='"
-						+ registry.trim() + "'";
+				return "select p.nome from cm_pessoa p, ga_docente a where p.idpessoa=a.idpessoa and a.idvinc='" + registry.trim() + "'";
 			}
-
 			if (userGroups.contains(UserGroup.EMPLOYEE_GROUP)) {
-				return "select p.nome from cm_pessoa p,rh_funcionario f,rh_vinculo v "
-						+ " where f.idpessoa=p.idpessoa and v.idfuncionario=f.idfuncionario and v.idvinculo='"
-						+ registry.trim() + "'";
+				return "select p.nome from cm_pessoa p,rh_funcionario f,rh_vinculo v " + " where f.idpessoa=p.idpessoa and v.idfuncionario=f.idfuncionario and v.idvinculo='" + registry.trim() + "'";
 			}
 		}
 		return null;
@@ -82,8 +75,7 @@ public class SigaDaoJDBC implements SigaDao {
 	private String getCourseNameSQL(String registry, List<String> userGroups) {
 		if (registry != null && userGroups != null) {
 			if (userGroups.contains(UserGroup.STUDENT_GROUP)) {
-				return "select c.nome from GA_PROGRAMA p, GA_CURSO c where p.matricula='"
-						+ registry.trim() + "' and c.curso=p.curso";
+				return "select c.nome from GA_PROGRAMA p, GA_CURSO c where p.matricula='" + registry.trim() + "' and c.curso=p.curso";
 			}
 		}
 		return null;
@@ -95,12 +87,10 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @param userGroup
 	 * @return Returns the sql to find a person's departament at siga
 	 */
-	private String getDepartamentNameSQL(String registry,
-			List<String> userGroups) {
+	private String getDepartamentNameSQL(String registry, List<String> userGroups) {
 		if (registry != null && userGroups != null) {
 			if (userGroups.contains(UserGroup.PROFESSOR_GROUP)) {
-				return "select d.nome from ga_docente do, ga_departamento d where do.iddepto=d.iddepto and do.idvinc="
-						+ registry.trim();
+				return "select d.nome from ga_docente do, ga_departamento d where do.iddepto=d.iddepto and do.idvinc=" + registry.trim();
 			}
 		}
 		return null;
@@ -115,10 +105,7 @@ public class SigaDaoJDBC implements SigaDao {
 	private String getLoginPersonSQL(String username, String password) {
 		if (username != null && password != null) {
 			try {
-				return "select b.idpessoa,b.nome from cm_usuario a, cm_pessoa b where a.login='"
-						+ username.trim()
-						+ "' and a.idpessoa=b.idpessoa and a.passmd5='"
-						+ StringUtil.MD5Encrypt(password.trim()) + "'";
+				return "select b.idpessoa,b.nome from cm_usuario a, cm_pessoa b where a.login='" + username.trim() + "' and a.idpessoa=b.idpessoa and a.passmd5='" + StringUtil.MD5Encrypt(password.trim()) + "'";
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
@@ -133,8 +120,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 */
 	private String isStudentSQL(String registry) {
 		if (registry != null) {
-			return "select matricula from GA_PROGRAMA p where p.matricula='"
-					+ registry.trim() + "'";
+			return "select matricula from GA_PROGRAMA p where p.matricula='" + registry.trim() + "'";
 		}
 		return null;
 	}
@@ -146,8 +132,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 */
 	private String isProfessorSQL(String registry) {
 		if (registry != null && StringUtil.isInteger(registry)) {
-			return "select idvinc from ga_docente where idvinc="
-					+ registry.trim();
+			return "select idvinc from ga_docente where idvinc=" + registry.trim();
 		}
 		return null;
 	}
@@ -159,9 +144,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 */
 	private String isEmployeeSQL(String registry) {
 		if (registry != null && StringUtil.isInteger(registry)) {
-			return "select f.idfuncionario from rh_funcionario f, rh_vinculo v "
-					+ " where f.idfuncionario=v.idfuncionario and v.idvinculo='"
-					+ registry.trim() + "'";
+			return "select f.idfuncionario from rh_funcionario f, rh_vinculo v " + " where f.idfuncionario=v.idfuncionario and v.idvinculo='" + registry.trim() + "'";
 		}
 		return null;
 	}
@@ -175,21 +158,11 @@ public class SigaDaoJDBC implements SigaDao {
 	 *            (1 , 2)
 	 * @return Returns the sql to find the student's subjects
 	 */
-	private String getStudentSubjectsSQL(String registry,
-			List<String> userGroups, String year, String semester) {
-		if (registry != null && year != null && semester != null
-				&& userGroups != null && year != null && semester != null
-				&& (semester.equals("1") || semester.equals("2"))) {
+	private String getStudentSubjectsSQL(String registry, List<String> userGroups, String year, String semester) {
+		if (registry != null && year != null && semester != null && userGroups != null && year != null && semester != null && (semester.equals("1") || semester.equals("2"))) {
 			semester = getSemester(semester);
 			if (userGroups.contains(UserGroup.STUDENT_GROUP)) {
-				return "select t.disciplina, t.turma, d.nome from ga_matricula m, ga_turma t , ga_disciplina d"
-						+ " where m.idturma=t.idturma and m.matricula='"
-						+ registry.trim()
-						+ "' and t.ano="
-						+ year.trim()
-						+ " and t.semestre="
-						+ semester.trim()
-						+ " and d.disciplina = t.disciplina";
+				return "select t.disciplina, t.turma, d.nome from ga_matricula m, ga_turma t , ga_disciplina d" + " where m.idturma=t.idturma and m.matricula='" + registry.trim() + "' and t.ano=" + year.trim() + " and t.semestre=" + semester.trim() + " and d.disciplina = t.disciplina";
 			}
 		}
 		return null;
@@ -204,23 +177,11 @@ public class SigaDaoJDBC implements SigaDao {
 	 *            (1 , 2)
 	 * @return Returns the sql to find the student's subjects
 	 */
-	private String getProfessorSubjectsSQL(String registry,
-			List<String> userGroups, String year, String semester) {
-		if (registry != null && year != null && semester != null
-				&& userGroups != null && year != null && semester != null
-				&& (semester.equals("1") || semester.equals("2"))) {
-
+	private String getProfessorSubjectsSQL(String registry, List<String> userGroups, String year, String semester) {
+		if (registry != null && year != null && semester != null && userGroups != null && year != null && semester != null && (semester.equals("1") || semester.equals("2"))) {
 			semester = getSemester(semester);
 			if (userGroups.contains(UserGroup.PROFESSOR_GROUP)) {
-				return "select t.idturma,t.disciplina,t.turma, d.idvinc, a.nome"
-						+ " from ga_turma t, ga_docenteturma dt, ga_docente d,ga_disciplina a"
-						+ " where t.idturma=dt.idturma and dt.iddocente=d.iddocente and t.ano="
-						+ year.trim()
-						+ " and t.semestre="
-						+ semester.trim()
-						+ " and d.idvinc="
-						+ registry.trim()
-						+ " and a.disciplina=t.disciplina";
+				return "select t.idturma,t.disciplina,t.turma, d.idvinc, a.nome" + " from ga_turma t, ga_docenteturma dt, ga_docente d,ga_disciplina a" + " where t.idturma=dt.idturma and dt.iddocente=d.iddocente and t.ano=" + year.trim() + " and t.semestre=" + semester.trim() + " and d.idvinc=" + registry.trim() + " and a.disciplina=t.disciplina";
 			}
 		}
 		return null;
@@ -235,18 +196,13 @@ public class SigaDaoJDBC implements SigaDao {
 	private String getPersonSectorSQL(String registry, List<String> userGroups) {
 		if (registry != null && userGroups != null) {
 			if (userGroups.contains(UserGroup.STUDENT_GROUP)) {
-				return "select s.paisetor,s.siglasetor from GA_PROGRAMA p, GA_CURSO c, CM_SETOR s where p.matricula='"
-						+ registry.trim()
-						+ "' and c.curso = p.curso and c.idsetor = s.idsetor";
+				return "select s.paisetor,s.siglasetor from GA_PROGRAMA p, GA_CURSO c, CM_SETOR s where p.matricula='" + registry.trim() + "' and c.curso = p.curso and c.idsetor = s.idsetor";
 			}
 			if (userGroups.contains(UserGroup.PROFESSOR_GROUP)) {
-				return "select s.paisetor,s.siglasetor from ga_docente do, ga_departamento d, cm_setor s where do.iddepto=d.iddepto and do.idvinc='"
-						+ registry.trim() + "' and s.idsetor=d.idsetor";
+				return "select s.paisetor,s.siglasetor from ga_docente do, ga_departamento d, cm_setor s where do.iddepto=d.iddepto and do.idvinc='" + registry.trim() + "' and s.idsetor=d.idsetor";
 			}
 			if (userGroups.contains(UserGroup.EMPLOYEE_GROUP)) {
-				return "select p.nome, s.paisetor,s.siglasetor from cm_pessoa p, rh_vinculo v, rh_funcionario f, cm_usuario u, cm_setor s where v.idvinculo = '"
-						+ registry.trim()
-						+ "' and v.idfuncionario = f.idfuncionario and f.idpessoa = p.idpessoa and u.idpessoa = p.idpessoa and u.idsetor = s.idsetor";
+				return "select p.nome, s.paisetor,s.siglasetor from cm_pessoa p, rh_vinculo v, rh_funcionario f, cm_usuario u, cm_setor s where v.idvinculo = '" + registry.trim() + "' and v.idfuncionario = f.idfuncionario and f.idpessoa = p.idpessoa and u.idpessoa = p.idpessoa and u.idsetor = s.idsetor";
 			}
 		}
 		return null;
@@ -262,28 +218,11 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @param userGroup
 	 * @return Returns the sql to find the person's sectors
 	 */
-	private String hasPersonLinkWithSectorSQL(String registry, String year,
-			String semester, String sector, List<String> userGroups) {
-
-		if (registry != null && userGroups != null
-				&& userGroups.contains(UserGroup.STUDENT_GROUP) && year != null
-				&& semester != null
-				&& (semester.equals("1") || semester.equals("2"))) {
+	private String hasPersonLinkWithSectorSQL(String registry, String year, String semester, String sector, List<String> userGroups) {
+		if (registry != null && userGroups != null && userGroups.contains(UserGroup.STUDENT_GROUP) && year != null && semester != null && (semester.equals("1") || semester.equals("2"))) {
 			semester = getSemester(semester);
-			return "select distinct(s.paisetor) from ga_matricula m, ga_turma t ,ga_disciplina d ,ga_departamento dep,cm_setor s "
-					+ " where m.idturma = t.idturma "
-					+ " and m.matricula='"
-					+ registry.trim()
-					+ "'"
-					+ " and t.ano="
-					+ year.trim()
-					+ " and t.semestre="
-					+ semester.trim()
-					+ " and t.disciplina = d.disciplina "
-					+ " and d.iddepto = dep.iddepto "
-					+ " and dep.idsetor = s.idsetor "
-					+ " and s.paisetor = '"
-					+ sector.toUpperCase().trim() + "'";
+			return "select distinct(s.paisetor) from ga_matricula m, ga_turma t ,ga_disciplina d ,ga_departamento dep,cm_setor s " + " where m.idturma = t.idturma " + " and m.matricula='" + registry.trim() + "'" + " and t.ano=" + year.trim() + " and t.semestre=" + semester.trim() + " and t.disciplina = d.disciplina " + " and d.iddepto = dep.iddepto " + " and dep.idsetor = s.idsetor "
+					+ " and s.paisetor = '" + sector.toUpperCase().trim() + "'";
 		}
 		return null;
 	}
@@ -295,8 +234,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 */
 	private String getPersonPasswordSQL(String registry) {
 		if (registry != null)
-			return "select passmd5 from cm_usuario where login='"
-					+ registry.trim() + "'";
+			return "select passmd5 from cm_usuario where login='" + registry.trim() + "'";
 		return null;
 	}
 
@@ -309,22 +247,10 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @return Returns the sql to find the register of people that is studying a
 	 *         subject
 	 */
-	private String getRegistriesBySubjectCodeSQL(String subjectCode,
-			String year, String semester, String classroom) {
-		if (subjectCode != null && year != null && semester != null
-				&& (semester.equals("1") || semester.equals("2"))) {
+	private String getRegistriesBySubjectCodeSQL(String subjectCode, String year, String semester, String classroom) {
+		if (subjectCode != null && year != null && semester != null && (semester.equals("1") || semester.equals("2"))) {
 			semester = getSemester(semester);
-			return "select  m.matricula  from ga_matricula m, ga_turma t , ga_disciplina d"
-					+ " where m.idturma = t.idturma "
-					+ " and t.turma='"
-					+ classroom.toUpperCase().trim()
-					+ "'"
-					+ " and t.ano="
-					+ year.trim()
-					+ " and t.semestre= "
-					+ semester.trim()
-					+ " and d.disciplina = t.disciplina "
-					+ " and d.disciplina = '" + subjectCode.trim() + "'";
+			return "select  m.matricula  from ga_matricula m, ga_turma t , ga_disciplina d" + " where m.idturma = t.idturma " + " and t.turma='" + classroom.toUpperCase().trim() + "'" + " and t.ano=" + year.trim() + " and t.semestre= " + semester.trim() + " and d.disciplina = t.disciplina " + " and d.disciplina = '" + subjectCode.trim() + "'";
 		}
 		return null;
 	}
@@ -339,28 +265,12 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @return Returns the sql to find the register of people that is studying a
 	 *         subject, except the registries not wanted
 	 */
-	private String getRegistriesBySubjectCodeSQL(String subjectCode,
-			String year, String semester, String classroom,
-			List<String> registriesNotWanted) {
-		if (subjectCode != null && year != null && semester != null
-				&& classroom != null && registriesNotWanted != null) {
+	private String getRegistriesBySubjectCodeSQL(String subjectCode, String year, String semester, String classroom, List<String> registriesNotWanted) {
+		if (subjectCode != null && year != null && semester != null && classroom != null && registriesNotWanted != null) {
 			StringBuffer buffer = new StringBuffer();
 			for (String string : registriesNotWanted)
 				buffer.append(" and m.matricula <> " + string);
-			return "select  m.matricula  from ga_matricula m, ga_turma t , ga_disciplina d"
-					+ " where m.idturma = t.idturma "
-					+ " and t.turma='"
-					+ classroom.toUpperCase().trim()
-					+ "'"
-					+ " and t.ano="
-					+ year.trim()
-					+ " and t.semestre= "
-					+ getSemester(semester.trim())
-					+ " and d.disciplina = t.disciplina "
-					+ " and d.disciplina = '"
-					+ subjectCode.toUpperCase().trim()
-					+ "'"
-					+ buffer.toString();
+			return "select  m.matricula  from ga_matricula m, ga_turma t , ga_disciplina d" + " where m.idturma = t.idturma " + " and t.turma='" + classroom.toUpperCase().trim() + "'" + " and t.ano=" + year.trim() + " and t.semestre= " + getSemester(semester.trim()) + " and d.disciplina = t.disciplina " + " and d.disciplina = '" + subjectCode.toUpperCase().trim() + "'" + buffer.toString();
 		}
 		return null;
 	}
@@ -373,23 +283,10 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @return Returns the sql to find the register of people that is studying a
 	 *         subject
 	 */
-	private String getRegistriesBySubjectCodeSQL(List<String> subjectsCode,
-			String year, String semester, String classroom) {
-		if (subjectsCode != null && year != null && semester != null
-				&& !subjectsCode.isEmpty()
-				&& (semester.equals("1") || semester.equals("2"))) {
+	private String getRegistriesBySubjectCodeSQL(List<String> subjectsCode, String year, String semester, String classroom) {
+		if (subjectsCode != null && year != null && semester != null && !subjectsCode.isEmpty() && (semester.equals("1") || semester.equals("2"))) {
 			semester = getSemester(semester);
-			StringBuffer query = new StringBuffer(
-					"select distinct(m.matricula) from ga_matricula m, ga_turma t , ga_disciplina d"
-							+ " where m.idturma = t.idturma "
-							+ " and t.turma= '"
-							+ classroom.toUpperCase().trim()
-							+ "'"
-							+ " and t.ano="
-							+ year.trim()
-							+ " and t.semestre= "
-							+ semester.trim()
-							+ " and d.disciplina = t.disciplina and (");
+			StringBuffer query = new StringBuffer("select distinct(m.matricula) from ga_matricula m, ga_turma t , ga_disciplina d" + " where m.idturma = t.idturma " + " and t.turma= '" + classroom.toUpperCase().trim() + "'" + " and t.ano=" + year.trim() + " and t.semestre= " + semester.trim() + " and d.disciplina = t.disciplina and (");
 			int count = 0;
 			for (String string : subjectsCode) {
 				query.append("d.disciplina = '" + string + "'");
@@ -397,7 +294,6 @@ public class SigaDaoJDBC implements SigaDao {
 					query.append(" or ");
 				else
 					query.append(")");
-
 				count++;
 			}
 			return query.toString();
@@ -412,25 +308,11 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @param sector
 	 * @return Returns the sql to find all subject of a period and sector
 	 */
-	private String getSubjectByPeriodAndSectorSQL(String year, String semester,
-			String sector) {
-		if (year != null && semester != null && sector != null
-				&& (semester.equals("1") || semester.equals("2"))) {
+	private String getSubjectByPeriodAndSectorSQL(String year, String semester, String sector) {
+		if (year != null && semester != null && sector != null && (semester.equals("1") || semester.equals("2"))) {
 			semester = getSemester(semester);
-			return "select di.disciplina,di.nome, t.turma, de.depto from ga_disciplina di, ga_departamento de, cm_setor s, ga_turma t"
-					+ " where t.ano="
-					+ year.trim()
-					+ " and t.semestre="
-					+ semester.trim()
-					+ " and di.disciplina = t.disciplina"
-					+ " and di.iddepto = de.iddepto"
-					+ " and de.idsetor = s.idsetor"
-					+ " and (s.paisetor = '"
-					+ sector.toUpperCase().trim()
-					+ "' or s.siglasetor='"
-					+ sector.toUpperCase().trim()
-					+ "')"
-					+ "order by de.depto, t.turma";
+			return "select di.disciplina,di.nome, t.turma, de.depto from ga_disciplina di, ga_departamento de, cm_setor s, ga_turma t" + " where t.ano=" + year.trim() + " and t.semestre=" + semester.trim() + " and di.disciplina = t.disciplina" + " and di.iddepto = de.iddepto" + " and de.idsetor = s.idsetor" + " and (s.paisetor = '" + sector.toUpperCase().trim() + "' or s.siglasetor='"
+					+ sector.toUpperCase().trim() + "')" + "order by de.depto, t.turma";
 		}
 		return null;
 	}
@@ -442,27 +324,11 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @param sector
 	 * @return Returns the sql to find all subject of a period and sector
 	 */
-	private String getSubjectByPeriodAndSectorAndDepartmentSQL(String year,
-			String semester, String sector, String department) {
-		if (year != null && semester != null && sector != null
-				&& (semester.equals("1") || semester.equals("2"))) {
+	private String getSubjectByPeriodAndSectorAndDepartmentSQL(String year, String semester, String sector, String department) {
+		if (year != null && semester != null && sector != null && (semester.equals("1") || semester.equals("2"))) {
 			semester = getSemester(semester);
-			return "select di.disciplina,di.nome, t.turma, de.depto from ga_disciplina di, ga_departamento de, cm_setor s, ga_turma t"
-					+ " where t.ano="
-					+ year.trim()
-					+ " and t.semestre="
-					+ semester.trim()
-					+ " and di.disciplina = t.disciplina "
-					+ " and di.iddepto = de.iddepto"
-					+ " and de.depto='"
-					+ department.trim()
-					+ "'"
-					+ " and de.idsetor = s.idsetor"
-					+ " and (s.paisetor = '"
-					+ sector.toUpperCase().trim()
-					+ "' or s.siglasetor='"
-					+ sector.toUpperCase().trim()
-					+ "')" + "order by de.depto, t.turma";
+			return "select di.disciplina,di.nome, t.turma, de.depto from ga_disciplina di, ga_departamento de, cm_setor s, ga_turma t" + " where t.ano=" + year.trim() + " and t.semestre=" + semester.trim() + " and di.disciplina = t.disciplina " + " and di.iddepto = de.iddepto" + " and de.depto='" + department.trim() + "'" + " and de.idsetor = s.idsetor" + " and (s.paisetor = '"
+					+ sector.toUpperCase().trim() + "' or s.siglasetor='" + sector.toUpperCase().trim() + "')" + "order by de.depto, t.turma";
 		}
 		return null;
 	}
@@ -474,10 +340,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 */
 	private String getDepartamentsBySectorSQL(String sector) {
 		if (sector != null) {
-			return "select d.depto from ga_departamento d,cm_setor s "
-					+ " where  d.idsetor = s.idsetor and (s.siglasetor='"
-					+ sector.toUpperCase().trim() + "' or s.paisetor = '"
-					+ sector.toUpperCase().trim() + "')";
+			return "select d.depto from ga_departamento d,cm_setor s " + " where  d.idsetor = s.idsetor and (s.siglasetor='" + sector.toUpperCase().trim() + "' or s.paisetor = '" + sector.toUpperCase().trim() + "')";
 		}
 		return null;
 	}
@@ -491,31 +354,11 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @return Returns the sql to find subjects by year, semester,
 	 *         subjectCode,sector
 	 */
-	private String getSubjectByPeriodAndSectorAndSubjectCodeSQL(String year,
-			String semester, String subjectCode, String sector) {
-		if (year != null && semester != null && subjectCode != null
-				&& sector != null) {
+	private String getSubjectByPeriodAndSectorAndSubjectCodeSQL(String year, String semester, String subjectCode, String sector) {
+		if (year != null && semester != null && subjectCode != null && sector != null) {
 			semester = getSemester(semester);
-			return "select di.disciplina,di.nome, t.turma, de.depto from ga_disciplina di, ga_departamento de, cm_setor s, ga_turma t "
-					+ " where t.ano='"
-					+ year.trim()
-					+ "' "
-					+ " and t.semestre='"
-					+ semester.trim()
-					+ "' "
-					+ " and di.disciplina = t.disciplina "
-					+ " and di.iddepto = de.iddepto "
-					+ " and di.disciplina = '"
-					+ subjectCode.toUpperCase().trim()
-					+ "' "
-					+ " and de.idsetor = s.idsetor "
-					+ " and (s.paisetor = '"
-					+ sector.toUpperCase().trim()
-					+ "' "
-					+ " or s.siglasetor='"
-					+ sector.toUpperCase().trim()
-					+ "') "
-					+ " order by de.depto, t.turma";
+			return "select di.disciplina,di.nome, t.turma, de.depto from ga_disciplina di, ga_departamento de, cm_setor s, ga_turma t " + " where t.ano='" + year.trim() + "' " + " and t.semestre='" + semester.trim() + "' " + " and di.disciplina = t.disciplina " + " and di.iddepto = de.iddepto " + " and di.disciplina = '" + subjectCode.toUpperCase().trim() + "' " + " and de.idsetor = s.idsetor "
+					+ " and (s.paisetor = '" + sector.toUpperCase().trim() + "' " + " or s.siglasetor='" + sector.toUpperCase().trim() + "') " + " order by de.depto, t.turma";
 		}
 		return null;
 	}
@@ -527,9 +370,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 */
 	private String getNameAndRegistryByNameSQL(String name) {
 		if (name != null)
-			return "select p.nome, u.login from cm_pessoa p, cm_usuario u where p.nome like '"
-					+ name.toUpperCase().trim()
-					+ "%' and u.idpessoa = p.idpessoa";
+			return "select p.nome, u.login from cm_pessoa p, cm_usuario u where p.nome like '" + name.toUpperCase().trim() + "%' and u.idpessoa = p.idpessoa";
 		return null;
 	}
 
@@ -541,25 +382,10 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @return Returns the sql to find the registry and name of the subject
 	 *         owner
 	 */
-	private String getSubjectOwnerSQL(String subjectCode, String year,
-			String semester, String classroom) {
-		if (subjectCode != null && year != null && semester != null
-				&& classroom != null) {
+	private String getSubjectOwnerSQL(String subjectCode, String year, String semester, String classroom) {
+		if (subjectCode != null && year != null && semester != null && classroom != null) {
 			semester = getSemester(semester);
-			return "select p.nome, d.idvinc  from ga_docenteturma dt, ga_turma t, ga_docente d, cm_pessoa p "
-					+ " where dt.idturma = t.idturma and "
-					+ " t.ano = '"
-					+ year.trim()
-					+ "' and "
-					+ " t.semestre = '"
-					+ semester.trim()
-					+ "'  and "
-					+ " t.disciplina = '"
-					+ subjectCode.toUpperCase().trim()
-					+ "' and "
-					+ " dt.iddocente = d.iddocente and "
-					+ " d.idpessoa = p.idpessoa "
-					+ " and t.turma = '"
+			return "select p.nome, d.idvinc  from ga_docenteturma dt, ga_turma t, ga_docente d, cm_pessoa p " + " where dt.idturma = t.idturma and " + " t.ano = '" + year.trim() + "' and " + " t.semestre = '" + semester.trim() + "'  and " + " t.disciplina = '" + subjectCode.toUpperCase().trim() + "' and " + " dt.iddocente = d.iddocente and " + " d.idpessoa = p.idpessoa " + " and t.turma = '"
 					+ classroom.toUpperCase().trim() + "'";
 		}
 		return null;
@@ -575,15 +401,12 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom)
-			throws ConnectionDataBaseException, Exception {
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom) throws ConnectionDataBaseException, Exception {
 		List<String> list = new ArrayList<String>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
 		Statement st = connection.createStatement();
-		String query = getRegistriesBySubjectCodeSQL(subjectCode, year,
-				semester, classroom);
+		String query = getRegistriesBySubjectCodeSQL(subjectCode, year, semester, classroom);
 		if (query != null) {
 			ResultSet rs = (ResultSet) st.executeQuery(query);
 			while (rs.next())
@@ -605,16 +428,12 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom,
-			List<String> registriesNotWanted)
-			throws ConnectionDataBaseException, Exception {
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom, List<String> registriesNotWanted) throws ConnectionDataBaseException, Exception {
 		List<String> list = new ArrayList<String>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
 		Statement st = connection.createStatement();
-		String query = getRegistriesBySubjectCodeSQL(subjectCode, year,
-				semester, classroom, registriesNotWanted);
+		String query = getRegistriesBySubjectCodeSQL(subjectCode, year, semester, classroom, registriesNotWanted);
 		if (query != null) {
 			ResultSet rs = (ResultSet) st.executeQuery(query);
 			while (rs.next())
@@ -633,15 +452,12 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public List<String> getRegistriesBySubjectCode(List<String> subjectsCode,
-			String year, String semester, String classroom)
-			throws ConnectionDataBaseException, Exception {
+	public List<String> getRegistriesBySubjectCode(List<String> subjectsCode, String year, String semester, String classroom) throws ConnectionDataBaseException, Exception {
 		List<String> list = new ArrayList<String>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
 		Statement st = connection.createStatement();
-		String query = getRegistriesBySubjectCodeSQL(subjectsCode, year,
-				semester, classroom);
+		String query = getRegistriesBySubjectCodeSQL(subjectsCode, year, semester, classroom);
 		if (query != null) {
 			ResultSet rs = (ResultSet) st.executeQuery(query);
 			while (rs.next())
@@ -658,9 +474,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @return Returns all subject of a period and sector
 	 */
 	@Override
-	public List<GroupVO> getSubjectByPeriodAndSector(String year,
-			String semester, String sector) throws ConnectionDataBaseException,
-			Exception {
+	public List<GroupVO> getSubjectByPeriodAndSector(String year, String semester, String sector) throws ConnectionDataBaseException, Exception {
 		List<GroupVO> list = new ArrayList<GroupVO>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
@@ -690,15 +504,12 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year,
-			String semester, String sector, String department)
-			throws ConnectionDataBaseException, Exception {
+	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year, String semester, String sector, String department) throws ConnectionDataBaseException, Exception {
 		List<GroupVO> list = new ArrayList<GroupVO>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
 		Statement st = connection.createStatement();
-		String query = getSubjectByPeriodAndSectorAndDepartmentSQL(year,
-				semester, sector, department);
+		String query = getSubjectByPeriodAndSectorAndDepartmentSQL(year, semester, sector, department);
 		if (query != null) {
 			ResultSet rs = (ResultSet) st.executeQuery(query);
 			while (rs.next()) {
@@ -723,15 +534,12 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year,
-			String semester, String subjectCode, String sector)
-			throws ConnectionDataBaseException, Exception {
+	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year, String semester, String subjectCode, String sector) throws ConnectionDataBaseException, Exception {
 		List<GroupVO> list = new ArrayList<GroupVO>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
 		Statement st = connection.createStatement();
-		String query = getSubjectByPeriodAndSectorAndSubjectCodeSQL(year,
-				semester, subjectCode, sector);
+		String query = getSubjectByPeriodAndSectorAndSubjectCodeSQL(year, semester, subjectCode, sector);
 		if (query != null) {
 			ResultSet rs = (ResultSet) st.executeQuery(query);
 			while (rs.next()) {
@@ -755,8 +563,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * 
 	 */
 	@Override
-	public String getPersonPassword(String registry)
-			throws ConnectionDataBaseException, Exception {
+	public String getPersonPassword(String registry) throws ConnectionDataBaseException, Exception {
 		String pass = null;
 		if (connection == null)
 			throw new ConnectionDataBaseException();
@@ -783,14 +590,11 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public boolean hasPersonLinkWithSector(String registry, String year,
-			String semester, String sector, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception {
+	public boolean hasPersonLinkWithSector(String registry, String year, String semester, String sector, List<String> userGroups) throws ConnectionDataBaseException, Exception {
 		if (connection == null)
 			throw new ConnectionDataBaseException();
 		Statement st = connection.createStatement();
-		String query = hasPersonLinkWithSectorSQL(registry, year, semester,
-				sector, userGroups);
+		String query = hasPersonLinkWithSectorSQL(registry, year, semester, sector, userGroups);
 		if (query != null) {
 			ResultSet rs = (ResultSet) st.executeQuery(query);
 			if (rs.next())
@@ -809,8 +613,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * 
 	 */
 	@Override
-	public SectorVO getPersonSector(String registry, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception {
+	public SectorVO getPersonSector(String registry, List<String> userGroups) throws ConnectionDataBaseException, Exception {
 		SectorVO s = null;
 		if (connection == null)
 			throw new ConnectionDataBaseException();
@@ -819,8 +622,7 @@ public class SigaDaoJDBC implements SigaDao {
 		if (query != null) {
 			ResultSet rs = (ResultSet) st.executeQuery(query);
 			while (rs.next())
-				s = new SectorVO(rs.getString("paisetor"), rs
-						.getString("siglasetor"));
+				s = new SectorVO(rs.getString("paisetor"), rs.getString("siglasetor"));
 		}
 		return s;
 	}
@@ -833,8 +635,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public String getPersonName(String registry, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception {
+	public String getPersonName(String registry, List<String> userGroups) throws ConnectionDataBaseException, Exception {
 		String s = null;
 		if (connection == null) {
 			throw new ConnectionDataBaseException();
@@ -859,8 +660,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * 
 	 */
 	@Override
-	public String getCourseName(String registry, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception {
+	public String getCourseName(String registry, List<String> userGroups) throws ConnectionDataBaseException, Exception {
 		String s = null;
 		if (connection == null)
 			throw new ConnectionDataBaseException();
@@ -882,8 +682,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public String getDepartamentName(String registry, List<String> userGroups)
-			throws ConnectionDataBaseException, Exception {
+	public String getDepartamentName(String registry, List<String> userGroups) throws ConnectionDataBaseException, Exception {
 		String s = null;
 		if (connection == null)
 			throw new ConnectionDataBaseException();
@@ -906,8 +705,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public boolean loginPerson(String username, String password)
-			throws ConnectionDataBaseException, Exception {
+	public boolean loginPerson(String username, String password) throws ConnectionDataBaseException, Exception {
 		if (connection == null)
 			throw new ConnectionDataBaseException();
 		Statement st = connection.createStatement();
@@ -927,8 +725,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public List<String> getDepartamentsBySector(String sector)
-			throws ConnectionDataBaseException, Exception {
+	public List<String> getDepartamentsBySector(String sector) throws ConnectionDataBaseException, Exception {
 		List<String> departaments = new ArrayList<String>();
 		if (connection == null) {
 			throw new ConnectionDataBaseException();
@@ -949,8 +746,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public List<String> getUserPositionGroups(String registry)
-			throws ConnectionDataBaseException, Exception {
+	public List<String> getUserPositionGroups(String registry) throws ConnectionDataBaseException, Exception {
 		List<String> groups = new ArrayList<String>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
@@ -996,15 +792,12 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws ConnectionDataBaseException
 	 */
 	@Override
-	public List<GroupVO> getSubjects(String registry, List<String> userGroups,
-			String year, String semester) throws ConnectionDataBaseException,
-			Exception {
+	public List<GroupVO> getSubjects(String registry, List<String> userGroups, String year, String semester) throws ConnectionDataBaseException, Exception {
 		List<GroupVO> list = new ArrayList<GroupVO>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
 		Statement st = connection.createStatement();
-		String query = getStudentSubjectsSQL(registry, userGroups, year,
-				semester);
+		String query = getStudentSubjectsSQL(registry, userGroups, year, semester);
 		if (query != null) {
 			ResultSet rs = st.executeQuery(query);
 			while (rs.next()) {
@@ -1036,8 +829,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 *         name (using like primitive)
 	 */
 	@Override
-	public List<NameVO> getNameAndRegistryByName(String name)
-			throws ConnectionDataBaseException, Exception {
+	public List<NameVO> getNameAndRegistryByName(String name) throws ConnectionDataBaseException, Exception {
 		List<NameVO> list = new ArrayList<NameVO>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
@@ -1046,9 +838,7 @@ public class SigaDaoJDBC implements SigaDao {
 		if (query != null) {
 			ResultSet rs = (ResultSet) st.executeQuery(query);
 			while (rs.next())
-				list
-						.add(new NameVO(rs.getString("nome"), rs
-								.getString("login")));
+				list.add(new NameVO(rs.getString("nome"), rs.getString("login")));
 		}
 		return list;
 	}
@@ -1063,20 +853,16 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<NameVO> getSubjectOwner(String subjectCode, String year,
-			String semester, String classroom)
-			throws ConnectionDataBaseException, Exception {
+	public List<NameVO> getSubjectOwner(String subjectCode, String year, String semester, String classroom) throws ConnectionDataBaseException, Exception {
 		List<NameVO> list = new ArrayList<NameVO>();
 		if (connection == null)
 			throw new ConnectionDataBaseException();
 		Statement st = connection.createStatement();
-		String query = getSubjectOwnerSQL(subjectCode, year, semester,
-				classroom);
+		String query = getSubjectOwnerSQL(subjectCode, year, semester, classroom);
 		if (query != null) {
 			ResultSet rs = (ResultSet) st.executeQuery(query);
 			while (rs.next())
-				list.add(new NameVO(rs.getString("nome"), rs
-						.getString("idvinc")));
+				list.add(new NameVO(rs.getString("nome"), rs.getString("idvinc")));
 		}
 		return list;
 	}
@@ -1090,8 +876,7 @@ public class SigaDaoJDBC implements SigaDao {
 	 * @throws SQLException
 	 */
 	@Override
-	public void openConnection() throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, SQLException {
+	public void openConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		connection = dataSource.getConnection();
 	}
 
@@ -1140,5 +925,4 @@ public class SigaDaoJDBC implements SigaDao {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-
 }

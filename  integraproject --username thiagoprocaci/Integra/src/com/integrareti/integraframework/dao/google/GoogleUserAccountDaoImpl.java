@@ -27,9 +27,7 @@ import com.integrareti.integraframework.dao.integra.DomainDao;
  * @author Thiago Gama
  */
 public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
-
 	private static final String USER_SERVICE_ARG = "gdata-sample-AppsForYourDomain-UserService";
-
 	private String domainUrlBase;
 	private String domainName;
 	private UserService userService;
@@ -55,20 +53,10 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws ServiceException
 	 * @throws IOException
 	 */
-	public UserEntry createUser(Person p) throws AppsForYourDomainException,
-			ServiceException, IOException, Exception {
-
+	public UserEntry createUser(Person p) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		// prepares the google apps service
 		prepareUserService(p.getDomain().getName());
-		LOGGER.log(Level.INFO, "Creating user '"
-				+ p.getGoogleAccount()
-				+ "'. Given Name: '"
-				+ p.getGivenName()
-				+ "' Family Name: '"
-				+ p.getFamilyName()
-				+ (p.getQuotaLimitInMB() != null ? "' Quota Limit: '"
-						+ p.getQuotaLimitInMB() + "'." : "."));
-
+		LOGGER.log(Level.INFO, "Creating user '" + p.getGoogleAccount() + "'. Given Name: '" + p.getGivenName() + "' Family Name: '" + p.getFamilyName() + (p.getQuotaLimitInMB() != null ? "' Quota Limit: '" + p.getQuotaLimitInMB() + "'." : "."));
 		URL insertUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION);
 		return userService.insert(insertUrl, p.getUserEntry());
 	}
@@ -92,12 +80,8 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public UserEntry createUser(String username, String givenName,
-			String familyName, String password, String domain)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
-		return createUser(username, givenName, familyName, password, domain,
-				null);
+	public UserEntry createUser(String username, String givenName, String familyName, String password, String domain) throws AppsForYourDomainException, ServiceException, IOException, Exception {
+		return createUser(username, givenName, familyName, password, domain, null);
 	}
 
 	/**
@@ -122,19 +106,9 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public UserEntry createUser(String username, String givenName,
-			String familyName, String password, String domain,
-			Integer quotaLimitInMb) throws AppsForYourDomainException,
-			ServiceException, IOException, Exception {
+	public UserEntry createUser(String username, String givenName, String familyName, String password, String domain, Integer quotaLimitInMb) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareUserService(domain);
-		LOGGER.log(Level.INFO, "Creating user '"
-				+ username
-				+ "'. Given Name: '"
-				+ givenName
-				+ "' Family Name: '"
-				+ familyName
-				+ (quotaLimitInMb != null ? "' Quota Limit: '" + quotaLimitInMb
-						+ "'." : "."));
+		LOGGER.log(Level.INFO, "Creating user '" + username + "'. Given Name: '" + givenName + "' Family Name: '" + familyName + (quotaLimitInMb != null ? "' Quota Limit: '" + quotaLimitInMb + "'." : "."));
 		UserEntry entry = new UserEntry();
 		Login login = new Login();
 		login.setUserName(username);
@@ -166,13 +140,10 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public UserEntry retrieveUser(String username, String domain)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
+	public UserEntry retrieveUser(String username, String domain) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		LOGGER.log(Level.INFO, "Retrieving user '" + username + "'.");
 		prepareUserService(domain);
-		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION
-				+ "/" + username);
+		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/" + username);
 		return userService.getEntry(retrieveUrl, UserEntry.class);
 	}
 
@@ -190,18 +161,13 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public UserFeed retrieveAllUsers(String domain)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
-
+	public UserFeed retrieveAllUsers(String domain) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		LOGGER.log(Level.INFO, "Retrieving all users.");
 		prepareUserService(domain);
-		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION
-				+ "/");
+		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/");
 		UserFeed allUsers = new UserFeed();
 		UserFeed currentPage;
 		Link nextLink;
-
 		do {
 			currentPage = userService.getFeed(retrieveUrl, UserFeed.class);
 			allUsers.getEntries().addAll(currentPage.getEntries());
@@ -232,17 +198,10 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public UserFeed retrievePageOfUsers(String startUsername, String domain)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
-
-		LOGGER.log(Level.INFO,
-				"Retrieving one page of users"
-						+ (startUsername != null ? " starting at "
-								+ startUsername : "") + ".");
+	public UserFeed retrievePageOfUsers(String startUsername, String domain) throws AppsForYourDomainException, ServiceException, IOException, Exception {
+		LOGGER.log(Level.INFO, "Retrieving one page of users" + (startUsername != null ? " starting at " + startUsername : "") + ".");
 		prepareUserService(domain);
-		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION
-				+ "/");
+		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/");
 		AppsForYourDomainQuery query = new AppsForYourDomainQuery(retrieveUrl);
 		query.setStartUsername(startUsername);
 		return userService.query(query, UserFeed.class);
@@ -263,13 +222,10 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public UserEntry updateUser(String username, UserEntry userEntry,
-			String domain) throws AppsForYourDomainException, ServiceException,
-			IOException, Exception {
+	public UserEntry updateUser(String username, UserEntry userEntry, String domain) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		LOGGER.log(Level.INFO, "Updating user '" + username + "'.");
 		prepareUserService(domain);
-		URL updateUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/"
-				+ username);
+		URL updateUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/" + username);
 		return userService.update(updateUrl, userEntry);
 	}
 
@@ -285,14 +241,10 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public void deleteUser(String username, String domain)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
-
+	public void deleteUser(String username, String domain) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		LOGGER.log(Level.INFO, "Deleting user '" + username + "'.");
 		prepareUserService(domain);
-		URL deleteUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/"
-				+ username);
+		URL deleteUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/" + username);
 		userService.delete(deleteUrl);
 	}
 
@@ -309,21 +261,13 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public UserEntry suspendUser(String username, String domain)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
-
+	public UserEntry suspendUser(String username, String domain) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		LOGGER.log(Level.INFO, "Suspending user '" + username + "'.");
 		prepareUserService(domain);
-
-		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION
-				+ "/" + username);
-		UserEntry userEntry = userService
-				.getEntry(retrieveUrl, UserEntry.class);
+		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/" + username);
+		UserEntry userEntry = userService.getEntry(retrieveUrl, UserEntry.class);
 		userEntry.getLogin().setSuspended(true);
-
-		URL updateUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/"
-				+ username);
+		URL updateUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/" + username);
 		return userService.update(updateUrl, userEntry);
 	}
 
@@ -340,21 +284,13 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public UserEntry restoreUser(String username, String domain)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
-
+	public UserEntry restoreUser(String username, String domain) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		LOGGER.log(Level.INFO, "Restoring user '" + username + "'.");
 		prepareUserService(domain);
-
-		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION
-				+ "/" + username);
-		UserEntry userEntry = userService
-				.getEntry(retrieveUrl, UserEntry.class);
+		URL retrieveUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/" + username);
+		UserEntry userEntry = userService.getEntry(retrieveUrl, UserEntry.class);
 		userEntry.getLogin().setSuspended(false);
-
-		URL updateUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/"
-				+ username);
+		URL updateUrl = new URL(domainUrlBase + "user/" + SERVICE_VERSION + "/" + username);
 		return userService.update(updateUrl, userEntry);
 	}
 
@@ -368,23 +304,14 @@ public class GoogleUserAccountDaoImpl extends GoogleDomainDao {
 	 *            domain name
 	 * @throws AuthenticationException
 	 */
-	private void prepareUserService(String domain)
-			throws AuthenticationException, Exception {
+	private void prepareUserService(String domain) throws AuthenticationException, Exception {
 		if (!domain.equals(this.domainName)) {
 			this.domainName = domain;
 			domainUrlBase = APPS_FEEDS_URL_BASE + domain + "/";
-			LOGGER.log(Level.INFO,
-					"Preparing userService with domainUrlBase = "
-							+ domainUrlBase);
-
+			LOGGER.log(Level.INFO, "Preparing userService with domainUrlBase = " + domainUrlBase);
 			Login login = domainDao.getGoogleDomainAdminLogin(domain);
-			LOGGER.log(Level.INFO, "Credentials " + login.getUserName() + "@"
-					+ domain + " - " + login.getPassword());
-
-			userService.setUserCredentials(login.getUserName() + "@" + domain,
-					login.getPassword());
+			LOGGER.log(Level.INFO, "Credentials " + login.getUserName() + "@" + domain + " - " + login.getPassword());
+			userService.setUserCredentials(login.getUserName() + "@" + domain, login.getPassword());
 		}
-
 	}
-
 }

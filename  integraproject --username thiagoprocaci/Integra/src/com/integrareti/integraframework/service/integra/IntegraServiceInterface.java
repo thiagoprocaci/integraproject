@@ -11,7 +11,6 @@ import com.integrareti.integraframework.business.Identifiable;
  * 
  */
 public interface IntegraServiceInterface<T extends Identifiable<ID>, ID extends java.io.Serializable> {
-
 	/**
 	 * Deletes an object
 	 * 
@@ -27,15 +26,13 @@ public interface IntegraServiceInterface<T extends Identifiable<ID>, ID extends 
 	 * @throws Exception
 	 */
 	public List<T> getAll() throws Exception;
-	
-	
+
 	/**
 	 * @return Returns all by domainName
 	 * @param class
 	 * @throws Exception
 	 */
-	public List<T> getAllByDomainName(String domainName) throws Exception;	
-	
+	public List<T> getAllByDomainName(String domainName) throws Exception;
 
 	/**
 	 * @return Returns an object by id
@@ -54,16 +51,17 @@ public interface IntegraServiceInterface<T extends Identifiable<ID>, ID extends 
 	 * @throws Exception
 	 */
 	public void save(T object) throws Exception;
-	
 
 	/**
-	 *  Reattach an object to Hibernate Session
+	 * Reattach an object to Hibernate Session
+	 * 
 	 * @param o
 	 */
 	public void reattach(Object o);
-	
+
 	/**
-	 * Initialize an object - hibernate 
+	 * Initialize an object - hibernate
+	 * 
 	 * @param o
 	 */
 	public void initialize(Object o);
@@ -72,7 +70,7 @@ public interface IntegraServiceInterface<T extends Identifiable<ID>, ID extends 
 	 * Open hibernate session
 	 */
 	public void openSession();
-	
+
 	/**
 	 * Closed hibernate session
 	 */

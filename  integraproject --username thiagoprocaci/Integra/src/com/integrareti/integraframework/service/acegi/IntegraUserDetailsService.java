@@ -14,24 +14,21 @@ import com.integrareti.integraframework.service.siga.SigaService;
  * system
  * 
  * @created 10/12/2007
- * @author Thiago Athouguia Gama 
+ * @author Thiago Athouguia Gama
  * @version 1.0
  * 
  */
 public class IntegraUserDetailsService implements UserDetailsService {
-
 	private SigaService sigaService;
 	private GoogleUserAccountServiceInterface personService;
 
-	public IntegraUserDetailsService(SigaService sigaService,
-			GoogleUserAccountServiceInterface personService) {
+	public IntegraUserDetailsService(SigaService sigaService, GoogleUserAccountServiceInterface personService) {
 		this.sigaService = sigaService;
 		this.personService = personService;
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String registry)
-			throws UsernameNotFoundException, DataAccessException {
+	public UserDetails loadUserByUsername(String registry) throws UsernameNotFoundException, DataAccessException {
 		Person person = null;
 		try {
 			person = personService.getByRegistry(registry);
@@ -39,16 +36,12 @@ public class IntegraUserDetailsService implements UserDetailsService {
 			e.printStackTrace();
 		}
 		if (person == null)
-			throw new UsernameNotFoundException("Username " + registry
-					+ " not found");
-
+			throw new UsernameNotFoundException("Username " + registry + " not found");
 		try {
 			person.setPassword(sigaService.getPersonPassword(registry));
 		} catch (Exception e) {
-			throw new UsernameNotFoundException(
-					"Ocorreu uma exceção ao se verificar a senha do usuário");
+			throw new UsernameNotFoundException("Ocorreu uma exceção ao se verificar a senha do usuário");
 		}
 		return person;
 	}
-
 }

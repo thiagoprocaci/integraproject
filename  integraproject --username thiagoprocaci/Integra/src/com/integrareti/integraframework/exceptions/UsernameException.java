@@ -7,7 +7,6 @@ package com.integrareti.integraframework.exceptions;
  */
 @SuppressWarnings("serial")
 public class UsernameException extends Exception {
-
 	private static final String MSG_EXCEPTION = "Detailed error: ";
 
 	/**
@@ -18,5 +17,4 @@ public class UsernameException extends Exception {
 	public UsernameException(String msg) {
 		super(MSG_EXCEPTION + msg);
 	}
-
 }

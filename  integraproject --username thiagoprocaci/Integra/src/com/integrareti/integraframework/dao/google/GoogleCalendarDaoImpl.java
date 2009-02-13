@@ -12,7 +12,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.integrareti.integraframework.dao.google;
 
 import java.io.IOException;
@@ -72,20 +71,17 @@ import com.integrareti.integraframework.dao.integra.DomainDao;
  * control lists.
  */
 public class GoogleCalendarDaoImpl extends GoogleDomainDao {
-
 	// private constants
 	private static final String METAFEED_URL_BASE = "http://www.google.com/calendar/feeds/";
 	private static final String ACL_FEED_URL_SUFFIX = "/acl/full";
 	private static final String EVENT_FEED_URL_SUFFIX = "/private/full";
 	private static final String OWNCALENDARS_FEED_URL_SUFFIX = "/owncalendars/full/";
-
 	private static String METAFEED_URL = null;
 	private static String EVENT_FEED_URL = null;
 	private static String ACL_FEED_URL = null;
 	private CalendarService service;
 
-	public GoogleCalendarDaoImpl(DomainDao domainDao)
-			throws AuthenticationException {
+	public GoogleCalendarDaoImpl(DomainDao domainDao) throws AuthenticationException {
 		LOGGER = Logger.getLogger(GoogleCalendarDaoImpl.class.getName());
 		this.domainDao = domainDao;
 		service = new CalendarService("Interareti-integra-1.0");
@@ -106,17 +102,12 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 		// Send the request and receive the response:
 		CalendarFeed resultFeed = service.getFeed(feedUrl, CalendarFeed.class);
 		for (CalendarEntry calEntry : resultFeed.getEntries()) {
-			Link link = calEntry.getLink(
-					AclNamespace.LINK_REL_ACCESS_CONTROL_LIST, Link.Type.ATOM);
+			Link link = calEntry.getLink(AclNamespace.LINK_REL_ACCESS_CONTROL_LIST, Link.Type.ATOM);
 			if (link != null) {
-				AclFeed aclFeed = service.getFeed(new URL(link.getHref()),
-						AclFeed.class);
+				AclFeed aclFeed = service.getFeed(new URL(link.getHref()), AclFeed.class);
 				for (AclEntry aclEntry : aclFeed.getEntries()) {
-					System.out.println("\t\tScope: Type="
-							+ aclEntry.getScope().getType() + " ("
-							+ aclEntry.getScope().getValue() + ")");
-					System.out.println("\t\tRole: "
-							+ aclEntry.getRole().getValue());
+					System.out.println("\t\tScope: Type=" + aclEntry.getScope().getType() + " (" + aclEntry.getScope().getValue() + ")");
+					System.out.println("\t\tRole: " + aclEntry.getRole().getValue());
 				}
 				;
 			}
@@ -130,13 +121,11 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 *            An authenticated CalendarService object.
 	 * @throws Exception
 	 */
-	public CalendarFeed getUserCalendars(String domainName, String calendarId)
-			throws Exception {
+	public CalendarFeed getUserCalendars(String domainName, String calendarId) throws Exception {
 		prepareCalendarService(domainName, calendarId);
 		URL feedUrl = new URL(METAFEED_URL);
 		// Send the request and receive the response:
 		return service.getFeed(feedUrl, CalendarFeed.class);
-
 	}
 
 	/**
@@ -147,14 +136,12 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 *            An authenticated CalendarService object.
 	 * @throws Exception
 	 */
-	public CalendarEventFeed getAllEvents(String domainName, String calendarId)
-			throws Exception {
+	public CalendarEventFeed getAllEvents(String domainName, String calendarId) throws Exception {
 		prepareCalendarService(domainName, calendarId);
 		// Set up the URL and the object that will handle the connection:
 		URL feedUrl = new URL(EVENT_FEED_URL);
 		// Send the request and receive the response:
 		return service.getFeed(feedUrl, CalendarEventFeed.class);
-
 	}
 
 	/**
@@ -169,9 +156,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public CalendarEventFeed getEventByTextQuery(String query,
-			String domainName, String calendarId) throws ServiceException,
-			IOException, Exception {
+	public CalendarEventFeed getEventByTextQuery(String query, String domainName, String calendarId) throws ServiceException, IOException, Exception {
 		prepareCalendarService(domainName, calendarId);
 		Query myQuery = new Query(new URL(EVENT_FEED_URL));
 		myQuery.setFullTextQuery(query);
@@ -192,9 +177,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public CalendarEventFeed getEventsByDateRangeQuery(DateTime startTime,
-			DateTime endTime, String domainName, String calendarId)
-			throws ServiceException, IOException, Exception {
+	public CalendarEventFeed getEventsByDateRangeQuery(DateTime startTime, DateTime endTime, String domainName, String calendarId) throws ServiceException, IOException, Exception {
 		prepareCalendarService(domainName, calendarId);
 		URL feedUrl = new URL(EVENT_FEED_URL);
 		CalendarQuery myQuery = new CalendarQuery(feedUrl);
@@ -230,10 +213,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	private CalendarEventEntry createEvent(String eventTitle,
-			String eventContent, Person author, String recurData,
-			boolean isQuickAdd, WebContent wc, String domainName,
-			String calendarId) throws ServiceException, IOException, Exception {
+	private CalendarEventEntry createEvent(String eventTitle, String eventContent, Person author, String recurData, boolean isQuickAdd, WebContent wc, String domainName, String calendarId) throws ServiceException, IOException, Exception {
 		prepareCalendarService(domainName, calendarId);
 		URL postUrl = new URL(EVENT_FEED_URL);
 		CalendarEventEntry myEntry = new CalendarEventEntry();
@@ -249,13 +229,9 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 		// of the event.
 		if (recurData == null) {
 			Calendar calendar = new GregorianCalendar();
-			DateTime startTime = new DateTime(calendar.getTime(), TimeZone
-					.getDefault());
-
+			DateTime startTime = new DateTime(calendar.getTime(), TimeZone.getDefault());
 			calendar.add(Calendar.MINUTE, 30);
-			DateTime endTime = new DateTime(calendar.getTime(), TimeZone
-					.getDefault());
-
+			DateTime endTime = new DateTime(calendar.getTime(), TimeZone.getDefault());
 			When eventTimes = new When();
 			eventTimes.setStartTime(startTime);
 			eventTimes.setEndTime(endTime);
@@ -283,11 +259,8 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public CalendarEventEntry createSingleEvent(String eventTitle,
-			String eventContent, Person author, String domainName,
-			String calendarId) throws ServiceException, IOException, Exception {
-		return createEvent(eventTitle, eventContent, author, null, false, null,
-				domainName, calendarId);
+	public CalendarEventEntry createSingleEvent(String eventTitle, String eventContent, Person author, String domainName, String calendarId) throws ServiceException, IOException, Exception {
+		return createEvent(eventTitle, eventContent, author, null, false, null, domainName, calendarId);
 	}
 
 	/**
@@ -302,11 +275,8 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public CalendarEventEntry createQuickAddEvent(String quickAddContent,
-			Person author, String domainName, String calendarId)
-			throws ServiceException, IOException, Exception {
-		return createEvent(null, quickAddContent, author, null, true, null,
-				domainName, calendarId);
+	public CalendarEventEntry createQuickAddEvent(String quickAddContent, Person author, String domainName, String calendarId) throws ServiceException, IOException, Exception {
+		return createEvent(null, quickAddContent, author, null, true, null, domainName, calendarId);
 	}
 
 	/**
@@ -330,10 +300,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public CalendarEventEntry createWebContentEvent(String title, String type,
-			String url, Person author, String icon, String width,
-			String height, String domainName, String calendarId)
-			throws ServiceException, IOException, Exception {
+	public CalendarEventEntry createWebContentEvent(String title, String type, String url, Person author, String icon, String width, String height, String domainName, String calendarId) throws ServiceException, IOException, Exception {
 		WebContent wc = new WebContent();
 		wc.setHeight(height);
 		wc.setWidth(width);
@@ -341,8 +308,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 		wc.setType(type);
 		wc.setUrl(url);
 		wc.setIcon(icon);
-		return createEvent(title, null, author, null, false, wc, domainName,
-				calendarId);
+		return createEvent(title, null, author, null, false, wc, domainName, calendarId);
 	}
 
 	/**
@@ -355,18 +321,13 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @return The newly-created CalendarEventEntry.
 	 * @throws Exception
 	 */
-	public CalendarEventEntry createRecurringEvent(CalendarService service,
-			String eventTitle, String eventContent, Person author,
-			String domainName, String calendarId) throws Exception {
+	public CalendarEventEntry createRecurringEvent(CalendarService service, String eventTitle, String eventContent, Person author, String domainName, String calendarId) throws Exception {
 		// Specify a recurring event that occurs every Tuesday from May 1,
 		// 2007 through September 4, 2007. Note that we are using iCal (RFC
 		// 2445)
 		// syntax; see http://www.ietf.org/rfc/rfc2445.txt for more information.
-		String recurData = "DTSTART;VALUE=DATE:20070501\r\n"
-				+ "DTEND;VALUE=DATE:20070502\r\n"
-				+ "RRULE:FREQ=WEEKLY;BYDAY=Tu;UNTIL=20070904\r\n";
-		return createEvent(eventTitle, eventContent, author, recurData, false,
-				null, domainName, calendarId);
+		String recurData = "DTSTART;VALUE=DATE:20070501\r\n" + "DTEND;VALUE=DATE:20070502\r\n" + "RRULE:FREQ=WEEKLY;BYDAY=Tu;UNTIL=20070904\r\n";
+		return createEvent(eventTitle, eventContent, author, recurData, false, null, domainName, calendarId);
 	}
 
 	/**
@@ -379,8 +340,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @return The updated CalendarEventEntry object.
 	 * @throws Exception
 	 */
-	public CalendarEventEntry updateTitle(CalendarEventEntry entry,
-			String newTitle, String domainName) throws Exception {
+	public CalendarEventEntry updateTitle(CalendarEventEntry entry, String newTitle, String domainName) throws Exception {
 		prepareCalendarService(domainName, null);
 		entry.setTitle(new PlainTextConstruct(newTitle));
 		return entry.update();
@@ -399,9 +359,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public CalendarEventEntry addReminder(CalendarEventEntry entry,
-			int numMinutes, String domainName) throws ServiceException,
-			IOException, Exception {
+	public CalendarEventEntry addReminder(CalendarEventEntry entry, int numMinutes, String domainName) throws ServiceException, IOException, Exception {
 		prepareCalendarService(domainName, null);
 		Reminder reminder = new Reminder();
 		reminder.setMinutes(numMinutes);
@@ -420,17 +378,14 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public CalendarEventEntry addExtendedProperty(CalendarEventEntry entry,
-			Map<String, String> properties, String domainName)
-			throws ServiceException, IOException, Exception {
+	public CalendarEventEntry addExtendedProperty(CalendarEventEntry entry, Map<String, String> properties, String domainName) throws ServiceException, IOException, Exception {
 		// Add an extended property "id" with value 1234 to the EventEntry
 		// entry.
 		// We specify the complete schema URL to avoid namespace collisions with
 		// other applications that use the same property name. ->
 		// property.setName("http://www.example.com/schemas/2005#mycal.id");
 		prepareCalendarService(domainName, null);
-		Iterator<String> itNames = properties.keySet().iterator(), itValues = properties
-				.values().iterator();
+		Iterator<String> itNames = properties.keySet().iterator(), itValues = properties.values().iterator();
 		ExtendedProperty property;
 		while (itNames.hasNext()) {
 			property = new ExtendedProperty();
@@ -451,16 +406,13 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public AclFeed getAclList(CalendarEntry calEntry, String domainName)
-			throws ServiceException, IOException, Exception {
+	public AclFeed getAclList(CalendarEntry calEntry, String domainName) throws ServiceException, IOException, Exception {
 		prepareCalendarService(domainName, null);
-		Link link = calEntry.getLink(AclNamespace.LINK_REL_ACCESS_CONTROL_LIST,
-				Link.Type.ATOM);
+		Link link = calEntry.getLink(AclNamespace.LINK_REL_ACCESS_CONTROL_LIST, Link.Type.ATOM);
 		if (link != null) {
 			return service.getFeed(new URL(link.getHref()), AclFeed.class);
 		}
 		return null;
-
 	}
 
 	/**
@@ -476,16 +428,13 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public AclEntry addAccessControl(String userEmail, AclRole role,
-			String domainName, String calendarId) throws ServiceException,
-			IOException, Exception {
+	public AclEntry addAccessControl(String userEmail, AclRole role, String domainName, String calendarId) throws ServiceException, IOException, Exception {
 		prepareCalendarService(domainName, calendarId);
 		AclEntry entry = new AclEntry();
 		entry.setScope(new AclScope(AclScope.Type.USER, userEmail));
 		entry.setRole(role);
 		URL url = new URL(ACL_FEED_URL);
 		return service.insert(url, entry);
-
 	}
 
 	/**
@@ -501,9 +450,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public AclEntry updateAccessControl(String userEmail, AclRole newRole,
-			String domainName, String calendarId) throws ServiceException,
-			IOException, Exception {
+	public AclEntry updateAccessControl(String userEmail, AclRole newRole, String domainName, String calendarId) throws ServiceException, IOException, Exception {
 		prepareCalendarService(domainName, calendarId);
 		URL url = new URL(ACL_FEED_URL);
 		AclFeed aclFeed = service.getFeed(url, AclFeed.class);
@@ -513,7 +460,6 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 				return aclEntry.update();
 			}
 		}
-
 		return null;
 	}
 
@@ -529,8 +475,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If the URL is malformed.
 	 */
-	public AclEntry deleteAccessControl(String userEmail, String domainName,
-			String calendarId) throws ServiceException, IOException, Exception {
+	public AclEntry deleteAccessControl(String userEmail, String domainName, String calendarId) throws ServiceException, IOException, Exception {
 		prepareCalendarService(domainName, calendarId);
 		URL url = new URL(ACL_FEED_URL);
 		AclFeed aclFeed = service.getFeed(url, AclFeed.class);
@@ -554,10 +499,7 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 	 * @param location
 	 * @return
 	 */
-	public CalendarEntry createCalendar(String title, String summary,
-			TimeZoneProperty timeZone, HiddenProperty hidden,
-			ColorProperty color, Where location, String domainName)
-			throws Exception {
+	public CalendarEntry createCalendar(String title, String summary, TimeZoneProperty timeZone, HiddenProperty hidden, ColorProperty color, Where location, String domainName) throws Exception {
 		prepareCalendarService(domainName, null);
 		// Create the calendar
 		CalendarEntry calendar = new CalendarEntry();
@@ -570,28 +512,23 @@ public class GoogleCalendarDaoImpl extends GoogleDomainDao {
 		calendar.setAccessLevel(AccessLevelProperty.OWNER);
 		// Insert the calendar
 		URL postUrl = null;
-		postUrl = new URL(
-				"http://www.google.com/calendar/feeds/default/owncalendars/full");
+		postUrl = new URL("http://www.google.com/calendar/feeds/default/owncalendars/full");
 		CalendarEntry cal = service.insert(postUrl, calendar);
-		System.out.println("depois------ "
-				+ URLDecoder.decode(cal.getId(), "UTF-8"));
+		System.out.println("depois------ " + URLDecoder.decode(cal.getId(), "UTF-8"));
 		return cal;
 	}
 
 	/**
 	 * Prepare calendar service - credentials settings
 	 */
-	private void prepareCalendarService(String domainName, String calendarId)
-			throws AuthenticationException, Exception {
+	private void prepareCalendarService(String domainName, String calendarId) throws AuthenticationException, Exception {
 		if (domainName != null) {
 			Login login = domainDao.getGoogleDomainAdminLogin(domainName);
-			LOGGER.log(Level.INFO, "Credentials " + login.getUserName() + "@"
-					+ domainName + " - " + login.getPassword());
+			LOGGER.log(Level.INFO, "Credentials " + login.getUserName() + "@" + domainName + " - " + login.getPassword());
 			String user = login.getUserName() + "@" + domainName;
 			service.setUserCredentials(user, login.getPassword());
 			// The URL for the metafeed of the specified user
-			METAFEED_URL = METAFEED_URL_BASE + user
-					+ OWNCALENDARS_FEED_URL_SUFFIX;
+			METAFEED_URL = METAFEED_URL_BASE + user + OWNCALENDARS_FEED_URL_SUFFIX;
 			if (calendarId == null)
 				ACL_FEED_URL = METAFEED_URL + ACL_FEED_URL_SUFFIX;
 			else

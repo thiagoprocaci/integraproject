@@ -20,7 +20,6 @@ import com.integrareti.integraframework.ui.zk.form.AcsForm;
  */
 @SuppressWarnings("serial")
 public class LoginWindow extends Window {
-
 	private LoginController loginController;
 	private String relayState;
 	private AcsForm acsForm;
@@ -32,15 +31,13 @@ public class LoginWindow extends Window {
 	 * Executed on create window
 	 */
 	public void onCreate() {
-		loginController = (LoginController) SpringUtil
-				.getBean("loginController");
+		loginController = (LoginController) SpringUtil.getBean("loginController");
 		relayState = getDesktop().getExecution().getParameter("RelayState");
 		accessDenied = getDesktop().getExecution().getParameter("accessDenied") != null;
 		usernameTB = (Textbox) getFellow("username");
 		passwordTB = (Textbox) getFellow("password");
 		warnning = (Label) getFellow("warnning");
-		acsForm = new AcsForm(getDesktop().getExecution()
-				.getParameter("domain"));
+		acsForm = new AcsForm(getDesktop().getExecution().getParameter("domain"));
 		this.appendChild(acsForm);
 		if (accessDenied) {
 			warnning.setValue("Acesso negado");
@@ -55,8 +52,7 @@ public class LoginWindow extends Window {
 		Clients.showBusy("Executando login...", true);
 		Person loggedPerson = null;
 		try {
-			loggedPerson = loginController.integraLogin(usernameTB.getText(),
-					passwordTB.getText());
+			loggedPerson = loginController.integraLogin(usernameTB.getText(), passwordTB.getText());
 		} catch (WrongValueException e1) {
 			Clients.showBusy(null, false);
 			warnning.setValue("Login falhou");
@@ -72,12 +68,9 @@ public class LoginWindow extends Window {
 			warnning.setValue("Login inválido");
 			warnning.setVisible(true);
 			passwordTB.setRawValue(null);
-
 		} else {
-			if (relayState != null) {				
-				acsForm.submitForm(SingleSignOn.getInstance().getAuthSSO(
-						loggedPerson.getDomain().getName(),
-						loggedPerson.getGoogleAccount()), relayState);
+			if (relayState != null) {
+				acsForm.submitForm(SingleSignOn.getInstance().getAuthSSO(loggedPerson.getDomain().getName(), loggedPerson.getGoogleAccount()), relayState);
 			} else {
 				Clients.submitForm("loginForm");
 			}

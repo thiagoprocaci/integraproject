@@ -9,20 +9,19 @@ import java.io.Serializable;
  * 
  */
 @SuppressWarnings("serial")
-public class GroupVO implements Serializable{
-
+public class GroupVO implements Serializable {
 	private String classroom;
 	private String subjectCode;
 	private String subjectName;
 	private String departament;
-	
+
 	/**
 	 * Creates a new SubjectVO
 	 * 
 	 * @param name
 	 * @param code
 	 */
-	public GroupVO(String classroom, String subjectCode, String subjectName,String departament) {
+	public GroupVO(String classroom, String subjectCode, String subjectName, String departament) {
 		this.classroom = classroom;
 		this.subjectCode = subjectCode;
 		this.subjectName = subjectName;
@@ -33,7 +32,6 @@ public class GroupVO implements Serializable{
 	 * Creates an empty SubjectVO
 	 */
 	public GroupVO() {
-
 	}
 
 	/**
@@ -97,6 +95,7 @@ public class GroupVO implements Serializable{
 
 	/**
 	 * Sets departament
+	 * 
 	 * @param departament
 	 */
 	public void setDepartament(String departament) {
@@ -145,7 +144,4 @@ public class GroupVO implements Serializable{
 			return false;
 		return true;
 	}
-
-
-
 }

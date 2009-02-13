@@ -7,8 +7,9 @@ import com.integrareti.integraframework.business.Domain;
 
 /**
  * This interface offers methods to manipulates the domain's data
+ * 
  * @author Thiago
- *
+ * 
  */
 public interface DomainDao extends GenericDao<Domain, Integer> {
 	/**
@@ -18,7 +19,7 @@ public interface DomainDao extends GenericDao<Domain, Integer> {
 	 * @throws Exception
 	 */
 	public Domain getDomainByUnitName(String unitName) throws Exception;
-	
+
 	/**
 	 * 
 	 * @param domainName
@@ -26,7 +27,7 @@ public interface DomainDao extends GenericDao<Domain, Integer> {
 	 * @throws Exception
 	 */
 	public Domain getDomainByName(String domainName) throws Exception;
-	
+
 	/**
 	 * 
 	 * @param domainName
@@ -34,12 +35,12 @@ public interface DomainDao extends GenericDao<Domain, Integer> {
 	 * @throws Exception
 	 */
 	public Login getGoogleDomainAdminLogin(String domainName) throws Exception;
-	
+
 	/**
 	 * 
 	 * @param domainName
 	 * @return Returns all domains by name
 	 * @throws Exception
 	 */
-	public List<Domain> getAllByDomainName(String domainName) throws Exception; 	
+	public List<Domain> getAllByDomainName(String domainName) throws Exception;
 }

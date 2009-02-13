@@ -12,8 +12,6 @@
 	style="margin:auto;margin-top:50px;">
 	<style src="/css/main.css" />
 	<html id="warning"
-			use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
-			<h:a href="/Integra/j_acegi_logout">
-					Entrar como outro usuário
-				</h:a>
+		use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
+	<h:a href="/Integra/j_acegi_logout">Entrar como outro usuário</h:a>
 </window>

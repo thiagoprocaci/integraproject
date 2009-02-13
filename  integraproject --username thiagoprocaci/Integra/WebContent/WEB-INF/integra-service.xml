@@ -24,8 +24,7 @@
 	</bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
-		lazy-init="default" autowire="byName"
-		dependency-check="default">
+		lazy-init="default" autowire="byName" dependency-check="default">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
@@ -40,7 +39,7 @@
 			<ref bean="sigaDao" />
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="groupLogService"
 		class="com.integrareti.integraframework.service.integra.IntegraGroupLogServiceImpl"
 		autowire="byName">
@@ -70,7 +69,7 @@
 		class="com.integrareti.integraframework.service.integra.IntegraDeletedGoogleUserImpl">
 		<constructor-arg ref="deletedGoogleUserDao" />
 	</bean>
-	
+
 	<bean id="googleEmailListService"
 		class="com.integrareti.integraframework.service.google.GoogleEmailListServiceImpl">
 		<constructor-arg ref="emailListDao" />
@@ -85,6 +84,6 @@
 			ref="sharedTransactionTemplate">
 		</property>
 		<property name="groupDaoJDBC" ref="groupDaoJDBC"></property>
-		<property name="groupLogDao" ref="groupLogDao"></property> 
+		<property name="groupLogDao" ref="groupLogDao"></property>
 	</bean>
 </beans>

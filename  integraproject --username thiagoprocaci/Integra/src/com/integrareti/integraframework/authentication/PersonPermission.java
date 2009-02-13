@@ -3,14 +3,12 @@ package com.integrareti.integraframework.authentication;
 import com.integrareti.integraframework.business.Person;
 
 /**
- * Describe a permission of a person
- * Component mapped inside Person.hbm.xml
+ * Describe a permission of a person Component mapped inside Person.hbm.xml
  * 
  * @version 1.0
  * @created 02-Oct-2007 15:27:36
  */
 public class PersonPermission {
-
 	private Person person;
 	private Transaction transaction;
 	private boolean read;
@@ -20,18 +18,16 @@ public class PersonPermission {
 	 * Creates a new permission
 	 */
 	public PersonPermission() {
-
 	}
 
 	/**
 	 * Creates a new permission
 	 */
-	public PersonPermission(Person person, Transaction transaction, boolean read,
-			boolean write) {
+	public PersonPermission(Person person, Transaction transaction, boolean read, boolean write) {
 		this.person = person;
 		this.transaction = transaction;
 		this.read = read;
-		this.write =write;
+		this.write = write;
 	}
 
 	/**
@@ -44,6 +40,7 @@ public class PersonPermission {
 
 	/**
 	 * Sets the person
+	 * 
 	 * @param person
 	 */
 	public void setPerson(Person person) {
@@ -60,6 +57,7 @@ public class PersonPermission {
 
 	/**
 	 * Sets the trasaction
+	 * 
 	 * @param transaction
 	 */
 	public void setTransaction(Transaction transaction) {
@@ -76,6 +74,7 @@ public class PersonPermission {
 
 	/**
 	 * Sets read
+	 * 
 	 * @param read
 	 */
 	public void setRead(boolean read) {
@@ -92,6 +91,7 @@ public class PersonPermission {
 
 	/**
 	 * Sets write
+	 * 
 	 * @param write
 	 */
 	public void setWrite(boolean write) {
@@ -103,8 +103,7 @@ public class PersonPermission {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((person == null) ? 0 : person.hashCode());
-		result = prime * result
-				+ ((transaction == null) ? 0 : transaction.hashCode());
+		result = prime * result + ((transaction == null) ? 0 : transaction.hashCode());
 		return result;
 	}
 
@@ -129,5 +128,4 @@ public class PersonPermission {
 			return false;
 		return true;
 	}
-
 }

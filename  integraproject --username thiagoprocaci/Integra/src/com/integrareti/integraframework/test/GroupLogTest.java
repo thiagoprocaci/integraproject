@@ -10,7 +10,6 @@ import com.integrareti.integraframework.dao.integra.DomainDao;
 import com.integrareti.integraframework.dao.integra.GroupLogDao;
 
 public class GroupLogTest extends BasicIntegraTestCase {
-
 	private GroupLogDao groupLogDao;
 	private DomainDao domainDao;
 
@@ -27,10 +26,8 @@ public class GroupLogTest extends BasicIntegraTestCase {
 			SystemGroupTask task = new SystemGroupTask();
 			task.setDescription("teste descricao");
 			task.setName("teste nome");
-			task.addError(new SystemGroupError("teste causa",
-					"teste descricao", task));
-			task.addError(new SystemGroupError("teste causa 2",
-					"teste descricao 2", task));
+			task.addError(new SystemGroupError("teste causa", "teste descricao", task));
+			task.addError(new SystemGroupError("teste causa 2", "teste descricao 2", task));
 			GroupLog groupLog = new GroupLog();
 			groupLog.setGroupDescription("teste com erro");
 			groupLog.setBeginTime(new GregorianCalendar());
@@ -40,9 +37,7 @@ public class GroupLogTest extends BasicIntegraTestCase {
 			groupLog.setGroupName("teste");
 			task.setGroupLog(groupLog);
 			groupLog.addTask(task);
-
 			groupLogDao.save(groupLog);
-
 			task = new SystemGroupTask();
 			task.setDescription("teste descricao");
 			task.setName("teste nome");
@@ -55,7 +50,6 @@ public class GroupLogTest extends BasicIntegraTestCase {
 			groupLog.setGroupName("teste");
 			task.setGroupLog(groupLog);
 			groupLog.addTask(task);
-
 			groupLogDao.save(groupLog);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,14 +61,11 @@ public class GroupLogTest extends BasicIntegraTestCase {
 	public void testQuery() {
 		boolean b = true;
 		try {
-			List<GroupLog> list = groupLogDao.getByPeriod(
-					new GregorianCalendar().getTime(), new GregorianCalendar()
-							.getTime());
+			List<GroupLog> list = groupLogDao.getByPeriod(new GregorianCalendar().getTime(), new GregorianCalendar().getTime());
 			System.out.println("Todos :");
 			for (GroupLog groupLog : list)
 				System.out.println(groupLog.getGroupDescription());
-			list = groupLogDao.getByPeriodWithErrors(new GregorianCalendar()
-					.getTime(), new GregorianCalendar().getTime());
+			list = groupLogDao.getByPeriodWithErrors(new GregorianCalendar().getTime(), new GregorianCalendar().getTime());
 			System.out.println("Todos com erro :");
 			for (GroupLog groupLog : list)
 				System.out.println(groupLog.getGroupDescription());
@@ -110,5 +101,4 @@ public class GroupLogTest extends BasicIntegraTestCase {
 		}
 		assertEquals(true, b);
 	}
-
 }

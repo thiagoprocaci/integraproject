@@ -31,7 +31,6 @@ import com.integrareti.integraframework.ui.zk.window.AnnotateDataBinderWindow;
  */
 @SuppressWarnings("serial")
 public class MyGroupsWindow extends AnnotateDataBinderWindow {
-
 	private MyGroupsController myGroupsController;
 	private Person person;
 	private AcsForm acsForm;
@@ -41,10 +40,8 @@ public class MyGroupsWindow extends AnnotateDataBinderWindow {
 	 */
 	@Override
 	public void doOnCreate() {
-		myGroupsController = (MyGroupsController) SpringUtil
-				.getBean("myGroupsController");
-		person = (Person) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		myGroupsController = (MyGroupsController) SpringUtil.getBean("myGroupsController");
+		person = (Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		acsForm = new AcsForm(person.getDomain().getName());
 		this.appendChild(acsForm);
 	}
@@ -54,8 +51,7 @@ public class MyGroupsWindow extends AnnotateDataBinderWindow {
 	 */
 	@Override
 	public void doBeforeBind() {
-		Integer groupId = Integer.parseInt(Executions.getCurrent()
-				.getParameter("groupId"));
+		Integer groupId = Integer.parseInt(Executions.getCurrent().getParameter("groupId"));
 		Group g = null;
 		try {
 			g = myGroupsController.getMyGroupById(groupId);
@@ -68,10 +64,9 @@ public class MyGroupsWindow extends AnnotateDataBinderWindow {
 			getBindObjects().put("groupOwners", owners.toString());
 			getBindObjects().put("myGroup", g);
 		} catch (Exception e) {
-			addHtmlWarning("warning", "Ocorreu um erro ao carregar os grupos",
-					"", HtmlWarning.ERROR);
+			addHtmlWarning("warning", "Ocorreu um erro ao carregar os grupos", "", HtmlWarning.ERROR);
 			e.printStackTrace();
-		}		
+		}
 	}
 
 	/**
@@ -87,21 +82,15 @@ public class MyGroupsWindow extends AnnotateDataBinderWindow {
 		if (lbxActions.getSelectedIndex() == 1) {
 			Set<Listitem> selecteditems = lbxParticipants.getSelectedItems();
 			if (!selecteditems.isEmpty()) {
-				List<String> addresses = new ArrayList<String>(selecteditems
-						.size());
-				for (Iterator<Listitem> it = selecteditems.iterator(); it
-						.hasNext();) {
-					addresses
-							.add((((Person) ((Listitem) it.next()).getValue()))
-									.getEmail());
+				List<String> addresses = new ArrayList<String>(selecteditems.size());
+				for (Iterator<Listitem> it = selecteditems.iterator(); it.hasNext();) {
+					addresses.add((((Person) ((Listitem) it.next()).getValue())).getEmail());
 				}
 				composeMail(addresses);
 			}
-
 		} else if (lbxActions.getSelectedIndex() == 3) {
 			List<String> addresses = new ArrayList<String>();
-			Set<EmailList> lists = ((Group) getBindObjects().get("myGroup"))
-					.getEmailLists();
+			Set<EmailList> lists = ((Group) getBindObjects().get("myGroup")).getEmailLists();
 			for (EmailList emailList : lists)
 				addresses.add(emailList.getEmailAddress());
 			composeMail(addresses);
@@ -123,11 +112,8 @@ public class MyGroupsWindow extends AnnotateDataBinderWindow {
 			if (it.hasNext())
 				sendTo.append(", ");
 		}
-		String relayState = AcsForm.GOOGLE_MAIL_BASE_URL
-				+ person.getDomain().getName()
-				+ "/?view=cm&cmid=1&tf=1&AuthEventSource=SSO&fs=1&to=" + sendTo;
-		String SAMLResponse = SingleSignOn.getInstance().getAuthSSO(
-				person.getDomain().getName(), person.getGoogleAccount());
+		String relayState = AcsForm.GOOGLE_MAIL_BASE_URL + person.getDomain().getName() + "/?view=cm&cmid=1&tf=1&AuthEventSource=SSO&fs=1&to=" + sendTo;
+		String SAMLResponse = SingleSignOn.getInstance().getAuthSSO(person.getDomain().getName(), person.getGoogleAccount());
 		String javaScript = "window.open('','popWin',\"height=550, width=650,toolbar=no,scrollbars=auto,location=0,status=1,resizable=1,menubar=no\");	";
 		Clients.evalJavaScript(javaScript);
 		acsForm.setSamlResponseTextAreaValue(SAMLResponse);

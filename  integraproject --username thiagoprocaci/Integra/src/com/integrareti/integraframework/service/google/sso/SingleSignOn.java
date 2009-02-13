@@ -9,13 +9,13 @@ import com.integrareti.integraframework.exceptions.SamlException;
  * 
  */
 public class SingleSignOn {
-
 	private static final SingleSignOn INSTANCE = new SingleSignOn();
 
 	/**
 	 * Empty constructor
 	 */
-	private SingleSignOn() {}
+	private SingleSignOn() {
+	}
 
 	/**
 	 * 
@@ -40,16 +40,12 @@ public class SingleSignOn {
 		try {
 			RequestGoogle requestGoogle = RequestGoogle.getInstance();
 			String SAMLReqst = requestGoogle.getRequestGoogle(domainName);
-			ProcessResponseGoogle processResponseGoogle = ProcessResponseGoogle
-					.getInstance();
-			String samlResponse = processResponseGoogle.getSAMLResponse(
-					SAMLReqst, username);
+			ProcessResponseGoogle processResponseGoogle = ProcessResponseGoogle.getInstance();
+			String samlResponse = processResponseGoogle.getSAMLResponse(SAMLReqst, username);
 			return samlResponse;
 		} catch (SamlException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-
 }

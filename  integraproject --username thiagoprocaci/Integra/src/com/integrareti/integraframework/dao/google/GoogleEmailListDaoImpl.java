@@ -30,10 +30,8 @@ import com.integrareti.integraframework.dao.integra.DomainDao;
  * @author Thiago Baesso Procaci
  */
 public class GoogleEmailListDaoImpl extends GoogleDomainDao {
-
 	private static final String EMAIL_LIST_SERVICE_ARG = "gdata-sample-AppsForYourDomain-EmailListService";
 	private static final String EMAIL_LIST_RECIPIENT_SERVICE_ARG = "gdata-sample-AppsForYourDomain-EmailListRecipientService";
-
 	// private variables
 	private String domainUrlBase;
 	private EmailListRecipientService emailListRecipientService;
@@ -50,8 +48,7 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 		LOGGER = Logger.getLogger(GoogleEmailListDaoImpl.class.getName());
 		this.domainDao = domainDao;
 		emailListService = new EmailListService(EMAIL_LIST_SERVICE_ARG);
-		emailListRecipientService = new EmailListRecipientService(
-				EMAIL_LIST_RECIPIENT_SERVICE_ARG);
+		emailListRecipientService = new EmailListRecipientService(EMAIL_LIST_RECIPIENT_SERVICE_ARG);
 	}
 
 	/**
@@ -67,9 +64,7 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public EmailListEntry createEmailList(String emailList, String domainName)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
+	public EmailListEntry createEmailList(String emailList, String domainName) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListService(domainName);
 		emailList = emailList.toLowerCase();
 		LOGGER.log(Level.INFO, "Creating email list '" + emailList + "'.");
@@ -95,13 +90,10 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public EmailListFeed retrieveEmailLists(String recipient, String domainName)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
+	public EmailListFeed retrieveEmailLists(String recipient, String domainName) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListService(domainName);
 		recipient = recipient.toLowerCase();
-		LOGGER.log(Level.INFO, "Retrieving email lists for '" + recipient
-				+ "'.");
+		LOGGER.log(Level.INFO, "Retrieving email lists for '" + recipient + "'.");
 		URL feedUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION);
 		AppsForYourDomainQuery query = new AppsForYourDomainQuery(feedUrl);
 		query.setRecipient(recipient);
@@ -122,20 +114,15 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public EmailListFeed retrieveAllEmailLists(String domainName)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
-
+	public EmailListFeed retrieveAllEmailLists(String domainName) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListService(domainName);
 		LOGGER.log(Level.INFO, "Retrieving all email lists.");
-		URL retrieveUrl = new URL(domainUrlBase + "emailList/"
-				+ SERVICE_VERSION + "/");
+		URL retrieveUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION + "/");
 		EmailListFeed allEmailLists = new EmailListFeed();
 		EmailListFeed currentPage;
 		Link nextLink;
 		do {
-			currentPage = emailListService.getFeed(retrieveUrl,
-					EmailListFeed.class);
+			currentPage = emailListService.getFeed(retrieveUrl, EmailListFeed.class);
 			allEmailLists.getEntries().addAll(currentPage.getEntries());
 			nextLink = currentPage.getLink(Link.Rel.NEXT, Link.Type.ATOM);
 			if (nextLink != null) {
@@ -165,16 +152,10 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public EmailListFeed retrievePageOfEmailLists(String startEmailListName,
-			String domain) throws AppsForYourDomainException, ServiceException,
-			IOException, Exception {
+	public EmailListFeed retrievePageOfEmailLists(String startEmailListName, String domain) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListService(domainName);
-		LOGGER.log(Level.INFO, "Retrieving one page of email lists"
-				+ (startEmailListName != null ? " starting at "
-						+ startEmailListName : "") + ".");
-
-		URL retrieveUrl = new URL(domainUrlBase + "emailList/"
-				+ SERVICE_VERSION + "/");
+		LOGGER.log(Level.INFO, "Retrieving one page of email lists" + (startEmailListName != null ? " starting at " + startEmailListName : "") + ".");
+		URL retrieveUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION + "/");
 		AppsForYourDomainQuery query = new AppsForYourDomainQuery(retrieveUrl);
 		query.setStartEmailListName(startEmailListName);
 		return emailListService.query(query, EmailListFeed.class);
@@ -193,15 +174,11 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public EmailListEntry retrieveEmailList(String emailList, String domainName)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
+	public EmailListEntry retrieveEmailList(String emailList, String domainName) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListService(domainName);
 		emailList = emailList.toLowerCase();
 		LOGGER.log(Level.INFO, "Retrieving email list '" + emailList + "'.");
-
-		URL retrieveUrl = new URL(domainUrlBase + "emailList/"
-				+ SERVICE_VERSION + "/" + emailList);
+		URL retrieveUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION + "/" + emailList);
 		return emailListService.getEntry(retrieveUrl, EmailListEntry.class);
 	}
 
@@ -217,16 +194,11 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public void deleteEmailList(String emailList, String domainName)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
+	public void deleteEmailList(String emailList, String domainName) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListService(domainName);
 		emailList = emailList.toLowerCase();
-		LOGGER.log(Level.INFO, "Attempting to delete emailList '" + emailList
-				+ "'.");
-
-		URL deleteUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION
-				+ "/" + emailList);
+		LOGGER.log(Level.INFO, "Attempting to delete emailList '" + emailList + "'.");
+		URL deleteUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION + "/" + emailList);
 		emailListService.delete(deleteUrl);
 	}
 
@@ -245,30 +217,22 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public EmailListRecipientFeed retrieveAllRecipients(String emailList,
-			String domainName) throws AppsForYourDomainException,
-			ServiceException, IOException, Exception {
+	public EmailListRecipientFeed retrieveAllRecipients(String emailList, String domainName) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListRecipientService(domainName);
 		emailList = emailList.toLowerCase();
-		LOGGER.log(Level.INFO, "Retrieving all recipients in emailList '"
-				+ emailList + "'.");
-
-		URL retrieveUrl = new URL(domainUrlBase + "emailList/"
-				+ SERVICE_VERSION + "/" + emailList + "/recipient/");
-
+		LOGGER.log(Level.INFO, "Retrieving all recipients in emailList '" + emailList + "'.");
+		URL retrieveUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION + "/" + emailList + "/recipient/");
 		EmailListRecipientFeed allRecipients = new EmailListRecipientFeed();
 		EmailListRecipientFeed currentPage;
 		Link nextLink;
 		do {
-			currentPage = emailListRecipientService.getFeed(retrieveUrl,
-					EmailListRecipientFeed.class);
+			currentPage = emailListRecipientService.getFeed(retrieveUrl, EmailListRecipientFeed.class);
 			allRecipients.getEntries().addAll(currentPage.getEntries());
 			nextLink = currentPage.getLink(Link.Rel.NEXT, Link.Type.ATOM);
 			if (nextLink != null) {
 				retrieveUrl = new URL(nextLink.getHref());
 			}
 		} while (nextLink != null);
-
 		return allRecipients;
 	}
 
@@ -295,22 +259,14 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public EmailListRecipientFeed retrievePageOfRecipients(String emailList,
-			String startRecipient, String domainName)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
+	public EmailListRecipientFeed retrievePageOfRecipients(String emailList, String startRecipient, String domainName) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListRecipientService(domainName);
 		emailList = emailList.toLowerCase();
-		LOGGER.log(Level.INFO, "Retrieving one page of recipients"
-				+ (startRecipient != null ? " starting at " + startRecipient
-						: "") + ".");
-
-		URL retrieveUrl = new URL(domainUrlBase + "emailList/"
-				+ SERVICE_VERSION + "/" + emailList + "/recipient/");
+		LOGGER.log(Level.INFO, "Retrieving one page of recipients" + (startRecipient != null ? " starting at " + startRecipient : "") + ".");
+		URL retrieveUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION + "/" + emailList + "/recipient/");
 		AppsForYourDomainQuery query = new AppsForYourDomainQuery(retrieveUrl);
 		query.setStartRecipient(startRecipient);
-		return emailListRecipientService.query(query,
-				EmailListRecipientFeed.class);
+		return emailListRecipientService.query(query, EmailListRecipientFeed.class);
 	}
 
 	/**
@@ -329,26 +285,17 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public EmailListRecipientEntry addRecipientToEmailList(
-			String recipientAddress, String emailList, String domainName)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
-
+	public EmailListRecipientEntry addRecipientToEmailList(String recipientAddress, String emailList, String domainName) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListRecipientService(domainName);
 		recipientAddress = recipientAddress.toLowerCase();
 		emailList = emailList.toLowerCase();
-		LOGGER.log(Level.INFO, "Adding '" + recipientAddress
-				+ "' to emailList '" + emailList + "'.");
-
+		LOGGER.log(Level.INFO, "Adding '" + recipientAddress + "' to emailList '" + emailList + "'.");
 		EmailListRecipientEntry emailListRecipientEntry = new EmailListRecipientEntry();
 		Who who = new Who();
 		who.setEmail(recipientAddress);
 		emailListRecipientEntry.addExtension(who);
-
-		URL insertUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION
-				+ "/" + emailList + "/recipient");
-		return emailListRecipientService.insert(insertUrl,
-				emailListRecipientEntry);
+		URL insertUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION + "/" + emailList + "/recipient");
+		return emailListRecipientService.insert(insertUrl, emailListRecipientEntry);
 	}
 
 	/**
@@ -365,19 +312,12 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public void removeRecipientFromEmailList(String recipientAddress,
-			String emailList, String domainName)
-			throws AppsForYourDomainException, ServiceException, IOException,
-			Exception {
+	public void removeRecipientFromEmailList(String recipientAddress, String emailList, String domainName) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		prepareEmailListRecipientService(domainName);
-
 		recipientAddress = recipientAddress.toLowerCase();
 		emailList = emailList.toLowerCase();
-		LOGGER.log(Level.INFO, "Removing '" + recipientAddress
-				+ "' from emailList '" + emailList + "'.");
-
-		URL deleteUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION
-				+ "/" + emailList + "/recipient/" + recipientAddress);
+		LOGGER.log(Level.INFO, "Removing '" + recipientAddress + "' from emailList '" + emailList + "'.");
+		URL deleteUrl = new URL(domainUrlBase + "emailList/" + SERVICE_VERSION + "/" + emailList + "/recipient/" + recipientAddress);
 		emailListRecipientService.delete(deleteUrl);
 	}
 
@@ -391,15 +331,11 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 *            domain name
 	 * @throws AuthenticationException
 	 */
-	private void prepareEmailListService(String domain)
-			throws AuthenticationException, Exception {
+	private void prepareEmailListService(String domain) throws AuthenticationException, Exception {
 		domainUrlBase = APPS_FEEDS_URL_BASE + domain + "/";
-		LOGGER.log(Level.INFO,
-				"Preparing emailListService with domainUrlBase = "
-						+ domainUrlBase);
+		LOGGER.log(Level.INFO, "Preparing emailListService with domainUrlBase = " + domainUrlBase);
 		Login login = domainDao.getGoogleDomainAdminLogin(domain);
-		emailListService.setUserCredentials(login.getUserName() + "@" + domain,
-				login.getPassword());
+		emailListService.setUserCredentials(login.getUserName() + "@" + domain, login.getPassword());
 	}
 
 	/**
@@ -412,15 +348,11 @@ public class GoogleEmailListDaoImpl extends GoogleDomainDao {
 	 *            domain name
 	 * @throws AuthenticationException
 	 */
-	private void prepareEmailListRecipientService(String domain)
-			throws AuthenticationException, Exception {
+	private void prepareEmailListRecipientService(String domain) throws AuthenticationException, Exception {
 		this.domainName = domain;
 		domainUrlBase = APPS_FEEDS_URL_BASE + domain + "/";
-		LOGGER.log(Level.INFO,
-				"Preparing emailListRecipientService with domainUrlBase = "
-						+ domainUrlBase);
+		LOGGER.log(Level.INFO, "Preparing emailListRecipientService with domainUrlBase = " + domainUrlBase);
 		Login login = domainDao.getGoogleDomainAdminLogin(domain);
-		emailListRecipientService.setUserCredentials(login.getUserName() + "@"
-				+ domain, login.getPassword());
+		emailListRecipientService.setUserCredentials(login.getUserName() + "@" + domain, login.getPassword());
 	}
 }

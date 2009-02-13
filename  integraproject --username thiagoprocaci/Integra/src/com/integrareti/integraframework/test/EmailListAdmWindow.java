@@ -17,48 +17,40 @@ import com.integrareti.integraframework.ui.zk.window.AbstractWindow;
 
 @SuppressWarnings("all")
 public class EmailListAdmWindow extends AbstractWindow {
-
 	private GroupImportController groupImportController;
 	private EmailListController emailListController;
 	private Listbox lbxGroups;
-	
-	public void onCreate() {
-		groupImportController = (GroupImportController) SpringUtil
-				.getBean("groupImportController");
-		emailListController = (EmailListController) SpringUtil
-				.getBean("emailListController");
-		lbxGroups = (Listbox) getFellow("lbxGroups");
 
+	public void onCreate() {
+		groupImportController = (GroupImportController) SpringUtil.getBean("groupImportController");
+		emailListController = (EmailListController) SpringUtil.getBean("emailListController");
+		lbxGroups = (Listbox) getFellow("lbxGroups");
 		List<Group> groups = loadGroupsWithEmailListOrNot(false);
-	
-		
 		for (Group group : groups) {
 			Listitem lIt = new Listitem();
 			lIt.appendChild(new Listcell(group.getName()));
 			lIt.appendChild(new Listcell(group.getDescription()));
-			lIt.appendChild(new Listcell(group.getParticipants().size()+""));
-			lIt.appendChild(new Listcell(group.getEmailLists().size()+""));
+			lIt.appendChild(new Listcell(group.getParticipants().size() + ""));
+			lIt.appendChild(new Listcell(group.getEmailLists().size() + ""));
 			lbxGroups.appendChild(lIt);
 		}
-		
-		//setVariable("groups", groups, true);
-		//AnnotateDataBinder binder = new AnnotateDataBinder(this);
-		//binder.loadAll();
-		
+		// setVariable("groups", groups, true);
+		// AnnotateDataBinder binder = new AnnotateDataBinder(this);
+		// binder.loadAll();
 	}
+
 	private List<Group> loadGroupsWithEmailListOrNot(boolean with) {
 		List<Group> groups = null;
 		try {
-			if(with){
-				groups = groupImportController.getGroups(((Person)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getDomain().getName());
-			}else{
-				groups = groupImportController.getGroupsWithoutEmailList(((Person)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getDomain().getName());
+			if (with) {
+				groups = groupImportController.getGroups(((Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getDomain().getName());
+			} else {
+				groups = groupImportController.getGroupsWithoutEmailList(((Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getDomain().getName());
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			addHtmlWarning("warnings", "Erro ao carregar grupos ", e.getMessage(), HtmlWarning.ERROR);
 			e.printStackTrace();
 		}
 		return groups;
 	}
-
 }

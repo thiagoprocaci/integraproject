@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
-	
+
 	<bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 		<property name="corePoolSize" value="5" />
@@ -68,7 +68,7 @@
 	<!--<bean id="genericDao"
 		class="com.integrareti.integraframework.dao.integra.GenericDaoHibernate"
 		autowire="autodetect" />
-
+		
 	--><!-- BasicAclObjectIdentityDAO: Hibernate implementation-->
 	<bean id="basicAclObjectIdentityDAO"
 		class="com.integrareti.integraframework.dao.acegi.BasicAclObjectIdentityDAOHibernate">
@@ -85,12 +85,14 @@
 
 
 	<!-- SERVICE -->
-		<!-- Transaction-->
+	<!-- Transaction-->
 	<bean id="sharedTransactionTemplate"
 		class="org.springframework.transaction.support.TransactionTemplate">
 		<property name="isolationLevelName"
 			value="ISOLATION_READ_COMMITTED" />
-		<property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW"></property>
+		<property name="propagationBehaviorName"
+			value="PROPAGATION_REQUIRES_NEW">
+		</property>
 		<property name="timeout" value="60" />
 		<property name="transactionManager">
 			<ref bean="transactionManager" />
@@ -107,11 +109,12 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<!-- SERVICE beans --><!--
-	<bean id="serviceInterface"
+		<bean id="serviceInterface"
 		class="com.integrareti.integraframework.service.integra.IntegraServiceImpl">
 		<constructor-arg ref="genericDao" />
-	</bean>
-	--><bean id="sigaService"
+		</bean>
+	-->
+	<bean id="sigaService"
 		class="com.integrareti.integraframework.service.siga.SigaServiceImpl"
 		autowire="byName">
 		<constructor-arg>

@@ -5,14 +5,12 @@ package com.integrareti.integraframework.exceptions;
  */
 @SuppressWarnings("serial")
 public class SamlException extends Exception {
-
 	protected String message = "";
 
 	/**
 	 * Creates a new SamlException
 	 */
 	public SamlException() {
-
 	}
 
 	/**
