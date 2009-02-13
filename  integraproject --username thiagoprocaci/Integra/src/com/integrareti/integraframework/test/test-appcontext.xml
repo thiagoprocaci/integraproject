@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="10" />
+		<property name="queueCapacity" value="25" />
+	</bean>
+
+	<bean id="emailListDao"
+		class="com.integrareti.integraframework.dao.integra.EmailListDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.EmailList" />
+	</bean>
+	<bean id="userGroupDao"
+		class="com.integrareti.integraframework.dao.integra.UserGroupDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.authentication.UserGroup" />
+	</bean>
+
+	<bean id="personDao"
+		class="com.integrareti.integraframework.dao.integra.PersonDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.Person" />
+	</bean>
+
+	<bean id="domainDao"
+		class="com.integrareti.integraframework.dao.integra.DomainDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.Domain" />
+	</bean>
+
+	<bean id="groupDao"
+		class="com.integrareti.integraframework.dao.integra.GroupDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.Group" />
+	</bean>
+
+	<bean id="sigaDao"
+		class="com.integrareti.integraframework.dao.siga.SigaDaoJDBC"
+		autowire="autodetect" />
+
+	<bean id="googlePersonDao"
+		class="com.integrareti.integraframework.dao.google.GoogleUserAccountDaoImpl"
+		autowire="autodetect">
+		<constructor-arg ref="domainDao" />
+	</bean>
+	<bean id="googleEmailListDao"
+		class="com.integrareti.integraframework.dao.google.GoogleEmailListDaoImpl"
+		autowire="autodetect">
+		<constructor-arg ref="domainDao" />
+	</bean>
+
+	<!--<bean id="genericDao"
+		class="com.integrareti.integraframework.dao.integra.GenericDaoHibernate"
+		autowire="autodetect" />
+
+	--><!-- BasicAclObjectIdentityDAO: Hibernate implementation-->
+	<bean id="basicAclObjectIdentityDAO"
+		class="com.integrareti.integraframework.dao.acegi.BasicAclObjectIdentityDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- BasicAclPermissionDAO: Hibernate implementation -->
+	<bean id="basicAclPermissionDAO"
+		class="com.integrareti.integraframework.dao.acegi.BasicAclPermissionDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+
+
+	<!-- SERVICE -->
+		<!-- Transaction-->
+	<bean id="sharedTransactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="isolationLevelName"
+			value="ISOLATION_READ_COMMITTED" />
+		<property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW"></property>
+		<property name="timeout" value="60" />
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+		lazy-init="default" autowire="autodetect"
+		dependency-check="default">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- SERVICE beans --><!--
+	<bean id="serviceInterface"
+		class="com.integrareti.integraframework.service.integra.IntegraServiceImpl">
+		<constructor-arg ref="genericDao" />
+	</bean>
+	--><bean id="sigaService"
+		class="com.integrareti.integraframework.service.siga.SigaServiceImpl"
+		autowire="byName">
+		<constructor-arg>
+			<ref bean="sigaDao" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="userGroupService"
+		class="com.integrareti.integraframework.service.integra.IntegraUserGroupServiceImpl">
+		<constructor-arg ref="userGroupDao" />
+	</bean>
+
+	<bean id="personService"
+		class="com.integrareti.integraframework.service.google.GoogleUserAccountServiceImpl">
+		<constructor-arg ref="googlePersonDao" />
+		<constructor-arg ref="personDao" />
+	</bean>
+
+	<bean id="domainService"
+		class="com.integrareti.integraframework.service.integra.IntegraDomainServiceImpl">
+		<constructor-arg ref="domainDao" />
+	</bean>
+
+	<bean id="googleEmailListService"
+		class="com.integrareti.integraframework.service.google.GoogleEmailListServiceImpl">
+		<constructor-arg ref="emailListDao" />
+		<constructor-arg ref="googleEmailListDao" />
+	</bean>
+
+	<bean id="groupService"
+		class="com.integrareti.integraframework.service.integra.IntegraGroupServiceImpl">
+		<constructor-arg ref="groupDao" />
+		<constructor-arg ref="googleEmailListService" />
+		<property name="transactionTemplate"
+			ref="sharedTransactionTemplate">
+		</property>
+	</bean>
+
+	<!-- ########### SESSION FACTORY ########## -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLInnoDBDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernateFilter">
+					org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
+				</prop>
+			</props>
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>
+					classpath:/com/integrareti/integraframework/dao/hbm
+				</value>
+			</list>
+		</property>
+
+
+
+	</bean>
+
+	<!-- ####### DATASOURCE ########## -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://localhost:3306/integra</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value></value>
+		</property>
+	</bean>
+
+
+</beans>

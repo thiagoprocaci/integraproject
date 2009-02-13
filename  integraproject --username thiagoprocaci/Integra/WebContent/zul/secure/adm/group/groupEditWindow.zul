@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	xmlns:n="http://www.zkoss.org/2005/zk/native">
+	<style src="/css/main.css" />
+	<window id="groupAdmManagerWindow"
+		use="com.integrareti.integraframework.ui.zk.window.adm.group.GroupEditWindow"
+		title="Editar Grupo" border="normal" Sclass="integra-window">
+		<caption>
+
+			<toolbarbutton label="Novo Grupo"
+				image="/img/user-group-32x32.png" forward="onNewGroup" />
+			<toolbarbutton label="Editar Grupo"
+				image="/img/edit-user-32x32.png" forward="onEditGroup" />
+		</caption>
+		<window id="deleteWinConfimation" visible="false"
+			title="Exclusão" width="300px" border="normal">
+			<vbox>
+				<hbox>
+					<label value="Grupo a ser excluido: " />
+					<label id="lbldeleteWin" value="@{group.name}" />
+				</hbox>
+				<label value="Deseja realmente excluir o grupo?" />
+				<hbox>
+					<button label="Sim" width="85px"
+						onClick="groupAdmManagerWindow.deleteGroup()" />
+					<button label="Não" width="85px"
+						onClick="deleteWinConfimation.doEmbedded();deleteWinConfimation.setVisible(false)" />
+				</hbox>
+			</vbox>
+		</window>
+		<window id="popupWinOwners"
+			title="Adicionar/Remover responsáveis" border="normal" width="700px"
+			visible="false">
+			<vbox>
+				<label id="warning" visible="false" style="color:red" />
+				<hbox>
+					<label value="Nome: " />
+					<textbox width="575px" id="popupWinOwnersTextBox"
+						onOK="groupAdmManagerWindow.popupWinOwnersSearch()" />
+					<button label="Buscar" width="60px"
+						onClick="groupAdmManagerWindow.popupWinOwnersSearch()" />
+				</hbox>
+				<hbox>
+					<listbox id="ownersNotAdded"
+						model="@{allNameVOsOwnersNotAdded}" multiple="true"
+						checkmark="true" mold="paging" visible="true" width="340px">
+						<auxhead>
+							<auxheader label="Não adicionados"
+								colspan="2">
+								<separator width="25px"
+									orient="vertical" />
+								<button label="Adicionar >>"
+									width="120px"
+									onClick="groupAdmManagerWindow.popupWinOwnersAddPerson()" />
+							</auxheader>
+						</auxhead>
+						<listhead>
+							<listheader label="Matrícula" />
+							<listheader label="Nome" />
+						</listhead>
+						<listitem self="@{each=nameVO}"
+							value="@{nameVO}">
+							<listcell label="@{nameVO.registry}" />
+							<listcell label="@{nameVO.name}" />
+						</listitem>
+					</listbox>
+					<listbox id="ownersAdded"
+						model="@{allNameVOsOwnersAdded}" multiple="true" checkmark="true"
+						mold="paging" visible="true" width="340px" pageSize="12">
+						<auxhead>
+							<auxheader label="Adicionados"
+								colspan="2">
+								<separator width="25px"
+									orient="vertical" />
+								<button label="&#60;&#60; Remover"
+									width="120px"
+									onClick="groupAdmManagerWindow.popupWinOwnersRemovePerson()" />
+							</auxheader>
+						</auxhead>
+						<listhead>
+							<listheader label="Matrícula" />
+							<listheader label="Nome" />
+						</listhead>
+						<listitem self="@{each=nameVO}"
+							value="@{nameVO}">
+							<listcell label="@{nameVO.registry}" />
+							<listcell label="@{nameVO.name}" />
+						</listitem>
+					</listbox>
+				</hbox>
+				<hbox>
+					<button label="OK" width="85px"
+						onClick="groupAdmManagerWindow.popupWinOwnersOnOk()" />
+					<button label="Cancelar" width="85px"
+						onClick="groupAdmManagerWindow.popupWinOwnersOnCancel()" />
+				</hbox>
+			</vbox>
+		</window>
+
+		<window id="popupWinParticipants"
+			title="Adicionar/Remover participantes" border="normal"
+			visible="false" width="700px">
+			<vbox>
+				<label id="warning" visible="false" style="color:red" />
+				<hbox>
+					<label value="Nome: " />
+					<textbox width="575px"
+						id="popupWinParticipantsTextBox"
+						onOK="groupAdmManagerWindow.popupWinParticipantsSearch()" />
+					<button label="Buscar" width="60px"
+						onClick="groupAdmManagerWindow.popupWinParticipantsSearch()" />
+				</hbox>
+				<hbox>
+					<listbox id="participantsNotAdded"
+						model="@{allNameVOsParticipantsNotAdded}" multiple="true"
+						checkmark="true" mold="paging" visible="true" width="340px">
+						<auxhead>
+							<auxheader label="Não adicionados"
+								colspan="2">
+								<separator width="25px"
+									orient="vertical" />
+								<button label="Adicionar >>"
+									width="120px"
+									onClick="groupAdmManagerWindow.popupWinParticipantsAddPerson()" />
+							</auxheader>
+						</auxhead>
+						<listhead>
+							<listheader label="Matrícula" />
+							<listheader label="Nome" />
+						</listhead>
+						<listitem self="@{each=nameVO}"
+							value="@{nameVO}">
+							<listcell label="@{nameVO.registry}" />
+							<listcell label="@{nameVO.name}" />
+						</listitem>
+					</listbox>
+					<listbox id="participantsAdded"
+						model="@{allNameVOsParticipantsAdded}" multiple="true"
+						checkmark="true" mold="paging" visible="true" width="340px"
+						pageSize="12">
+						<auxhead>
+							<auxheader label="Adicionados"
+								colspan="2">
+								<separator width="25px"
+									orient="vertical" />
+								<button label="&#60;&#60; Remover"
+									width="120px"
+									onClick="groupAdmManagerWindow.popupWinParticipantsRemovePerson()" />
+							</auxheader>
+						</auxhead>
+						<listhead>
+							<listheader label="Matrícula" />
+							<listheader label="Nome" />
+						</listhead>
+						<listitem self="@{each=nameVO}"
+							value="@{nameVO}">
+							<listcell label="@{nameVO.registry}" />
+							<listcell label="@{nameVO.name}" />
+						</listitem>
+					</listbox>
+				</hbox>
+				<hbox>
+					<button label="OK" width="85px"
+						onClick="groupAdmManagerWindow.popupWinParticipantsOnOk()" />
+					<button label="Cancelar" width="85px"
+						onClick="groupAdmManagerWindow.popupWinParticipantsOnCancel()" />
+				</hbox>
+			</vbox>
+		</window>
+
+		<!-- Emmbedded WINDOW -->
+		<vbox width="100%">
+			<html id="warning"
+				use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
+			<hbox id="hbxSearch">
+				<groupbox>
+					<caption label="Busca"></caption>
+					<vbox>
+						<hbox>
+							<vbox>
+								Descrição
+								<textbox id="descriptionTextBox"
+									width="250px" onOK="groupAdmManagerWindow.searchGroups()" />
+							</vbox>
+							<vbox>
+								Palavra chave (ano, depto)
+								<textbox id="keyWordTextBox"
+									width="200px" onOK="groupAdmManagerWindow.searchGroups()" />
+							</vbox>
+						</hbox>
+						<button label="Buscar Grupo"
+							onClick="groupAdmManagerWindow.searchGroups()" />
+					</vbox>
+				</groupbox>
+			</hbox>
+			<listbox id="lbxGroups" model="@{groups}" multiple="false"
+				checkmark="true" mold="paging" visible="false"
+				onSelect="groupAdmManagerWindow.onSelectGroupsListBox()">
+				<auxhead>
+					<auxheader label="Resultado(s)" colspan="4"
+						align="center" />
+				</auxhead>
+				<listhead>
+					<listheader label="Grupo" />
+					<listheader label="Descrição" />
+				</listhead>
+				<listitem self="@{each=group}" value="@{group}">
+					<listcell label="@{group.name}" />
+					<listcell label="@{group.description}" />
+				</listitem>
+			</listbox>
+			<grid visible="false" id="groupDescriptorGrid">
+				<rows>
+					<row>
+						Descrição
+						<textbox value="@{group.description}"
+							id="groupDescription" width="500px" />
+					</row>
+					<row>
+						Código
+						<hbox>
+							<label value="@{group.name}"
+								id="lblGroupName" />
+							<label value="grupo_" visible="false"
+								id="lblGrupoPrefix" />
+							<textbox value="@{group.name}"
+								id="tbxGroupName" visible="false">
+							</textbox>
+						</hbox>
+					</row>
+					<row>
+						Número de listas
+						<label value="@{group.emailLists.size}"
+							id="groupNumberEmailLists" />
+					</row>
+					<row>
+						Número de participantes
+						<label value="@{group.participants.size}"
+							id="groupNumberParticipants" />
+					</row>
+					<row>
+						Adicionar/Remover participante
+						<vbox>
+							<hbox>
+								Matrícula
+								<textbox id="searchParticipant" />
+								<button label="Adicionar"
+									onClick="groupAdmManagerWindow.addPersonSearch()" />
+								<button label="Remover"
+									onClick="groupAdmManagerWindow.removePersonSearch()" />
+								<button label="Buscar..."
+									onClick="groupAdmManagerWindow.initPopupWinParticipants()" />
+							</hbox>
+							<vbox id="participantDataVBox"
+								visible="false">
+								<hbox>
+									Matrícula:
+									<label id="lblPersonRegistry"
+										value="@{searchedPerson.registry}" />
+								</hbox>
+								<hbox>
+									Nome:
+									<label id="lblPersonName"
+										value="@{searchedPerson.name}" />
+								</hbox>
+								<hbox>
+									<button label="Confirmar"
+										onClick="groupAdmManagerWindow.confirmParticipantToGroup()" />
+									<button label="Cancelar"
+										onClick="groupAdmManagerWindow.cancelParticipantToGroup()" />
+								</hbox>
+							</vbox>
+						</vbox>
+					</row>
+					<row>
+						Adicionar/Remover responsável
+						<vbox>
+							<hbox>
+								Matrícula
+								<textbox id="searchOwner" />
+								<button label="Adicionar"
+									onClick="groupAdmManagerWindow.addOwnerSearch()" />
+								<button label="Remover"
+									onClick="groupAdmManagerWindow.removeOwnerSearch()" />
+								<button label="Buscar..."
+									onClick="groupAdmManagerWindow.initPopupWinOwners()" />
+							</hbox>
+							<vbox id="ownerDataVBox" visible="false">
+								<hbox>
+									Matrícula:
+									<label id="lblOwnerRegistry"
+										value="@{searchedOwner.registry}" />
+								</hbox>
+								<hbox>
+									Nome:
+									<label id="lblOwnerName"
+										value="@{searchedOwner.name}" />
+								</hbox>
+								<hbox>
+									<button label="Confirmar"
+										onClick="groupAdmManagerWindow.confirmOwnerToGroup()" />
+									<button label="Cancelar"
+										onClick="groupAdmManagerWindow.cancelOwnerToGroup()" />
+								</hbox>
+							</vbox>
+						</vbox>
+					</row>
+				</rows>
+			</grid>
+			<hbox id="hBoxButtons" visible="false">
+				<button label="Salvar"
+					onClick="groupAdmManagerWindow.saveGroup()" />
+				<button id="btnExcluir" label="Excluir"
+					onClick="deleteWinConfimation.doHighlighted()" />
+				<button label="Atualização de participantes automática"
+					id="btnAtAutomatica"
+					onClick="groupAdmManagerWindow.groupUpDate() " />
+			</hbox>
+		</vbox>
+	</window>
+</zk>

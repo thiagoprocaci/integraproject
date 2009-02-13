@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="com.integrareti.integraframework.business">
+	<class name="Person" table="`person`">
+		<comment></comment>
+		<id name="id" type="int">
+			<column name="personID" />
+			<generator class="native" />
+		</id>
+		<property name="googleAccount" type="string"
+			column="googleAccount" unique="true" access="property" />
+
+		<property name="password" type="string" column="appsPassword"
+			unique="true" access="property" />
+
+		<property name="registry" type="string" column="registry"
+			unique="true" />
+
+		<many-to-one name="domain" column="domainID" class="Domain"
+			lazy="false" />
+
+		<!-- <set name="personPermissions" table="transaction_person">
+			<key column="personID"></key>
+			<composite-element class="com.integrareti.integraframework.authentication.PersonPermission">
+			<parent name="person" />
+			<many-to-one name="transaction" column="transactionID"
+			not-null="true" class="com.integrareti.integraframework.authentication.Transaction" />
+			<property name="write" column="write" type="boolean" />
+			<property name="read" column="read" type="boolean" />
+			</composite-element>
+			</set> -->
+
+		<set name="userGroups" table="person_usergroup"
+			cascade="save-update" batch-size="20" lazy="false">
+			<key column="personID" />
+			<many-to-many
+				class="com.integrareti.integraframework.authentication.UserGroup"
+				column="usergroupID" />
+		</set>
+
+	</class>
+</hibernate-mapping>

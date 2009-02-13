@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+	package="com.integrareti.integraframework.authentication">
+	<class name="UserGroup" table="`usergroup`">
+		<comment></comment>
+		<id name="id" type="int">
+			<column name="userGroupID" />
+			<generator class="native" />
+		</id>
+		<property name="name" type="string" column="name" />
+
+		<!-- 		<set name="groupPermissions" table="transaction_usergroup">
+			<key column="userGroupID"></key>
+			
+			<composite-element class="GroupPermission">
+			<parent name="userGroup" />
+			<many-to-one name="transaction" column="transactionID"
+			not-null="true" class="Transaction" />	
+			<property name="write" column="write" type="boolean" />
+			<property name="read" column="read" type="boolean" />
+			</composite-element>
+			
+			</set> -->
+	</class>
+</hibernate-mapping>

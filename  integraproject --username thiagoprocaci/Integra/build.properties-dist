@@ -1,0 +1,6 @@
+appserver.home=c:/Arquivos de programas/Apache Software Foundation/Tomcat 5.5
+deploy.path=${appserver.home}\\webapps
+
+tomcat.manager.url=http://localhost:8080/manager
+tomcat.manager.username=admin
+tomcat.manager.password=

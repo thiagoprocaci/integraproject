@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	xmlns:n="http://www.zkoss.org/2005/zk/native" id="groupImportWindow"
+	use="com.integrareti.integraframework.ui.zk.window.adm.group.GroupImportWindow"
+	title="Importar Grupos" border="normal" Sclass="integra-window">
+	<style src="/css/main.css"/>
+	<vbox width="100%">
+		<html id="warning"
+			use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
+		<hbox>
+			<vbox>
+				<hbox>
+					<groupbox>
+						<caption label="Dados obrigatórios"></caption>
+						<hbox>
+							<vbox>
+								Unidade
+								<listbox id="units" model="@{units}"
+									mold="select" width="90px"
+									onSelect="groupImportWindow.onSelectUnit()">
+									<listitem self="@{each=unit}"
+										value="@{unit}">
+										<listcell label="@{unit.name}" />
+									</listitem>
+								</listbox>
+							</vbox>
+							<vbox>
+								Semestre
+								<listbox id="semester" mold="select"
+									width="90px">
+									<listitem>
+										<listcell label="1" />
+									</listitem>
+									<listitem>
+										<listcell label="2" />
+									</listitem>
+								</listbox>
+							</vbox>
+							<vbox>
+								Ano
+								<textbox id="year" width="90px"
+									maxlength="4" />
+								<n:br />
+							</vbox>
+							<vbox>
+								Resultados
+								<listbox id="result"
+									onSelect="groupImportWindow.onSelectResult()" mold="select"
+									width="90px">
+									<listitem label="25" />
+									<listitem label="50" />
+									<listitem label="100" />
+								</listbox>
+							</vbox>
+						</hbox>
+					</groupbox>
+					<groupbox>
+						<caption label="Filtros"></caption>
+						<vbox spacing="10px">
+							<radiogroup>
+								<radio label="Depto" checked="true"
+									onCheck="setVisibleVBoxs(false,true)" />
+								<radio label="Disciplina"
+									onCheck="setVisibleVBoxs(true,false)" />
+							</radiogroup>
+							<hbox>
+								<vbox id="vboxDepto">
+									<listbox id="filterDepto"
+										width="90px" model="@{filters}" mold="select">
+									</listbox>
+								</vbox>
+								<vbox id="vboxCodeDisc"
+									visible="false">
+									<hbox>
+										Cód
+										<textbox id="filterCode"
+											width="90px" />
+									</hbox>
+								</vbox>
+							</hbox>
+						</vbox>
+					</groupbox>
+				</hbox>
+				<hbox>
+					<button label="Importar disciplinas"
+						onClick="groupImportWindow.getGroupsVO();lbxGroups.visible=true"
+						width="150px" />
+					<button label="Criar grupos"
+						onClick="groupImportWindow.save()" width="150px" />
+				</hbox>
+			</vbox>
+		</hbox>
+		<listbox id="lbxGroups" model="@{groups}" multiple="true"
+			checkmark="true" mold="paging">
+			<listhead sizable="true">
+				<listheader label="Código" width="100px" />
+				<listheader label="Nome" />
+				<listheader label="Depto" width="100px" />
+				<listheader label="Turma" width="60px" />
+			</listhead>
+
+			<listitem self="@{each=group}" value="@{group}">
+				<listcell label="@{group.subjectCode}" />
+				<listcell label="@{group.subjectName}" />
+				<listcell label="@{group.departament}" />
+				<listcell label="@{group.classroom}" />
+			</listitem>
+		</listbox>
+	</vbox>
+	
+	 
+        
+	<zscript>
+		void setVisibleVBoxs(boolean vboxCodeDis, boolean vBoxDep){
+		vboxDepto.setVisible(vBoxDep); filterDepto.setVisible(vBoxDep);
+		vboxCodeDisc.setVisible(vboxCodeDis);
+		filterCode.setVisible(vboxCodeDis); }
+	</zscript>
+</window>

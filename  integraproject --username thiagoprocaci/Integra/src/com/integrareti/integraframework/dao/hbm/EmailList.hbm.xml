@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="com.integrareti.integraframework.business">
+	<class name="EmailList" table="`emaillist`">
+		<id name="id" type="int">
+			<column name="emailListID" />
+			<generator class="native" />
+		</id>
+		<property name="name" access="property" update="false"/>
+		<many-to-one name="group" class="Group" column="groupID" />
+		<many-to-one name="domain" class="Domain" column="domainID"
+			lazy="false" />
+		<set name="recipients" table="`person_emaillist`" lazy="false" cascade="save-update">
+			<key column="emailListID" />
+			<many-to-many class="Person" column="personID" />
+		</set>
+	</class>
+</hibernate-mapping>

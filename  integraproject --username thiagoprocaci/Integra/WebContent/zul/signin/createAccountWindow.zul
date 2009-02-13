@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	xmlns:n="http://www.zkoss.org/2005/zk/native"
+	use="com.integrareti.integraframework.ui.zk.window.signin.CreateAccountWindow"
+	id="createAccountWin">
+
+	<vbox width="100%">	
+		<label id="warnning"
+			style="font-weight:bold; color:white;  align:center; background-color:red;" />
+		<window border="normal" title="Dados do usuário">
+			<grid id="googleAccountGrid">
+				<rows>
+					<row>
+						Nome:
+						<label id="name" width="180px"
+							value="@{person.name}" />
+					</row>
+					<row>
+						Curso/Depto:
+						<label id="course"
+							value="@{person.deptoOrCourse}" width="180px" />
+					</row>
+					<row>
+						Matricula:
+						<label id="registry" value="@{person.registry}"
+							width="180px" />
+					</row>
+				</rows>
+			</grid>
+		</window>
+	</vbox>
+	<n:div style="height:25px" />
+	<window border="normal" title="Selecione o nome de usuário" id="usernamesWindow">
+		<listbox id="usernames" model="@{createAccountWin.usernames}"
+			multiple="false" checkmark="true"
+			selectedItem="@{createAccountWin.selectedUsername}">
+		</listbox>
+	</window>
+
+	<toolbarbutton label="Por que não posso escolher qualquer nome?"
+		popup="why" href="" />
+
+
+	<n:div align="right">
+		<button label="Avançar" onClick="createAccountWin.save()" />
+	</n:div>
+
+
+	<popup id="why" width="400px" style="background:#FAD163;">
+		<n:div style="padding:6px; background:#FFF7D7;">
+			<n:h5
+				style="font-weight: bold; margin:0px; padding:0px; ">
+				Por que não posso escolher qualquer nome?
+			</n:h5>
+			<n:p style="text-align:justify;">
+				Nos e-mails institucionais é necessário que se tenha um
+				determinado rigor com relação a nomes de usuários. Isso
+				é feito de forma a tentar evitar nomes de usuários
+				impróprios dentro do ambiente acadêmico.
+				<n:br />
+				Exemplo:gatao@ufjf.br
+			</n:p>
+		</n:div>
+	</popup>
+</window>

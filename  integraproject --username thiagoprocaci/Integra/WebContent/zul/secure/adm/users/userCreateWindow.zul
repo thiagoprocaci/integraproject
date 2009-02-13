@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	xmlns:n="http://www.zkoss.org/2005/zk/native">
+	<style src="/css/main.css" />
+	<window id="userCreateAdmManagerWindow"
+		use="com.integrareti.integraframework.ui.zk.window.adm.user.UserCreateWindow"
+		title="Novo usuário" border="normal" Sclass="integra-window">
+		<caption>
+			<toolbarbutton label="Novo Usuario"
+				image="/img/user-group-32x32.png" forward="onNewUser" />
+			<toolbarbutton label="Editar Usuario"
+				image="/img/edit-user-32x32.png" forward="onEditUser" />
+		</caption>
+		<vbox width="100%">
+			<html id="warning"
+				use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
+			<hbox id="hbxSearch">
+				<groupbox>
+					<caption label="Busca"></caption>
+					<vbox>
+						Matrícula
+						<textbox id="registryTextBox" width="250px"
+							onOK="userCreateAdmManagerWindow.searchUser()" />
+						<button label="Buscar usuario"
+							onClick="userCreateAdmManagerWindow.searchUser()" />
+					</vbox>
+				</groupbox>
+			</hbox>
+			<separator orient="horizontal"></separator>
+			<grid id="googleAccountGrid" visible="false">
+				<rows>
+					<row>
+						Nome:
+						<label id="name" width="180px"
+							value="@{person.name}" />
+					</row>
+					<row>
+						Curso/Depto:
+						<label id="course"
+							value="@{person.deptoOrCourse}" width="180px" />
+					</row>
+					<row>
+						Matricula:
+						<label id="registry" value="@{person.registry}"
+							width="180px" />
+					</row>
+					<row>
+						Domínio
+						<listbox id="domainListBox" mold="select"
+							model="@{domains}">
+							<listitem self="@{each=domain}"
+								value="@{domain}">
+								<listcell label="@{domain.name}" />
+							</listitem>
+						</listbox>
+					</row>
+				</rows>
+			</grid>
+			<n:div style="height:25px" />
+			<window border="normal" title="Selecione o nome de usuário"
+				id="usernamesWindow" visible="false">
+				<listbox id="usernames"
+					model="@{userCreateAdmManagerWindow.usernames}" multiple="false"
+					checkmark="true"
+					selectedItem="@{userCreateAdmManagerWindow.selectedUsername}">
+				</listbox>
+			</window>
+			<button label="Salvar" id="btnSave"
+				onClick="userCreateAdmManagerWindow.save()" visible="false" />
+		</vbox>
+	</window>
+</zk>

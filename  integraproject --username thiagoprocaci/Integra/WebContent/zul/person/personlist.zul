@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul ../../WEB-INF/lib/zul.xsd "
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	use="com.integrareti.integraframework.ui.zk.window.AnnotateDataBinderListWindow"
+	editWindowPath="/zul/person/editperson.zul" title="Usuários"
+	border="normal" className="com.integrareti.integraframework.business.Person"
+	id="_list">
+
+	<timer onTimer="_list.bindComponents()" delay="300000"
+		repeats="true" />
+
+	<caption>
+		<toolbarbutton id="_lastUpdate" onClick="_list.bindComponents()"
+			tooltiptext="Atualizar agora" />
+	</caption>
+
+
+
+	<toolbar>
+		<toolbarbutton label="Add New User"
+			onClick="_list.onAddObject()" image="/img/add-user-32x32.png"
+			style="font-size:8pt" />
+
+		<toolbarbutton label="Edit User" onClick="_list.onEditObject()"
+			image="/img/add-user-32x32.png" style="font-size:8pt" />
+
+		<toolbarbutton label="Delete User"
+			onClick="_list.onDeleteObject()" image="/img/add-user-32x32.png"
+			style="font-size:8pt" />
+	</toolbar>
+
+	<a:bind model="object" selectedItem="_list.selectedObject" />
+	<listbox mold="paging">
+		<listhead sizable="true">
+			<listheader label="Nome" />
+			<listheader label="Sobrenome" />
+			<listheader label="E-mail" />
+			<listheader label="Matrícula" />
+			</listhead>
+		<a:bind _var="thisObject" />
+		<listitem onDoubleClick="_list.onEditObject()">
+			<a:bind label="thisObject.givenName" />
+			<listcell />
+			<a:bind label="thisObject.familyName" />
+			<listcell />
+			<a:bind label="thisObject.email" />
+			<listcell />
+			<a:bind label="thisObject.registry" />
+			<listcell />
+		</listitem>
+	</listbox>
+
+</window>

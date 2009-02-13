@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Login Integra"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	xmlns:n="http://www.zkoss.org/2005/zk/native"
+	xmlns:h="http://www.w3.org/1999/xhtml">
+	<h:table class="header" border="0" cellpadding="0" cellspacing="0"
+		width="100%">
+		<h:tbody>
+			<h:tr>
+				<h:td valign="bottom" width="94">
+					<h:img src="img/ice_logo_white.jpg" alt="Google"
+						height="118" width="177" />
+				</h:td>
+				<h:td valign="bottom">
+					<h:h1>
+						Bem-vindo ao Instituto de Ciências Exatas - UFJF
+					</h:h1>
+				</h:td>
+			</h:tr>
+		</h:tbody>
+	</h:table>
+	<h:table class="container" border="0" cellpadding="1"
+		cellspacing="1" width="90%">
+		<h:tbody>
+			<h:tr>
+				<h:td align="center" valign="top">
+					<h:div id="gaia_loginbox">
+						<h:table class="form-noindent" border="0"
+							cellpadding="5" cellspacing="3" width="100%">
+							<h:tbody>
+								<h:tr>
+									<h:td style="text-align: center;"
+										bgcolor="#E0ECFF" nowrap="nowrap" valign="top">
+										<h:input name="ltmpl"
+											value="default" type="hidden" />
+										<h:input name="ltmplcache"
+											value="2" type="hidden" />
+										<h:div class="loginBox">
+											<h:table id="gaia_table"
+												align="center" border="0" cellpadding="1" cellspacing="0">
+												<h:tbody>
+													<h:tr>
+														<h:td
+															class="smallfont" colspan="2" align="center">
+															Acesse sua
+															conta em
+															<h:h2>
+																Instituto
+																de
+																Ciências
+																Exatas -
+																UFJF
+															</h:h2>
+														</h:td>
+													</h:tr>
+
+													<h:tr>
+														<h:td
+															colspan="2" align="center">
+														</h:td>
+													</h:tr>
+													<h:tr>
+														<h:td
+															align="center">
+															<window
+																use="com.integrareti.integraframework.ui.zk.window.login.LoginWindow"
+																id="loginWindow" width="360px" border="none">
+																<style
+																	src="/css/main.css" />
+																<div
+																	align="center" style="width:300px;">
+																	<label
+																		style="color:red"
+																		value="O login falhou: usuário/senha inválido(s)"
+																		if="${!empty param.login_error}" />
+
+																	<label
+																		id="warnning" visible="true" style="color:red" />
+																</div>
+																<h:form
+																	id="loginForm" action="j_acegi_security_check"
+																	method="POST" class="login-form">
+																	<grid
+																		Sclass="no-zk-grid">
+																		<rows>
+																			<row>
+																				<h:div
+																					align="right">
+																					Matrícula:
+																				</h:div>
+																				<textbox
+																					id="username" name="j_username" />
+																			</row>
+																			<row
+																				style="background-color:#E0ECFF;">
+																				<h:div
+																					align="right">
+																					Senha:
+																				</h:div>
+																				<textbox
+																					id="password" name="j_password" type="password"
+																					onOK="loginWindow.login()" />
+																			</row>
+																			<row
+																				spans="2" if="${empty param.SAMLRequest}">
+																				<checkbox
+																					name="_acegi_security_remember_me"
+																					label="Salvar as minhas informações neste computador." />
+																			</row>
+																			<row
+																				spans="2" style="background-color:#E0ECFF;">
+																				<div
+																					align="center">
+																					<button
+																						width="76px" label="Acessar"
+																						onClick="loginWindow.login()" />
+																				</div>
+																			</row>
+
+																		</rows>
+																	</grid>
+																</h:form>
+															</window>
+														</h:td>
+													</h:tr>
+													<h:tr>
+														<h:td>
+															<h:span>
+																Se ainda
+																não é
+																usuário,
+																<h:a
+																	href="http://integra.cpd.ufjf.br:8080/Integra/zul/signin/verifyAccountWindow.zul?domain=ice.ufjf.br">
+																	faça
+																	já o
+																	seu
+																	cadastro
+																</h:a>
+															</h:span>
+														</h:td>
+													</h:tr>
+												</h:tbody>
+											</h:table>
+										</h:div>
+									</h:td>
+								</h:tr>
+								<h:tr>
+									<h:td align="left">
+										<h:span> 
+											<h:a target="blank"
+												href="http://sites.google.com/a/ice.ufjf.br/integra/ajuda-integra">
+												Precisa de ajuda para uso? Clique aqui!
+											</h:a>
+										</h:span>
+									</h:td>
+								</h:tr>
+							</h:tbody>
+						</h:table>
+					</h:div>
+				</h:td>
+				<h:td class="smallfont" valign="top" width="100%">
+					<h:h2>Uma solução Google para e-mail.</h:h2>
+					<h:p>
+						Bem-vindo aos aplicativos do Instituto de
+						Ciencias Exatas - UFJF , gerado pelo Google.
+						Aproveite a tecnologia inovadora de e-mail do
+						Google e tenha a conveniência de acessar o seu
+						e-mail de praticamente qualquer lugar.
+					</h:p>
+					<h:ul>
+						<h:li>
+							<h:b>Pesquise, não classifique.</h:b>
+							<h:br />
+							Use a pesquisa do Google para
+							<h:b>encontrar a mensagem exata</h:b>
+							que você deseja, independentemente de quando
+							ela foi enviada ou recebida.
+						</h:li>
+						<h:li>
+							<h:b>Não jogue nada fora.</h:b>
+							<h:br />
+							Sua conta inclui grande quantidade de
+							armazenamento. Portanto, você nunca
+							precisará excluir outra mensagem.
+						</h:li>
+						<h:li>
+							<h:b>Mantenha tudo no contexto.</h:b>
+							<h:br />
+							As mensagens são agrupadas com todas as suas
+							respostas e exibidas como uma conversa.
+						</h:li>
+					</h:ul>
+				</h:td>
+			</h:tr>
+		</h:tbody>
+	</h:table>
+	<h:div style="height:20px;"></h:div>
+	<h:table class="footer" border="0" cellpadding="0" cellspacing="0"
+		width="100%">
+		<h:tbody>
+			<h:tr>
+				<h:td valign="bottom" align="center">
+					<h:span>
+						©2008 Google
+						<h:a
+							href="http://www.google.com/a/help/intl/pt-BR/users/privacy.html">
+							Política de Privacidade
+						</h:a>
+						-
+						<h:a
+							href="http://www.google.com/a/help/intl/pt-BR/users/terms.html">
+							Termos de serviço
+						</h:a>
+					</h:span>
+				</h:td>
+				<h:td align="right" valign="bottom">
+					<h:span>Powered by</h:span>
+					<h:img src="img/minigoogle.gif" alt="Google"
+						border="0" />
+
+				</h:td>
+			</h:tr>
+		</h:tbody>
+	</h:table>
+</zk>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Access Denied"?>
+<window xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	xmlns:n="http://www.zkoss.org/2005/zk/native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	use="com.integrareti.integraframework.ui.zk.window.login.AccessDeniedWindow"
+	width="500px" border="normal" title="Acesso negado"
+	style="margin:auto;margin-top:50px;">
+	<style src="/css/main.css" />
+	<html id="warning"
+			use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
+			<h:a href="/Integra/j_acegi_logout">
+					Entrar como outro usuário
+				</h:a>
+</window>

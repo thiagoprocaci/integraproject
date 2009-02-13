@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="iNtegra Platform"?>
+<window xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	xmlns:n="http://www.zkoss.org/2005/zk/native"
+	use="com.integrareti.integraframework.ui.zk.window.signin.VerifyAccountWindow"
+	style="margin:15px 25px 0px 25px ;" id="verifyWin"
+	>
+	<n:div>
+		<n:img src="../../img/header_short.jpg" />
+		<n:img src="../../img/logo_ufjf.gif"
+			style="padding-left: 50px;" />
+	</n:div>
+	<n:div
+		style=" padding:6px; margin-top:35px; margin-bottom:20px;border:solid 1px
+			#C3D9FF;background:#E0ECFF">
+
+		<n:span style="font-weight: bold">Bem-vindo!</n:span>
+		Neste momento você está iniciando o uso desta plataforma. Seu
+		primeiro passo é definir uma conta para ter acesso aos serviços
+		oferecidos pela plataforma.
+	</n:div>
+	<vbox style="margin:auto;">
+		<label id="warnning"
+			style="font-weight:bold; color:white;  float:center; background-color:red;" />
+		<window title="Login" id="loginWindow" border="normal"
+			width="350px">
+			<grid style="margin:auto">
+				<rows>
+					<row>
+						Matrícula:
+						<textbox id="username" />
+					</row>
+					<row>
+						Senha:
+						<textbox id="password" type="password" onOK="verifyWin.verify()"/>
+					</row>
+					<row spans="2">
+						<div align="center">
+							<button label="Submeter"
+								onClick="verifyWin.verify()" />
+						</div>
+					</row>
+				</rows>
+			</grid>
+		</window>
+	</vbox>
+</window>

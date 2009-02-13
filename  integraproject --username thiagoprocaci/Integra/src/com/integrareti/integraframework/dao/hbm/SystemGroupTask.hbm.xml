@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="com.integrareti.integraframework.business.task">
+	<class name="SystemGroupTask" table="`systemgrouptask`">
+		<comment></comment>
+		<id name="id" type="int">
+			<column name="systemTaskID" />
+			<generator class="native" />
+		</id>
+		<property name="name" type="string" column="name"
+			access="property" />
+		<property name="description" type="string" column="description"
+			access="property" />
+		<property name="createTime" type="java.util.Calendar" column="createTime"
+			access="property" />
+		<set name="errors" cascade="all-delete-orphan" batch-size="20"
+			lazy="false" inverse="true">
+			<key column="systemTaskID" />
+			<one-to-many
+				class="com.integrareti.integraframework.business.error.SystemGroupError" />
+		</set>
+		<many-to-one name="groupLog" column="groupLogID"
+			class="com.integrareti.integraframework.business.log.GroupLog" />
+	</class>
+</hibernate-mapping>
+

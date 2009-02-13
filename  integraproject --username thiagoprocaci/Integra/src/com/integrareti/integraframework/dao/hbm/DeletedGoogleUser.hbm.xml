@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="com.integrareti.integraframework.business">
+	<class name="DeletedGoogleUser" table="`deletedgoogleuser`">
+		<id name="id" type="int">
+			<column name="deletedgoogleuserID" />
+			<generator class="native" />
+		</id>
+		<property name="deletedGoogleAccount"  column="deletedgoogleaccount"  type="string" />		
+		<property name="exclusionDate" column="exclusiondate" type="java.util.Calendar" />
+		<many-to-one name="domain" column="domainID" class="Domain"
+			lazy="false" />
+	</class>	
+</hibernate-mapping>
+

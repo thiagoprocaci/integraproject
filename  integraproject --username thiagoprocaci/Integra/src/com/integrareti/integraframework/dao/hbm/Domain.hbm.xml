@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 26/06/2007 14:59:50 by Hibernate Tools 3.2.0.b9 -->
+<hibernate-mapping
+	package="com.integrareti.integraframework.business">
+	<class name="Domain" table="domain">
+		<id name="id" type="int">
+			<column name="domainID" />
+			<generator class="native" />
+		</id>
+		<property name="name" type="string" column="name" unique="true" />
+		
+		<property name="googleDomainAdmin" column="googleDomainAdmin" type="string"
+			not-null="true" />
+			
+		<property name="googleDomainPassword" column="googleDomainPassword" type="string"
+			not-null="true" />
+
+		<set name="units" cascade="save-update" batch-size="50"
+			inverse="true" >
+			<key column="domainID" />
+			<one-to-many class="Unit" />
+		</set>
+
+		<set name="members" cascade="save-update" batch-size="50"
+			inverse="true">
+			<key column="domainID" />
+			<one-to-many class="Person" />
+		</set>
+
+		<set name="emailLists" cascade="save-update" batch-size="50"
+			inverse="true">
+			<key column="domainID" />
+			<one-to-many class="EmailList" />
+		</set>
+
+	</class>
+	
+</hibernate-mapping>

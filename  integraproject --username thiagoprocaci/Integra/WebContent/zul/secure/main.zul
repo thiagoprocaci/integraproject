@@ -1,0 +1,123 @@
+<?page title="iNtegra Platform" id="main"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml">
+	<style src="/css/main.css" />
+	<borderlayout height="100%"
+		use="com.integrareti.integraframework.ui.zk.window.adm.MainWindow">
+		<north style="background-color:#C3DCFB; border:0px;"
+			height="40px">
+			<h:table width="100%" class="top-menu" cellspacing="0"
+				cellpadding="0">
+				<h:tr>
+					<h:td>
+						<h:div style="width:670px;">
+							<window border="none" id="win"
+								use="com.integrareti.integraframework.ui.zk.window.services.ServiceWindow">
+								<button onClick="win.onClickHome()"
+									image="/img/integra-home.png" label="Início" width="90px" />
+								<button onClick="win.onClickMail()"
+									image="/img/gmail.png" label="Email" width="90px" />
+								<button onClick="win.onClickCalendar()"
+									image="/img/calendar.gif" label="Calendário" width="130px" />
+								<button onClick="win.onClickDocs()"
+									image="/img/docs.gif" label="Documentos" width="140px" />
+								<button onClick="win.onClickSites()"
+									image="/img/sites.gif" label="Sites" width="100px" />
+								<button onClick="win.onClickIceApps()"
+									image="/img/iceApps.gif" label="ICE Apps" width="120px" />
+
+							</window>
+						</h:div>
+					</h:td>
+					<h:td>
+						<h:div align="right">
+							<label id="lblUser" />
+							<label value=" | " />
+							<h:a href="/Integra/j_acegi_logout"
+								style="padding-right:15px;padding-left:5px;">
+								Sair
+							</h:a>
+						</h:div>
+					</h:td>
+				</h:tr>
+			</h:table>
+		</north>
+		<west style="border:1;border-right:0px;" collapsible="true"
+			size="250px" flex="true">
+			<window id="menuWindow" border="none">
+				<tree id="admMenu" pageSize="-1" height="150px"
+					width="100%"
+					use="com.integrareti.integraframework.ui.zk.tree.adm.AdmMenuTree"
+					style="border:0px;">
+					<treecols>
+						<treecol label="Administração" height="30%" />
+					</treecols>
+					<treechildren>
+						<treeitem label="Grupo"
+							image="/img/group.png">
+							<treechildren>
+								<treeitem
+									value="/zul/secure/adm/group/groupEditWindow.zul">
+									<treerow>
+										<treecell label="Editar grupo"
+											onClick="admMenu.onSelectItem()">
+										</treecell>
+									</treerow>
+								</treeitem>
+
+								<treeitem
+									value="/zul/secure/adm/group/groupImportWindow.zul">
+									<treerow>
+										<treecell
+											label="Importar grupos" onClick="admMenu.onSelectItem()">
+										</treecell>
+									</treerow>
+								</treeitem>
+								<treeitem
+									value="/zul/secure/adm/group/log/groupLog.zul">
+									<treerow>
+										<treecell label="Logs"
+											onClick="admMenu.onSelectItem()">
+										</treecell>
+									</treerow>
+								</treeitem>
+
+							</treechildren>
+						</treeitem>
+						<treeitem label="Usuários"
+							image="/img/group.png">
+							<treechildren>
+								<treeitem
+									value="/zul/secure/adm/users/userEditWindow.zul">
+									<treerow>
+										<treecell label="Editar usuário"
+											onClick="admMenu.onSelectItem()">
+										</treecell>
+									</treerow>
+								</treeitem>
+							</treechildren>
+						</treeitem>
+					</treechildren>
+				</tree>
+				<tree pageSize="-1" vflex="true" width="100%"
+					height="100%" id="myGroups" style="border:0px;"
+					use="com.integrareti.integraframework.ui.zk.tree.teacher.MyGroupsTree">
+					<treecols>
+						<treecol label="Meus Grupos" height="20px" />
+					</treecols>
+				</tree>
+			</window>
+		</west>
+		<center border="0" style="background-color:#C3DCFB;"
+			autoscroll="true">
+			<include id="include" src="/html/start.html"
+				style="background-color:white;" width="100%" height="100%" />
+		</center>
+		<south border="0" style="background-color:#C3DCFB;">
+			<include id="southInclude"
+				src="/zul/secure/adm/progressWindow.zul" />
+		</south>
+	</borderlayout>
+</zk>

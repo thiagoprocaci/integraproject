@@ -1,0 +1,153 @@
+@CHARSET "ISO-8859-1";
+
+#errorContainer {
+	background: #FFDDDD;
+	border: 1px solid #FFBBBB;
+	margin: 0 0 0 0;
+	font-weight: bold;
+	color: black;
+}
+
+#errorContainer h5 {
+	background: #FFDDDD url(../img/delete.png) no-repeat scroll 5px 0px;
+	padding: 1px 25px;
+	position: relative;
+}
+
+#warningContainer {
+	background: #FFFFDD none repeat scroll 0%;
+	border: 1px solid #FFEE66;
+	color: black;
+	font-weight: bold;
+	margin: 0 0 0 0;
+}
+
+#warningContainer h5 {
+	background: #FFFFDD url(../img/icon_warning.gif) no-repeat scroll 5px
+		0px;
+	padding: 1px 25px;
+	position: relative;
+}
+
+#infoContainer {
+	background: #DDFFDD;
+	border: 1px solid #BBFFBB;
+	color: black;
+	font-weight: bold;
+	margin: 0pt;
+}
+
+#infoContainer h5 {
+	background: #DDFFDD url(../img/accept.png) no-repeat scroll 5px 0px;
+	padding: 1px 25px;
+	position: relative;
+}
+
+.login-win {
+	margin: auto;
+	margin-top: 50px;
+}
+
+.login-form {
+	padding: 0;
+	margin: 0;
+	spacing: 0;
+}
+
+div.layout-split {
+	font-size: 1px;
+	height: 6px;
+	line-height: 1px;
+	position: absolute;
+	width: 10px;
+	z-index: 12;
+}
+
+div.layout-split-h-ns {
+	background-image: url(../img/splt-h-ns.png);
+	background-position: left center;
+}
+
+/*window head*/
+td.lwt-embedded,td.mwt-embedded,td.rwt-embedded {
+	background-color: #D0E3FB;
+	border-bottom: 0px solid #8AA3C1;
+	height: 30px;
+	color: #0000CC;
+	font-family: arial, Sans-serif;
+}
+
+/*tree-item*/
+div.foot-cell-inner,div.cell-inner,div.head-cell-inner {
+	border: 0pt none;
+	margin-bottom: 2px;
+	overflow: hidden;
+}
+
+body {
+	padding: 0;
+}
+
+.progress-panel {
+	background: #FFFFDD none repeat scroll 0%;
+	border: 1px solid #FFEE66;
+	color: black;
+	font-weight: bold;
+	margin: 0 0 0 0;
+	padding-top: 5px;
+}
+
+.top-menu  button {
+	background-color: #C3DCFB;
+	height: 32px;
+	border: 0;
+	cursor: pointer;
+}
+
+
+
+.no-zk-grid   {
+	background: #E0ECFF ;
+}
+
+
+.start {
+	background: #FFFFDD;
+	border: 1px solid #FFEE66;
+	color: black;
+	font-weight: bold;
+	padding: 5px;
+}
+
+.lwt-integra-window {
+	width: 0px;
+	height: 35px;
+}
+
+.rwt-integra-window {
+	width: 0px;
+	
+}
+
+.integra-window {
+	border: 0px;
+	margin: 0pt;
+	padding: 0px;
+}
+.integra-window .title a, .title a:visited, .title a:hover {
+	color:black;
+	text-decoration: none;
+
+}
+
+.mwt-integra-window {
+	font-weight: bold;
+	padding-left: 5px;
+	background-image:
+		url(../img/bg_windowgradient.gif);
+	background-repeat: repeat-x;
+}
+
+.wc-integra-window {
+	padding:5px;
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<window title="Add/Edit User" border="normal"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation" id="editUserWindow"
+	xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	width="400px" closable="true"
+	use="com.integrareti.integraframework.ui.zk.window.AnnotateDataBinderEditWindow">
+
+	<grid>
+		<rows>
+			<row>
+				Nome :
+				<a:bind value="object.givenName" />
+				<textbox />
+			</row>
+			<row>
+			Sobrenome:
+				<a:bind value="object.familyName" />
+				<textbox />
+			</row>
+			
+			<row>
+				Google Account :
+				<a:bind value="object.googleAccount" />
+				<textbox />
+			</row>
+			
+			<row>
+				Registry :
+				<a:bind value="object.registry" />
+				<textbox />
+			</row>
+			
+			<row>
+				Password :
+				<a:bind value="object.password" />
+				<textbox id="pass" />
+			</row>
+			<row>
+				Domain Name :
+				<a:bind value="object.domain.name" />
+				<textbox id="domain" />
+			</row>
+		</rows>
+	</grid>
+	<div align="right">
+		<toolbar>
+			<button label="Save" onClick="editUserWindow.onSave()" />
+			<button label="Cancel" onClick="editUserWindow.onCancel()" />
+		</toolbar>
+	</div>
+
+</window>
