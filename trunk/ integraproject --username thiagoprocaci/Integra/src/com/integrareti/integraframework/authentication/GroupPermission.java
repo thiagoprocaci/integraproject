@@ -7,30 +7,28 @@ package com.integrareti.integraframework.authentication;
  * @created 02-Oct-2007 15:27:34
  */
 public class GroupPermission {
-
 	private UserGroup userGroup;
 	private Transaction transaction;
 	private boolean read;
 	private boolean write;
 
-
 	/**
 	 * Creates a new GroupPermission
 	 */
-	public GroupPermission(){
-
+	public GroupPermission() {
 	}
-	
+
 	/**
-	 *  Creates a new GroupPermission
+	 * Creates a new GroupPermission
+	 * 
 	 * @param userGroup
 	 * @param transaction
 	 */
-	public GroupPermission(UserGroup userGroup,Transaction transaction){
+	public GroupPermission(UserGroup userGroup, Transaction transaction) {
 		this.userGroup = userGroup;
 		this.transaction = transaction;
 	}
-	
+
 	/**
 	 * 
 	 * @return return userGroup
@@ -41,6 +39,7 @@ public class GroupPermission {
 
 	/**
 	 * Sets the userGroup
+	 * 
 	 * @param userGroup
 	 */
 	public void setUserGroup(UserGroup userGroup) {
@@ -57,6 +56,7 @@ public class GroupPermission {
 
 	/**
 	 * Sets read
+	 * 
 	 * @param read
 	 */
 	public void setRead(boolean read) {
@@ -73,6 +73,7 @@ public class GroupPermission {
 
 	/**
 	 * Sets write
+	 * 
 	 * @param write
 	 */
 	public void setWrite(boolean write) {
@@ -88,7 +89,8 @@ public class GroupPermission {
 	}
 
 	/**
-	 * Sets the transaction 
+	 * Sets the transaction
+	 * 
 	 * @param transaction
 	 */
 	public void setTransaction(Transaction transaction) {
@@ -99,10 +101,8 @@ public class GroupPermission {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((userGroup == null) ? 0 : userGroup.hashCode());
-		result = prime * result
-				+ ((transaction == null) ? 0 : transaction.hashCode());
+		result = prime * result + ((userGroup == null) ? 0 : userGroup.hashCode());
+		result = prime * result + ((transaction == null) ? 0 : transaction.hashCode());
 		return result;
 	}
 
@@ -127,7 +127,4 @@ public class GroupPermission {
 			return false;
 		return true;
 	}
-
-	
-
 }

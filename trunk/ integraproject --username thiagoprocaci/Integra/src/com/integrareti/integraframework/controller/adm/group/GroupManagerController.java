@@ -27,7 +27,6 @@ import com.integrareti.integraframework.valueobject.NameVO;
  * 
  */
 public class GroupManagerController {
-
 	private SigaService sigaService;
 	private IntegraGroupServiceInterface integraGroupServiceInterface;
 	private GoogleUserAccountServiceInterface googleUserAccountServiceInterface;
@@ -39,9 +38,7 @@ public class GroupManagerController {
 	 * @param integraGroupServiceInterface
 	 * @param googleUserAccountServiceInterface
 	 */
-	public GroupManagerController(SigaService sigaService,
-			IntegraGroupServiceInterface integraGroupServiceInterface,
-			GoogleUserAccountServiceInterface googleUserAccountServiceInterface) {
+	public GroupManagerController(SigaService sigaService, IntegraGroupServiceInterface integraGroupServiceInterface, GoogleUserAccountServiceInterface googleUserAccountServiceInterface) {
 		this.sigaService = sigaService;
 		this.integraGroupServiceInterface = integraGroupServiceInterface;
 		this.googleUserAccountServiceInterface = googleUserAccountServiceInterface;
@@ -63,8 +60,7 @@ public class GroupManagerController {
 	 * @return Returns groups by description
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByDescription(String description)
-			throws Exception {
+	public List<Group> getGroupsByDescription(String description) throws Exception {
 		return integraGroupServiceInterface.getGroupsByDescription(description);
 	}
 
@@ -76,20 +72,17 @@ public class GroupManagerController {
 	 * @throws Exception
 	 * @throws DataAccessException
 	 */
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			String name) throws Exception {
-		return integraGroupServiceInterface.getGroupsByDescriptionAndName(
-				description, name);
+	public List<Group> getGroupsByDescriptionAndName(String description, String name) throws Exception {
+		return integraGroupServiceInterface.getGroupsByDescriptionAndName(description, name);
 	}
-	
+
 	/**
 	 * 
 	 * @param names
-	 * @return Returns groups by pieces of name 
+	 * @return Returns groups by pieces of name
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByPiecesOfNames(List<String> names)
-			throws Exception{
+	public List<Group> getGroupsByPiecesOfNames(List<String> names) throws Exception {
 		return integraGroupServiceInterface.getGroupsByPiecesOfNames(names);
 	}
 
@@ -101,10 +94,8 @@ public class GroupManagerController {
 	 * @throws Exception
 	 * @throws DataAccessException
 	 */
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			List<String> names) throws Exception {
-		return integraGroupServiceInterface.getGroupsByDescriptionAndName(
-				description, names);
+	public List<Group> getGroupsByDescriptionAndName(String description, List<String> names) throws Exception {
+		return integraGroupServiceInterface.getGroupsByDescriptionAndName(description, names);
 	}
 
 	/**
@@ -114,8 +105,7 @@ public class GroupManagerController {
 	 * @return Returns the person name
 	 * @throws Exception
 	 */
-	public String getPersonName(String registry, Set<UserGroup> userGroups)
-			throws Exception {
+	public String getPersonName(String registry, Set<UserGroup> userGroups) throws Exception {
 		List<String> list = new ArrayList<String>();
 		for (UserGroup userGroup : userGroups)
 			list.add(userGroup.getName());
@@ -143,26 +133,24 @@ public class GroupManagerController {
 	 * @return Returns a map with errors
 	 * @throws Exception
 	 */
-	public Map<String, Group> saveGroup(Group group, Set<Person> addedPeople,
-			Set<Person> removedPeople, Set<Person> addedOwners,
-			Set<Person> removedOwners) throws Exception {
-		return integraGroupServiceInterface.saveGroupAndUpDateEmailLists(group,
-				addedPeople, removedPeople, addedOwners, removedOwners);
+	public Map<String, Group> saveGroup(Group group, Set<Person> addedPeople, Set<Person> removedPeople, Set<Person> addedOwners, Set<Person> removedOwners) throws Exception {
+		return integraGroupServiceInterface.saveGroupAndUpDateEmailLists(group, addedPeople, removedPeople, addedOwners, removedOwners);
 	}
 
 	/**
 	 * Checks if the group name is valid
+	 * 
 	 * @param name
 	 * @return true if it is valid. Otherwise false
 	 * @throws Exception
 	 */
-	public boolean isValidGroupName(String name) throws Exception{
-		if(!StringUtils.hasText(name))
+	public boolean isValidGroupName(String name) throws Exception {
+		if (!StringUtils.hasText(name))
 			return false;
-		if(integraGroupServiceInterface.getGroupIdByName(name, false) != null)
+		if (integraGroupServiceInterface.getGroupIdByName(name, false) != null)
 			return false;
-		for (int i = 0; i < name.length(); i++) 
-			if(name.charAt(i) == ' ')
+		for (int i = 0; i < name.length(); i++)
+			if (name.charAt(i) == ' ')
 				return false;
 		return true;
 	}
@@ -189,13 +177,11 @@ public class GroupManagerController {
 		if (list != null) {
 			int aux = list.size();
 			boolean stillOpenConnection = true;
-			for (Iterator<NameVO> iterator = list.iterator(); iterator
-					.hasNext();) {
+			for (Iterator<NameVO> iterator = list.iterator(); iterator.hasNext();) {
 				NameVO n = (NameVO) iterator.next();
 				if (aux == 1)
 					stillOpenConnection = false;
-				if (googleUserAccountServiceInterface.isPersonSaved(n
-						.getRegistry(), stillOpenConnection) == null)
+				if (googleUserAccountServiceInterface.isPersonSaved(n.getRegistry(), stillOpenConnection) == null)
 					iterator.remove();
 				aux--;
 			}
@@ -214,36 +200,28 @@ public class GroupManagerController {
 			String name = group.getName();
 			// getting datas from name
 			String classroom = name.substring(name.length() - 1);
-			String semester = name.substring(name.length() - 2,
-					name.length() - 1);
+			String semester = name.substring(name.length() - 2, name.length() - 1);
 			String year = name.substring(name.length() - 6, name.length() - 2);
 			String subjectCode = name.substring(0, name.length() - 6);
 			Set<Person> participants = new HashSet<Person>();
 			Set<Person> owners = new HashSet<Person>();
-			List<String> registries = sigaService.getRegistriesBySubjectCode(
-					subjectCode, year, semester, classroom, group
-							.getParticipantsRegistries());
-			List<Person> peopleSaved = googleUserAccountServiceInterface
-					.arePeopleSaved(registries);
+			List<String> registries = sigaService.getRegistriesBySubjectCode(subjectCode, year, semester, classroom, group.getParticipantsRegistries());
+			List<Person> peopleSaved = googleUserAccountServiceInterface.arePeopleSaved(registries);
 			if (!peopleSaved.isEmpty())
 				participants.addAll(peopleSaved);
 			// defining the owners
-			List<NameVO> ownersNameVO = sigaService.getSubjectOwner(
-					subjectCode, year, semester, classroom);
+			List<NameVO> ownersNameVO = sigaService.getSubjectOwner(subjectCode, year, semester, classroom);
 			registries = new ArrayList<String>();
 			if (ownersNameVO != null)
 				for (NameVO n : ownersNameVO)
 					registries.add(n.getRegistry());
 			peopleSaved = googleUserAccountServiceInterface.arePeopleSaved(registries);
-			if(!peopleSaved.isEmpty())
+			if (!peopleSaved.isEmpty())
 				owners.addAll(peopleSaved);
 			// saves group
-			return integraGroupServiceInterface.saveGroupAndUpDateEmailLists(
-					group, participants, new HashSet<Person>(0), owners,
-					new HashSet<Person>(0));
+			return integraGroupServiceInterface.saveGroupAndUpDateEmailLists(group, participants, new HashSet<Person>(0), owners, new HashSet<Person>(0));
 		}
 		return new HashMap<String, Group>(0);
-
 	}
 
 	/**

@@ -8,16 +8,16 @@ import com.integrareti.integraframework.dao.integra.GroupLogDao;
 
 /**
  * This class offers services to manipulate groupLog
+ * 
  * @author Thiago Baesso Procaci
- *
+ * 
  */
-public class IntegraGroupLogServiceImpl extends
-IntegraServiceImpl<GroupLog, Integer> implements IntegraGroupLogServiceInterface{
-
+public class IntegraGroupLogServiceImpl extends IntegraServiceImpl<GroupLog, Integer> implements IntegraGroupLogServiceInterface {
 	private GroupLogDao groupLogDao;
-	
+
 	/**
 	 * Creates a new IntegraGroupLogServiceImpl
+	 * 
 	 * @param groupLogDao
 	 */
 	public IntegraGroupLogServiceImpl(GroupLogDao groupLogDao) {
@@ -43,9 +43,7 @@ IntegraServiceImpl<GroupLog, Integer> implements IntegraGroupLogServiceInterface
 	 * @return Returns groupLogs by period with errors
 	 */
 	@Override
-	public List<GroupLog> getByPeriodWithErrors(Date begin, Date end)
-			throws Exception {
+	public List<GroupLog> getByPeriodWithErrors(Date begin, Date end) throws Exception {
 		return groupLogDao.getByPeriodWithErrors(begin, end);
 	}
-
 }

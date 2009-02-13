@@ -21,27 +21,21 @@ import com.integrareti.integraframework.business.Person;
  */
 @SuppressWarnings("serial")
 public class MainWindow extends Borderlayout {
-	
 	private ComponentVisibilityDefinitionHolder holder;
 	private Label lblUser;
 
 	public void onCreate() {
-		lblUser = (Label)getFellow("lblUser");
-		lblUser.setValue(((Person)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+		lblUser = (Label) getFellow("lblUser");
+		lblUser.setValue(((Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
 		secureComponents();
 	}
-	
+
 	/**
 	 * Makes components invisible if user dos not have the specified Role
 	 */
 	private void secureComponents() {
-		holder = (ComponentVisibilityDefinitionHolder) SpringUtil
-				.getBean("componentVisibilityDefinitionHolder");
-		List<String> comps = holder.getComponentVisibilityDefinitionSource()
-				.getComponentsToHide(
-						SecurityContextHolder.getContext().getAuthentication()
-								.getAuthorities());
-
+		holder = (ComponentVisibilityDefinitionHolder) SpringUtil.getBean("componentVisibilityDefinitionHolder");
+		List<String> comps = holder.getComponentVisibilityDefinitionSource().getComponentsToHide(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 		Component component = this;
 		for (String string : comps) {
 			Scanner sc = new Scanner(string);
@@ -54,5 +48,4 @@ public class MainWindow extends Borderlayout {
 			component = this;
 		}
 	}
-
 }

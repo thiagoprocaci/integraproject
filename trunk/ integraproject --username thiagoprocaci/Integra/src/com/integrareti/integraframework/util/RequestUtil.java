@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.integrareti.integraframework.util;
 
 import org.apache.commons.codec.binary.Base64;
@@ -44,27 +43,20 @@ public class RequestUtil {
 	 * @return String containing the encoded contents of the specified XML
 	 *         String
 	 */
-	public static String encodeMessage(String xmlString) throws IOException,
-			UnsupportedEncodingException {
+	public static String encodeMessage(String xmlString) throws IOException, UnsupportedEncodingException {
 		// first DEFLATE compress the document (saml-bindings-2.0,
 		// section 3.4.4.1)
 		byte[] xmlBytes = xmlString.getBytes("UTF-8");
 		ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-		DeflaterOutputStream deflaterOutputStream = new DeflaterOutputStream(
-				byteOutputStream);
+		DeflaterOutputStream deflaterOutputStream = new DeflaterOutputStream(byteOutputStream);
 		deflaterOutputStream.write(xmlBytes, 0, xmlBytes.length);
 		deflaterOutputStream.close();
-
 		// next, base64 encode it
 		Base64 base64Encoder = new Base64();
-		byte[] base64EncodedByteArray = base64Encoder.encode(byteOutputStream
-				.toByteArray());
+		byte[] base64EncodedByteArray = base64Encoder.encode(byteOutputStream.toByteArray());
 		String base64EncodedMessage = new String(base64EncodedByteArray);
-
 		// finally, URL encode it
-		String urlEncodedMessage = URLEncoder.encode(base64EncodedMessage,
-				"UTF-8");
-
+		String urlEncodedMessage = URLEncoder.encode(base64EncodedMessage, "UTF-8");
 		return urlEncodedMessage;
 	}
 
@@ -89,5 +81,4 @@ public class RequestUtil {
 		}
 		return encodedString.toString();
 	}
-
 }

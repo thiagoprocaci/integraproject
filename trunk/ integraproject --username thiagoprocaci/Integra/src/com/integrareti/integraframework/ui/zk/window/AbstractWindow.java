@@ -19,7 +19,6 @@ import com.integrareti.integraframework.ui.zk.html.HtmlWarning;
  */
 @SuppressWarnings("serial")
 public class AbstractWindow extends Window {
-
 	/**
 	 * Shows a warnning at a specified component
 	 * 
@@ -71,8 +70,7 @@ public class AbstractWindow extends Window {
 	 * @param warnnings
 	 * @param type
 	 */
-	public void addHtmlWarning(String componentId, String title,
-			List<String> warnnings, int type) {
+	public void addHtmlWarning(String componentId, String title, List<String> warnnings, int type) {
 		HtmlWarning l = (HtmlWarning) getFellowIfAny(componentId);
 		if (l != null) {
 			l.setType(type);
@@ -86,8 +84,7 @@ public class AbstractWindow extends Window {
 	 * 
 	 * @param warnning
 	 */
-	public void addHtmlWarning(String componentId, String title,
-			String warning, int type) {
+	public void addHtmlWarning(String componentId, String title, String warning, int type) {
 		HtmlWarning l = (HtmlWarning) getFellowIfAny(componentId);
 		if (l != null) {
 			l.setType(type);
@@ -105,6 +102,4 @@ public class AbstractWindow extends Window {
 		if (w != null)
 			w.setContent(null);
 	}
-	
-	
 }

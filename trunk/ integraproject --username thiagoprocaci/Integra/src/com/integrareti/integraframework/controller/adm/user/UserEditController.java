@@ -24,7 +24,6 @@ import com.integrareti.integraframework.valueobject.NameVO;
  * 
  */
 public class UserEditController {
-
 	private SigaService sigaService;
 	private GoogleUserAccountServiceInterface googleUserAccountServiceInterface;
 	private IntegraGroupServiceInterface integraGroupServiceInterface;
@@ -36,11 +35,7 @@ public class UserEditController {
 	 * @param sigaService
 	 * @param googleUserAccountServiceInterface
 	 */
-	public UserEditController(
-			SigaService sigaService,
-			GoogleUserAccountServiceInterface googleUserAccountServiceInterface,
-			IntegraGroupServiceInterface integraGroupServiceInterface,
-			IntegraUserGroupServiceInterface userGroupService) {
+	public UserEditController(SigaService sigaService, GoogleUserAccountServiceInterface googleUserAccountServiceInterface, IntegraGroupServiceInterface integraGroupServiceInterface, IntegraUserGroupServiceInterface userGroupService) {
 		this.sigaService = sigaService;
 		this.googleUserAccountServiceInterface = googleUserAccountServiceInterface;
 		this.integraGroupServiceInterface = integraGroupServiceInterface;
@@ -61,8 +56,7 @@ public class UserEditController {
 		for (NameVO nameVO : namesVOs) {
 			if (aux == 1)
 				stillOpenConnection = false;
-			Integer id = googleUserAccountServiceInterface.isPersonSaved(nameVO
-					.getRegistry(), stillOpenConnection);
+			Integer id = googleUserAccountServiceInterface.isPersonSaved(nameVO.getRegistry(), stillOpenConnection);
 			if (id != null) {
 				Person p = googleUserAccountServiceInterface.getById(id);
 				p.setName(nameVO.getName());
@@ -97,8 +91,7 @@ public class UserEditController {
 	 * @throws Exception
 	 */
 	public List<Group> getPersonGroups(Person person) throws Exception {
-		List<Group> list = googleUserAccountServiceInterface.getGroups(person
-				.getRegistry());
+		List<Group> list = googleUserAccountServiceInterface.getGroups(person.getRegistry());
 		return list;
 	}
 
@@ -132,38 +125,28 @@ public class UserEditController {
 	 * @param addedGroups
 	 * @throws Exception
 	 */
-	public Map<String, Group> save(Person person, Set<Group> removedGroups,
-			Set<Group> addedGroups) throws Exception {
+	public Map<String, Group> save(Person person, Set<Group> removedGroups, Set<Group> addedGroups) throws Exception {
 		googleUserAccountServiceInterface.save(person);
 		Map<String, Group> errors = new HashMap<String, Group>(0);
 		for (Group group : removedGroups) {
 			Set<Person> people = new HashSet<Person>(0);
 			people.add(person);
-			Map<String, Group> aux = integraGroupServiceInterface
-					.removeParticipantFromGroupAndEmailList(
-							integraGroupServiceInterface.getById(group.getId()),
-							people);
+			Map<String, Group> aux = integraGroupServiceInterface.removeParticipantFromGroupAndEmailList(integraGroupServiceInterface.getById(group.getId()), people);
 			if (!aux.isEmpty())
 				errors.putAll(aux);
 		}
 		for (Group group : addedGroups) {
 			Set<Person> people = new HashSet<Person>(0);
 			people.add(person);
-			Map<String, Group> aux = integraGroupServiceInterface
-					.createEmailListToGroup(integraGroupServiceInterface
-							.getById(group.getId()), people);
+			Map<String, Group> aux = integraGroupServiceInterface.createEmailListToGroup(integraGroupServiceInterface.getById(group.getId()), people);
 			if (!aux.isEmpty())
 				errors.putAll(aux);
-			aux = integraGroupServiceInterface
-					.addParticipantToGroupAndEmailList(
-							integraGroupServiceInterface.getById(group.getId()),
-							people);
+			aux = integraGroupServiceInterface.addParticipantToGroupAndEmailList(integraGroupServiceInterface.getById(group.getId()), people);
 			if (!aux.isEmpty())
 				errors.putAll(aux);
 		}
 		return errors;
 	}
-
 
 	/**
 	 * Deletes a person
@@ -177,10 +160,7 @@ public class UserEditController {
 		for (Group group : list) {
 			Set<Person> people = new HashSet<Person>(0);
 			people.add(person);
-			Map<String, Group> aux = integraGroupServiceInterface
-					.removeParticipantFromGroupAndEmailList(
-							integraGroupServiceInterface.getById(group.getId()),
-							people);
+			Map<String, Group> aux = integraGroupServiceInterface.removeParticipantFromGroupAndEmailList(integraGroupServiceInterface.getById(group.getId()), people);
 			if (!aux.isEmpty())
 				map.putAll(aux);
 		}
@@ -188,5 +168,4 @@ public class UserEditController {
 			googleUserAccountServiceInterface.delete(googleUserAccountServiceInterface.getById(person.getId()));
 		return map;
 	}
-
 }

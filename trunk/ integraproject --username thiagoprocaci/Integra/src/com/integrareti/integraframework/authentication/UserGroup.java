@@ -5,12 +5,12 @@ import com.integrareti.integraframework.business.Identifiable;
 /**
  * 
  * Describes a user Group
+ * 
  * @version 1.0
  * @created 02-Oct-2007 15:27:37
  */
 @SuppressWarnings("serial")
-public class UserGroup implements Identifiable<Integer>{
-
+public class UserGroup implements Identifiable<Integer> {
 	// PUBLIC CONSTANTS ------------------------------
 	public static final String PROFESSOR_GROUP = "PROFESSOR";
 	public static final String STUDENT_GROUP = "STUDENT";
@@ -18,12 +18,12 @@ public class UserGroup implements Identifiable<Integer>{
 	public static final String GOOGLE_ADMIN_GROUP = "GOOGLEADMIN";
 	public static final String DOMAIN_ADMIN_GROUP = "ADMIN";
 	// --------------------------------------------------
-
 	private Integer id;
 	private String name;
-	
+
 	/**
 	 * Creates a new UserGroup
+	 * 
 	 * @param name
 	 */
 	public UserGroup(String name) {
@@ -34,7 +34,6 @@ public class UserGroup implements Identifiable<Integer>{
 	 * Creates a new UserGroup
 	 */
 	public UserGroup() {
-
 	}
 
 	/**
@@ -47,6 +46,7 @@ public class UserGroup implements Identifiable<Integer>{
 
 	/**
 	 * Sets the id
+	 * 
 	 * @param id
 	 */
 	public void setId(Integer id) {
@@ -63,13 +63,12 @@ public class UserGroup implements Identifiable<Integer>{
 
 	/**
 	 * Sets the name
+	 * 
 	 * @param name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -95,5 +94,4 @@ public class UserGroup implements Identifiable<Integer>{
 			return false;
 		return true;
 	}
-
 }

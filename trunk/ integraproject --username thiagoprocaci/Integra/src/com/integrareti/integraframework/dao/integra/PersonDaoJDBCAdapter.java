@@ -14,7 +14,6 @@ import com.integrareti.integraframework.business.Person;
  * 
  */
 public class PersonDaoJDBCAdapter implements PersonDao {
-
 	private static final String MSG = "Not implementedn here - see PersonDaoHibernate";
 
 	/**
@@ -35,8 +34,7 @@ public class PersonDaoJDBCAdapter implements PersonDao {
 	 * @throws Exception
 	 */
 	@Override
-	public Person getByGoogleAccount(String googleAccount, String domainName)
-			throws Exception {
+	public Person getByGoogleAccount(String googleAccount, String domainName) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -69,8 +67,7 @@ public class PersonDaoJDBCAdapter implements PersonDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Person> getGoogleDomainAdmins(String domainName)
-			throws Exception {
+	public List<Person> getGoogleDomainAdmins(String domainName) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -152,5 +149,4 @@ public class PersonDaoJDBCAdapter implements PersonDao {
 	public void openSession() {
 		throw new RuntimeException(MSG);
 	}
-
 }

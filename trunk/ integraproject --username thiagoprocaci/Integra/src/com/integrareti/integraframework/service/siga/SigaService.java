@@ -16,7 +16,6 @@ import com.integrareti.integraframework.valueobject.SectorVO;
  * 
  */
 public interface SigaService {
-
 	/**
 	 * 
 	 * @param registry
@@ -24,8 +23,7 @@ public interface SigaService {
 	 * @return Returns the name
 	 * 
 	 */
-	public String getPersonName(String registry, List<String> userGroups)
-			throws Exception;
+	public String getPersonName(String registry, List<String> userGroups) throws Exception;
 
 	/**
 	 * 
@@ -36,8 +34,7 @@ public interface SigaService {
 	 * 
 	 * 
 	 */
-	public String getCourseName(String registry, List<String> userGroups)
-			throws Exception;
+	public String getCourseName(String registry, List<String> userGroups) throws Exception;
 
 	/**
 	 * 
@@ -46,8 +43,7 @@ public interface SigaService {
 	 * @return Returns the departament name
 	 * 
 	 */
-	public String getDepartamentName(String registry, List<String> userGroups)
-			throws Exception;
+	public String getDepartamentName(String registry, List<String> userGroups) throws Exception;
 
 	/**
 	 * Authentication at system
@@ -57,8 +53,7 @@ public interface SigaService {
 	 * @return true or false
 	 * 
 	 */
-	public boolean loginPerson(String username, String password)
-			throws Exception;
+	public boolean loginPerson(String username, String password) throws Exception;
 
 	/**
 	 * 
@@ -79,8 +74,7 @@ public interface SigaService {
 	 * @throws Exception
 	 * @return Returns a list groupVO with the subjects
 	 */
-	public List<GroupVO> getSubjects(String registry, List<String> userGroups,
-			String year, String semester) throws Exception;
+	public List<GroupVO> getSubjects(String registry, List<String> userGroups, String year, String semester) throws Exception;
 
 	/**
 	 * 
@@ -110,8 +104,7 @@ public interface SigaService {
 	 * @return Returns the sector. Example: ICE
 	 * 
 	 */
-	public SectorVO getPersonSector(String registry, List<String> userGroups)
-			throws Exception;
+	public SectorVO getPersonSector(String registry, List<String> userGroups) throws Exception;
 
 	/**
 	 * 
@@ -124,9 +117,7 @@ public interface SigaService {
 	 * @throws Exception
 	 * @return Returns true if person param registry has link to param sector
 	 */
-	public boolean hasPersonLinkWithSector(String registry, String year,
-			String semester, String sector, List<String> userGroups)
-			throws Exception;
+	public boolean hasPersonLinkWithSector(String registry, String year, String semester, String sector, List<String> userGroups) throws Exception;
 
 	/**
 	 * 
@@ -136,8 +127,7 @@ public interface SigaService {
 	 * @throws Exception
 	 * @return Returns all registry of people that is studying a subject
 	 */
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom) throws Exception;
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom) throws Exception;
 
 	/**
 	 * 
@@ -147,8 +137,7 @@ public interface SigaService {
 	 * @throws Exception
 	 * @return Returns all subject of a period and sector
 	 */
-	public List<GroupVO> getSubjectByPeriodAndSector(String year,
-			String semester, String sector) throws Exception;
+	public List<GroupVO> getSubjectByPeriodAndSector(String year, String semester, String sector) throws Exception;
 
 	/**
 	 * 
@@ -158,8 +147,7 @@ public interface SigaService {
 	 * @throws Exception
 	 * @return Returns all registry of people that is studying a list of subject
 	 */
-	public List<String> getRegistriesBySubjectCode(List<String> subjectsCode,
-			String year, String semester, String classroom) throws Exception;
+	public List<String> getRegistriesBySubjectCode(List<String> subjectsCode, String year, String semester, String classroom) throws Exception;
 
 	/**
 	 * 
@@ -180,8 +168,7 @@ public interface SigaService {
 	 * @return Returns all subject of a period , sector and departament
 	 * 
 	 */
-	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year,
-			String semester, String sector, String department) throws Exception;
+	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year, String semester, String sector, String department) throws Exception;
 
 	/**
 	 * 
@@ -192,9 +179,7 @@ public interface SigaService {
 	 * @return Returns all subject of a period , sector with the specified
 	 *         subject code
 	 */
-	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year,
-			String semester, String subjectCode, String sector)
-			throws Exception;
+	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year, String semester, String subjectCode, String sector) throws Exception;
 
 	/**
 	 * 
@@ -222,8 +207,7 @@ public interface SigaService {
 	 *         owners
 	 * @throws Exception
 	 */
-	public List<NameVO> getSubjectOwner(String subjectCode, String year,
-			String semester, String classroom) throws Exception;
+	public List<NameVO> getSubjectOwner(String subjectCode, String year, String semester, String classroom) throws Exception;
 
 	/**
 	 * 
@@ -233,9 +217,7 @@ public interface SigaService {
 	 * @return Returns a list of nameVOs(registry,name) representing the subject
 	 * @throws Exception
 	 */
-	public List<NameVO> getSubjectOwner(String subjectCode, String year,
-			String semester, String classroom, boolean stillOpenConnection)
-			throws Exception;
+	public List<NameVO> getSubjectOwner(String subjectCode, String year, String semester, String classroom, boolean stillOpenConnection) throws Exception;
 
 	/**
 	 * 
@@ -248,17 +230,12 @@ public interface SigaService {
 	 * @return Returns all registry of people that is studying a list of subject
 	 * @throws Exception
 	 */
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom,
-			List<String> registriesNotWanted) throws Exception;
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom, List<String> registriesNotWanted) throws Exception;
 
 	/**
 	 * 
 	 * @return Returns all registry of people that is studying a list of subject
 	 * @throws Exception
 	 */
-	public List<String> getRegistriesBySubjectCode(String subjectCode,
-			String year, String semester, String classroom, boolean stillOpenConnection)
-			throws Exception;
-
+	public List<String> getRegistriesBySubjectCode(String subjectCode, String year, String semester, String classroom, boolean stillOpenConnection) throws Exception;
 }

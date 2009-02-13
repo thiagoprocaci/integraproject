@@ -15,9 +15,7 @@ import com.integrareti.integraframework.business.Person;
  * @author Thiago
  * 
  */
-public class PersonDaoHibernate extends GenericDaoHibernate<Person, Integer>
-		implements PersonDao {
-
+public class PersonDaoHibernate extends GenericDaoHibernate<Person, Integer> implements PersonDao {
 	DeletedGoogleUserDao deletedGoogleUserDao;
 
 	/**
@@ -42,12 +40,7 @@ public class PersonDaoHibernate extends GenericDaoHibernate<Person, Integer>
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Person> getGoogleDomainAdmins(String d) throws Exception {
-		return getHibernateTemplate().find(
-				"SELECT p " + "FROM " + "Person  p," + "UserGroup  ug "
-						+ " WHERE " + " ug in elements(p.userGroups) AND "
-						+ " ug.name = '" + UserGroup.GOOGLE_ADMIN_GROUP
-						+ "' AND " + " p.domain.name = ?", d);
-
+		return getHibernateTemplate().find("SELECT p " + "FROM " + "Person  p," + "UserGroup  ug " + " WHERE " + " ug in elements(p.userGroups) AND " + " ug.name = '" + UserGroup.GOOGLE_ADMIN_GROUP + "' AND " + " p.domain.name = ?", d);
 	}
 
 	/**
@@ -58,11 +51,8 @@ public class PersonDaoHibernate extends GenericDaoHibernate<Person, Integer>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Person getByGoogleAccount(String googleAccount, String domainName)
-			throws Exception {
-		List<Person> list = getHibernateTemplate().find(
-				"FROM Person p WHERE p.googleAccount = ? and p.domain.name = ?",
-				new String[] { googleAccount, domainName });
+	public Person getByGoogleAccount(String googleAccount, String domainName) throws Exception {
+		List<Person> list = getHibernateTemplate().find("FROM Person p WHERE p.googleAccount = ? and p.domain.name = ?", new String[] { googleAccount, domainName });
 		if (list != null && !list.isEmpty())
 			return list.get(0);
 		return null;
@@ -77,8 +67,7 @@ public class PersonDaoHibernate extends GenericDaoHibernate<Person, Integer>
 	@SuppressWarnings("unchecked")
 	@Override
 	public Person getByRegistry(String registry) throws Exception {
-		List<Person> list = (List<Person>) getHibernateTemplate().find(
-				"FROM Person p WHERE p.registry = ?", registry);
+		List<Person> list = (List<Person>) getHibernateTemplate().find("FROM Person p WHERE p.registry = ?", registry);
 		if (list != null && !list.isEmpty()) {
 			return list.get(0);
 		}
@@ -125,8 +114,7 @@ public class PersonDaoHibernate extends GenericDaoHibernate<Person, Integer>
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Person> getAllByDomainName(String domainName) throws Exception {
-		return getHibernateTemplate().find(
-				"FROM Person p WHERE p.domain.name = ?", domainName);
+		return getHibernateTemplate().find("FROM Person p WHERE p.domain.name = ?", domainName);
 	}
 
 	/**
@@ -139,8 +127,7 @@ public class PersonDaoHibernate extends GenericDaoHibernate<Person, Integer>
 	@SuppressWarnings("unchecked")
 	@Override
 	public Integer isPersonSaved(String registry) throws Exception {
-		List<Integer> list = (List<Integer>) getHibernateTemplate().find(
-				"select p.id from Person p where p.registry = ?", registry);
+		List<Integer> list = (List<Integer>) getHibernateTemplate().find("select p.id from Person p where p.registry = ?", registry);
 		if (!list.isEmpty())
 			return list.get(0);
 		return null;
@@ -155,10 +142,7 @@ public class PersonDaoHibernate extends GenericDaoHibernate<Person, Integer>
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Group> getGroups(String registry) throws Exception {
-		return getHibernateTemplate()
-				.find(
-						"select g from Group g, Person p where p in elements(g.participants) and p.registry = ?",
-						registry);
+		return getHibernateTemplate().find("select g from Group g, Person p where p in elements(g.participants) and p.registry = ?", registry);
 	}
 
 	/**
@@ -174,9 +158,7 @@ public class PersonDaoHibernate extends GenericDaoHibernate<Person, Integer>
 	 * 
 	 * @param deletedGoogleUserDao
 	 */
-	public void setDeletedGoogleUserDao(
-			DeletedGoogleUserDao deletedGoogleUserDao) {
+	public void setDeletedGoogleUserDao(DeletedGoogleUserDao deletedGoogleUserDao) {
 		this.deletedGoogleUserDao = deletedGoogleUserDao;
 	}
-
 }

@@ -29,7 +29,6 @@ import com.integrareti.integraframework.util.XmlDigitalSigner;
  * 
  */
 public class ProcessResponseGoogle {
-
 	// private constants
 	private static final ProcessResponseGoogle INSTANCE = new ProcessResponseGoogle();
 	private static final String SAML_RESPONSE_TEMPLATE_FILE = "SamlResponseTemplate.xml";
@@ -40,7 +39,6 @@ public class ProcessResponseGoogle {
 	 * Empty constructor
 	 */
 	private ProcessResponseGoogle() {
-
 	}
 
 	/**
@@ -56,18 +54,14 @@ public class ProcessResponseGoogle {
 	 * @throws SamlException
 	 * @return Returns a new samlResponse
 	 */
-	public String getSAMLResponse(String SAMLReqst, String username)
-			throws SamlException {
-
+	public String getSAMLResponse(String SAMLReqst, String username) throws SamlException {
 		String SAMLRequest = SAMLReqst;
 		String samlResponse = null;
 		boolean continueLogin = true;
-
 		if (SAMLRequest == null || SAMLRequest.equals("null")) {
 			continueLogin = false;
 			throw new SamlException("ERROR: Unspecified SAML parameters.");
 		} else {
-
 			// Parse the SAML request and extract the ACS URL and provider
 			// name
 			// Extract the Assertion Consumer Service URL from AuthnRequest
@@ -78,70 +72,43 @@ public class ProcessResponseGoogle {
 			String providerName = samlRequestAttributes[1];
 			String acsURL = samlRequestAttributes[2];
 			String requestId = samlRequestAttributes[3];
-
 			if (username == null) {
 				throw new SamlException("Login Failed: Invalid user.");
 			} else {
-
 				String public_key_file_path = "";
 				try {
-					public_key_file_path = "/"
-							+ URLDecoder.decode(getClass().getResource(
-									PUBLIC_KEY_FILE).toString(), "UTF-8");
+					public_key_file_path = "/" + URLDecoder.decode(getClass().getResource(PUBLIC_KEY_FILE).toString(), "UTF-8");
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
-
-				public_key_file_path = StringUtil.replaceSubstring(
-						public_key_file_path, "file:/", "");
-
-				DSAPublicKey publicKey = (DSAPublicKey) SsoUtil.getPublicKey(
-						public_key_file_path, "DSA");
-
+				public_key_file_path = StringUtil.replaceSubstring(public_key_file_path, "file:/", "");
+				DSAPublicKey publicKey = (DSAPublicKey) SsoUtil.getPublicKey(public_key_file_path, "DSA");
 				String private_key_file_path = "";
-
 				try {
-					private_key_file_path = "/"
-							+ URLDecoder.decode(getClass().getResource(
-									PRIVATE_KEY_FILE).toString(), "UTF-8");
+					private_key_file_path = "/" + URLDecoder.decode(getClass().getResource(PRIVATE_KEY_FILE).toString(), "UTF-8");
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
-				private_key_file_path = StringUtil.replaceSubstring(
-						private_key_file_path, "file:/", "");
-
-				DSAPrivateKey privateKey = (DSAPrivateKey) SsoUtil
-						.getPrivateKey(private_key_file_path, "DSA");
-
+				private_key_file_path = StringUtil.replaceSubstring(private_key_file_path, "file:/", "");
+				DSAPrivateKey privateKey = (DSAPrivateKey) SsoUtil.getPrivateKey(private_key_file_path, "DSA");
 				// Check for valid parameter values for SAML response
-
 				// First, verify that the NotBefore and NotOnOrAfter values
 				// are valid
 				String notBefore = "2003-04-17T00:46:02Z";
 				String notOnOrAfter = "2020-04-17T00:51:02Z";
-
 				if (!validSamlDateFormat(issueInstant)) {
 					continueLogin = false;
-					throw new SamlException(
-							"ERROR: Invalid NotBefore date specified - "
-									+ notBefore);
-
+					throw new SamlException("ERROR: Invalid NotBefore date specified - " + notBefore);
 				} else if (!validSamlDateFormat(notOnOrAfter)) {
 					continueLogin = false;
-					throw new SamlException(
-							"ERROR: Invalid NotOnOrAfter date specified - "
-									+ notOnOrAfter);
-
+					throw new SamlException("ERROR: Invalid NotOnOrAfter date specified - " + notOnOrAfter);
 				}
-
 				// Sign XML containing user name with specified keys
 				if (continueLogin) {
 					// Generate SAML response contaning specified user name
-					String responseXmlString = createSamlResponse(username,
-							notBefore, notOnOrAfter,requestId, acsURL);
+					String responseXmlString = createSamlResponse(username, notBefore, notOnOrAfter, requestId, acsURL);
 					// Sign the SAML response XML
-					String signedSamlResponse = signResponse(responseXmlString,
-							publicKey, privateKey);
+					String signedSamlResponse = signResponse(responseXmlString, publicKey, privateKey);
 					samlResponse = signedSamlResponse;
 				}
 			}
@@ -159,23 +126,18 @@ public class ProcessResponseGoogle {
 	 * 3. Inflate <br>
 	 * Returns the String format of the AuthnRequest XML.
 	 */
-	private String decodeAuthnRequestXML(String encodedRequestXmlString)
-			throws SamlException {
+	private String decodeAuthnRequestXML(String encodedRequestXmlString) throws SamlException {
 		try {
 			// URL decode
-			encodedRequestXmlString = URLDecoder.decode(
-					encodedRequestXmlString, "UTF-8");
-
+			encodedRequestXmlString = URLDecoder.decode(encodedRequestXmlString, "UTF-8");
 			// Base64 decode
 			Base64 base64Decoder = new Base64();
 			byte[] xmlBytes = encodedRequestXmlString.getBytes("UTF-8");
 			byte[] base64DecodedByteArray = base64Decoder.decode(xmlBytes);
-
 			// Uncompress the AuthnRequest data
 			// First attempt to unzip the byte array according to DEFLATE (rfc
 			// 1951)
 			try {
-
 				Inflater inflater = new Inflater(true);
 				inflater.setInput(base64DecodedByteArray);
 				// since we are decompressing, it's impossible to know how much
@@ -183,23 +145,17 @@ public class ProcessResponseGoogle {
 				// might need; hopefully this number is suitably big
 				byte[] xmlMessageBytes = new byte[5000];
 				int resultLength = inflater.inflate(xmlMessageBytes);
-
 				if (!inflater.finished()) {
-					throw new RuntimeException(
-							"didn't allocate enough space to hold "
-									+ "decompressed data");
+					throw new RuntimeException("didn't allocate enough space to hold " + "decompressed data");
 				}
 				inflater.end();
 				return new String(xmlMessageBytes, 0, resultLength, "UTF-8");
-
 			} catch (DataFormatException e) {
-
 				// if DEFLATE fails, then attempt to unzip the byte array
 				// according
 				// to
 				// zlib (rfc 1950)
-				ByteArrayInputStream bais = new ByteArrayInputStream(
-						base64DecodedByteArray);
+				ByteArrayInputStream bais = new ByteArrayInputStream(base64DecodedByteArray);
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				InflaterInputStream iis = new InflaterInputStream(bais);
 				byte[] buf = new byte[1024];
@@ -211,13 +167,10 @@ public class ProcessResponseGoogle {
 				iis.close();
 				return new String(baos.toByteArray());
 			}
-
 		} catch (UnsupportedEncodingException e) {
-			throw new SamlException("Error decoding AuthnRequest: "
-					+ "Check decoding scheme - " + e.getMessage());
+			throw new SamlException("Error decoding AuthnRequest: " + "Check decoding scheme - " + e.getMessage());
 		} catch (IOException e) {
-			throw new SamlException("Error decoding AuthnRequest: "
-					+ "Check decoding scheme - " + e.getMessage());
+			throw new SamlException("Error decoding AuthnRequest: " + "Check decoding scheme - " + e.getMessage());
 		}
 	}
 
@@ -225,23 +178,17 @@ public class ProcessResponseGoogle {
 	 * Creates a DOM document from the specified AuthnRequest xmlString and
 	 * extracts the value under the "AssertionConsumerServiceURL" attribute
 	 */
-	private String[] getRequestAttributes(String xmlString)
-			throws SamlException {
+	private String[] getRequestAttributes(String xmlString) throws SamlException {
 		Document doc = SsoUtil.createJdomDoc(xmlString);
 		if (doc != null) {
 			String[] samlRequestAttributes = new String[4];
-			samlRequestAttributes[0] = doc.getRootElement().getAttributeValue(
-					"IssueInstant");
-			samlRequestAttributes[1] = doc.getRootElement().getAttributeValue(
-					"ProviderName");
-			samlRequestAttributes[2] = doc.getRootElement().getAttributeValue(
-					"AssertionConsumerServiceURL");
-			samlRequestAttributes[3] = doc.getRootElement().getAttributeValue(
-					"ID");
+			samlRequestAttributes[0] = doc.getRootElement().getAttributeValue("IssueInstant");
+			samlRequestAttributes[1] = doc.getRootElement().getAttributeValue("ProviderName");
+			samlRequestAttributes[2] = doc.getRootElement().getAttributeValue("AssertionConsumerServiceURL");
+			samlRequestAttributes[3] = doc.getRootElement().getAttributeValue("ID");
 			return samlRequestAttributes;
 		} else {
-			throw new SamlException(
-					"Error parsing AuthnRequest XML: Null document");
+			throw new SamlException("Error parsing AuthnRequest XML: Null document");
 		}
 	}
 
@@ -249,41 +196,22 @@ public class ProcessResponseGoogle {
 	 * Generates a SAML response XML by replacing the specified username on the
 	 * SAML response template file. Returns the String format of the XML file.
 	 */
-	private String createSamlResponse(String authenticatedUser,
-			String notBefore, String notOnOrAfter, String requestId,
-			String acsURL) throws SamlException {
-
+	private String createSamlResponse(String authenticatedUser, String notBefore, String notOnOrAfter, String requestId, String acsURL) throws SamlException {
 		String file_path = "";
-
 		try {
-			file_path = "/"
-					+ URLDecoder
-							.decode(
-									getClass()
-											.getResource(
-													"/com/integrareti/integraframework/service/google/sso/template/")
-											.toString()
-											+ SAML_RESPONSE_TEMPLATE_FILE,
-									"UTF-8");
+			file_path = "/" + URLDecoder.decode(getClass().getResource("/com/integrareti/integraframework/service/google/sso/template/").toString() + SAML_RESPONSE_TEMPLATE_FILE, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-
 		file_path = file_path.replace("file:/", "");
-
 		String samlResponse = SsoUtil.readFileContents(file_path);
-		samlResponse = samlResponse.replace("<USERNAME_STRING>",
-				authenticatedUser);
-		samlResponse = samlResponse
-				.replace("<RESPONSE_ID>", SsoUtil.createID());
-		samlResponse = samlResponse.replace("<ISSUE_INSTANT>", SsoUtil
-				.getDateAndTime());
-		samlResponse = samlResponse.replace("<AUTHN_INSTANT>", SsoUtil
-				.getDateAndTime());
+		samlResponse = samlResponse.replace("<USERNAME_STRING>", authenticatedUser);
+		samlResponse = samlResponse.replace("<RESPONSE_ID>", SsoUtil.createID());
+		samlResponse = samlResponse.replace("<ISSUE_INSTANT>", SsoUtil.getDateAndTime());
+		samlResponse = samlResponse.replace("<AUTHN_INSTANT>", SsoUtil.getDateAndTime());
 		samlResponse = samlResponse.replace("<NOT_BEFORE>", notBefore);
 		samlResponse = samlResponse.replace("<NOT_ON_OR_AFTER>", notOnOrAfter);
-		samlResponse = samlResponse.replace("<ASSERTION_ID>", SsoUtil
-				.createID());
+		samlResponse = samlResponse.replace("<ASSERTION_ID>", SsoUtil.createID());
 		samlResponse = samlResponse.replace("<REQUEST_ID>", requestId);
 		samlResponse = samlResponse.replace("<ACS_URL>", acsURL);
 		return samlResponse;
@@ -294,8 +222,7 @@ public class ProcessResponseGoogle {
 	 * with public key. Uses helper class XmlDigitalSigner to digitally sign the
 	 * XML.
 	 */
-	private String signResponse(String response, DSAPublicKey publicKey,
-			DSAPrivateKey privateKey) throws SamlException {
+	private String signResponse(String response, DSAPublicKey publicKey, DSAPrivateKey privateKey) throws SamlException {
 		return (XmlDigitalSigner.signXML(response, publicKey, privateKey));
 	}
 
@@ -325,5 +252,4 @@ public class ProcessResponseGoogle {
 		}
 		return true;
 	}
-
 }

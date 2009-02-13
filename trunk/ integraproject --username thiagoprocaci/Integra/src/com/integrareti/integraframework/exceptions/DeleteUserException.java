@@ -10,7 +10,6 @@ import com.integrareti.integraframework.business.Person;
  */
 @SuppressWarnings("serial")
 public class DeleteUserException extends Exception {
-
 	private static final String MSG_Exception = "This user can not be deleted: ";
 
 	/**
@@ -21,5 +20,4 @@ public class DeleteUserException extends Exception {
 	public DeleteUserException(Person person) {
 		super(MSG_Exception + person.getRegistry());
 	}
-
 }

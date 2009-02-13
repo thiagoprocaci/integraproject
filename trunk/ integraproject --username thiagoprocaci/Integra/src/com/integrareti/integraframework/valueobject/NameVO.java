@@ -4,30 +4,29 @@ import java.io.Serializable;
 
 /**
  * This class describes a VO object
+ * 
  * @author Thiago
- *
+ * 
  */
 @SuppressWarnings("serial")
-public class NameVO implements Serializable{
-
+public class NameVO implements Serializable {
 	// do not modify the methods equal and hashCode
-	
 	private String name;
 	private String registry;
-	
+
 	/**
 	 * Creates a new NameVO
 	 */
-	public NameVO(){
-		
+	public NameVO() {
 	}
-	
+
 	/**
 	 * Creates a new NameVO
+	 * 
 	 * @param name
 	 * @param registry
 	 */
-	public NameVO(String name,String registry){
+	public NameVO(String name, String registry) {
 		this.name = name;
 		this.registry = registry;
 	}
@@ -42,6 +41,7 @@ public class NameVO implements Serializable{
 
 	/**
 	 * Sets name
+	 * 
 	 * @param name
 	 */
 	public void setName(String name) {
@@ -58,6 +58,7 @@ public class NameVO implements Serializable{
 
 	/**
 	 * Sets registry
+	 * 
 	 * @param registry
 	 */
 	public void setRegistry(String registry) {
@@ -68,8 +69,7 @@ public class NameVO implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((registry == null) ? 0 : registry.hashCode());
+		result = prime * result + ((registry == null) ? 0 : registry.hashCode());
 		return result;
 	}
 
@@ -89,5 +89,4 @@ public class NameVO implements Serializable{
 			return false;
 		return true;
 	}
-	
 }

@@ -14,9 +14,7 @@ import com.integrareti.integraframework.business.Person;
  * @author Thiago B. Procaci
  * 
  */
-public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
-		implements GroupDao {
-
+public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer> implements GroupDao {
 	/**
 	 * 
 	 * @param groupName
@@ -26,8 +24,7 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Group> getGroupByName(String groupName) throws Exception {
-		return (List<Group>) getHibernateTemplate().find(
-				"FROM Group WHERE name=?", groupName);
+		return (List<Group>) getHibernateTemplate().find("FROM Group WHERE name=?", groupName);
 	}
 
 	/**
@@ -39,12 +36,8 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Group getGroupByNameAndDomainName(String groupName, String domainName)
-			throws Exception {
-		List<Group> list = (List<Group>) getHibernateTemplate()
-				.find(
-						"SELECT g FROM Group g, Domain d where g.name=?  and g.domain.name=? ",
-						new String[] { groupName, domainName });
+	public Group getGroupByNameAndDomainName(String groupName, String domainName) throws Exception {
+		List<Group> list = (List<Group>) getHibernateTemplate().find("SELECT g FROM Group g, Domain d where g.name=?  and g.domain.name=? ", new String[] { groupName, domainName });
 		if (list != null && !list.isEmpty()) {
 			return list.get(0);
 		}
@@ -60,8 +53,7 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	@SuppressWarnings("unchecked")
 	@Override
 	public Integer getGroupIdByName(String groupName) throws Exception {
-		List<Integer> list = (List<Integer>) getHibernateTemplate().find(
-				"SELECT g.id FROM Group g WHERE g.name=?", groupName);
+		List<Integer> list = (List<Integer>) getHibernateTemplate().find("SELECT g.id FROM Group g WHERE g.name=?", groupName);
 		if (list != null && !list.isEmpty())
 			return list.get(0);
 		return null;
@@ -74,12 +66,8 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Group> getAllGroupsWithoutEmailListByDomainName(
-			String domainName) throws Exception {
-		return getHibernateTemplate()
-				.find(
-						"From Group g WHERE size(g.emailLists) = 0 AND g.domain.name = ?",
-						domainName);
+	public List<Group> getAllGroupsWithoutEmailListByDomainName(String domainName) throws Exception {
+		return getHibernateTemplate().find("From Group g WHERE size(g.emailLists) = 0 AND g.domain.name = ?", domainName);
 	}
 
 	/**
@@ -90,14 +78,8 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Group> getGroupsByDescription(String description)
-			throws Exception {
-		return getHibernateTemplate()
-				.find(
-						String
-								.format(
-										"SELECT g FROM Group g WHERE g.description like '%%%S%%'",
-										description));
+	public List<Group> getGroupsByDescription(String description) throws Exception {
+		return getHibernateTemplate().find(String.format("SELECT g FROM Group g WHERE g.description like '%%%S%%'", description));
 	}
 
 	/**
@@ -109,14 +91,8 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("all")
 	@Override
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			String name) throws Exception {
-		return getHibernateTemplate()
-				.find(
-						String
-								.format(
-										"SELECT g FROM Group g WHERE g.description like '%%%S%%' AND g.name like '%%%S%%'",
-										new String[] { description, name }));
+	public List<Group> getGroupsByDescriptionAndName(String description, String name) throws Exception {
+		return getHibernateTemplate().find(String.format("SELECT g FROM Group g WHERE g.description like '%%%S%%' AND g.name like '%%%S%%'", new String[] { description, name }));
 	}
 
 	/**
@@ -128,11 +104,9 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("all")
 	@Override
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			List<String> names) throws Exception {
+	public List<Group> getGroupsByDescriptionAndName(String description, List<String> names) throws Exception {
 		StringBuffer buffer = new StringBuffer();
-		buffer
-				.append("SELECT g FROM Group g WHERE g.description like '%%%S%%' ");
+		buffer.append("SELECT g FROM Group g WHERE g.description like '%%%S%%' ");
 		String[] array = new String[names.size() + 1];
 		array[0] = description;
 		int count = 1;
@@ -141,10 +115,9 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 			array[count] = string;
 			count++;
 		}
-		return getHibernateTemplate().find(
-				String.format(buffer.toString(), array));
+		return getHibernateTemplate().find(String.format(buffer.toString(), array));
 	}
-	
+
 	/**
 	 * 
 	 * 
@@ -154,16 +127,10 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("all")
 	@Override
-	public List<Group> getGroupsByClue(String clue)
-			throws Exception {
-		return getHibernateTemplate()
-		.find(
-				String
-						.format(
-								"SELECT g FROM Group g WHERE g.description like '%%%S%%' or g.name like '%%%S%%'",
-								new String[]{clue,clue}));
+	public List<Group> getGroupsByClue(String clue) throws Exception {
+		return getHibernateTemplate().find(String.format("SELECT g FROM Group g WHERE g.description like '%%%S%%' or g.name like '%%%S%%'", new String[] { clue, clue }));
 	}
-	
+
 	/**
 	 * 
 	 * @param names
@@ -172,22 +139,19 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("all")
 	@Override
-	public List<Group> getGroupsByPiecesOfNames(List<String> names)
-			throws Exception {
+	public List<Group> getGroupsByPiecesOfNames(List<String> names) throws Exception {
 		StringBuffer buffer = new StringBuffer();
 		String[] array = new String[names.size()];
 		int count = 0;
 		for (String string : names) {
 			if (count == 0)
-				buffer
-						.append("SELECT g FROM Group g WHERE g.name like '%%%S%%' ");
+				buffer.append("SELECT g FROM Group g WHERE g.name like '%%%S%%' ");
 			else
 				buffer.append(" AND g.name like '%%%S%%' ");
 			array[count] = string;
 			count++;
 		}
-		return getHibernateTemplate().find(
-				String.format(buffer.toString(), array));
+		return getHibernateTemplate().find(String.format(buffer.toString(), array));
 	}
 
 	/**
@@ -196,8 +160,7 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Group> getAllByDomainName(String domainName) throws Exception {
-		return getHibernateTemplate().find(
-				"From Group g WHERE g.domain.name = ?", domainName);
+		return getHibernateTemplate().find("From Group g WHERE g.domain.name = ?", domainName);
 	}
 
 	/**
@@ -210,8 +173,7 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Group> getPageByDomainName(String domainName, int first,
-			int offset) throws Exception {
+	public List<Group> getPageByDomainName(String domainName, int first, int offset) throws Exception {
 		DetachedCriteria dt = DetachedCriteria.forClass(Group.class);
 		dt.createAlias("domain", "dom");
 		dt.add(Restrictions.eq("dom.name", domainName));
@@ -228,8 +190,7 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(
-			String domainName, int first, int offset) throws Exception {
+	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(String domainName, int first, int offset) throws Exception {
 		DetachedCriteria dt = DetachedCriteria.forClass(Group.class);
 		dt.createAlias("domain", "dom");
 		dt.add(Restrictions.eq("dom.name", domainName));
@@ -245,9 +206,7 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@Override
 	public Long countGroupsByDomainName(String domain) throws Exception {
-		return (Long) getHibernateTemplate().find(
-				"Select count(g) FROM Group g WHERE g.domain.name = ?", domain)
-				.get(0);
+		return (Long) getHibernateTemplate().find("Select count(g) FROM Group g WHERE g.domain.name = ?", domain).get(0);
 	}
 
 	/**
@@ -257,12 +216,8 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 * @throws Exception
 	 */
 	@Override
-	public Long countGroupsWithoutEmailListByDomainName(String domain)
-			throws Exception {
-		return (Long) getHibernateTemplate()
-				.find(
-						"Select count(g) FROM Group g WHERE size(g.emailLists) = 0 AND g.domain.name = ?",
-						domain).get(0);
+	public Long countGroupsWithoutEmailListByDomainName(String domain) throws Exception {
+		return (Long) getHibernateTemplate().find("Select count(g) FROM Group g WHERE size(g.emailLists) = 0 AND g.domain.name = ?", domain).get(0);
 	}
 
 	/**
@@ -273,7 +228,7 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Group> getGroupsByOwner(Person owner) throws Exception{		
+	public List<Group> getGroupsByOwner(Person owner) throws Exception {
 		return getHibernateTemplate().find("FROM Group g WHERE ? in elements(g.owners)", owner);
 	}
 
@@ -285,11 +240,7 @@ public class GroupDaoHibernate extends GenericDaoHibernate<Group, Integer>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Group> getGroupsByParticipant(Person participant)
-			throws Exception {
-		return getHibernateTemplate()
-				.find("FROM Group g WHERE ? in elements(g.participants)",
-						participant);
-	}	
-
+	public List<Group> getGroupsByParticipant(Person participant) throws Exception {
+		return getHibernateTemplate().find("FROM Group g WHERE ? in elements(g.participants)", participant);
+	}
 }

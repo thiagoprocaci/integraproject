@@ -15,13 +15,12 @@ import com.integrareti.integraframework.service.google.GoogleEmailListServiceInt
 import com.integrareti.integraframework.service.integra.IntegraGroupServiceInterface;
 
 /**
- * This class gives to main list (view) the access to bussiness
- * components
+ * This class gives to main list (view) the access to bussiness components
+ * 
  * @author Thiago
  * 
  */
 public class EmailListController {
-
 	private GoogleEmailListServiceInterface googleEmailListServiceInterface;
 	private IntegraGroupServiceInterface integraGroupServiceInterface;
 
@@ -30,8 +29,7 @@ public class EmailListController {
 	 * 
 	 * @param googleEmailListServiceInterface
 	 */
-	public EmailListController(GoogleEmailListServiceInterface googleEmailListServiceInterface,
-			IntegraGroupServiceInterface integraGroupServiceInterface) {
+	public EmailListController(GoogleEmailListServiceInterface googleEmailListServiceInterface, IntegraGroupServiceInterface integraGroupServiceInterface) {
 		this.googleEmailListServiceInterface = googleEmailListServiceInterface;
 		this.integraGroupServiceInterface = integraGroupServiceInterface;
 	}
@@ -43,14 +41,12 @@ public class EmailListController {
 	 * @return Recipients not added
 	 */
 	public Map<String, EmailList> createEmailLists(List<Group> groups) {
-		//TODO seems like this task is more suitable for the bussines class
-		
-		//forcing to initialize the lazy participants
+		// TODO seems like this task is more suitable for the bussines class
+		// forcing to initialize the lazy participants
 		for (Group group : groups) {
 			integraGroupServiceInterface.reattach(group);
-			integraGroupServiceInterface.initialize(group.getParticipants());			
+			integraGroupServiceInterface.initialize(group.getParticipants());
 		}
-		
 		int x = 0;
 		String errorString = "";
 		Map<String, EmailList> errorLists = new HashMap<String, EmailList>();
@@ -77,35 +73,32 @@ public class EmailListController {
 					group.addEmailList(emailList);
 					integraGroupServiceInterface.save(group);
 				} catch (AppsForYourDomainException e) {
-					errorString += "Invalid email list name. Entity exists only on Google. [GooErr: "
-						+ ((AppsForYourDomainException) e)
-								.getErrorCode() + "].";
+					errorString += "Invalid email list name. Entity exists only on Google. [GooErr: " + ((AppsForYourDomainException) e).getErrorCode() + "].";
 					errorLists.put(errorString, emailList);
 					errorString = "";
 					e.printStackTrace();
-				}catch (AuthenticationException e) {
-					errorString += e.getMessage() + ".";					
-					errorLists.put(emailList.getName()+": "+errorString, emailList);
-					errorString = "";					
+				} catch (AuthenticationException e) {
+					errorString += e.getMessage() + ".";
+					errorLists.put(emailList.getName() + ": " + errorString, emailList);
+					errorString = "";
 					e.printStackTrace();
-				}catch (Exception e) {					
-					errorString += e.getMessage() + ".";					
+				} catch (Exception e) {
+					errorString += e.getMessage() + ".";
 					errorLists.put(errorString, emailList);
-					errorString = "";					
+					errorString = "";
 					e.printStackTrace();
 				}
 			}
 		}
 		return errorLists;
 	}
-	
-
 
 	/**
-	 * Adds participants to groups emailList.
-	 * The emailLists for each group must be defined before
+	 * Adds participants to groups emailList. The emailLists for each group must
+	 * be defined before
+	 * 
 	 * @param groups
-	 * @throws ServiceException 
+	 * @throws ServiceException
 	 */
 	public Map<String, Person> addParticipants(List<Group> groups) {
 		Map<String, Person> errors = new HashMap<String, Person>();
@@ -125,7 +118,7 @@ public class EmailListController {
 					} catch (AppsForYourDomainException e) {
 						errors.put(e.getErrorCode().toString(), person);
 						e.printStackTrace();
-					}catch (Exception e) {
+					} catch (Exception e) {
 						errors.put(e.getMessage().toString(), person);
 						e.printStackTrace();
 					}
@@ -134,6 +127,4 @@ public class EmailListController {
 		}
 		return errors;
 	}
-
-	
 }

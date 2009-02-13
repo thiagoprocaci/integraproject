@@ -9,11 +9,11 @@ import com.integrareti.integraframework.business.Person;
 
 /**
  * Class adapter of groupDao
+ * 
  * @author Thiago
- *
+ * 
  */
 public class GroupDaoJDBCAdapter implements GroupDao {
-
 	private static final String MSG = "Not implementedn here - see GroupDaoHibernate";
 
 	/**
@@ -30,12 +30,11 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	/**
 	 * 
 	 * @param domain
-	 * @return Returns the number of groups without emaillist by domain name 
+	 * @return Returns the number of groups without emaillist by domain name
 	 * @throws Exception
 	 */
 	@Override
-	public Long countGroupsWithoutEmailListByDomainName(String domain)
-			throws Exception {
+	public Long countGroupsWithoutEmailListByDomainName(String domain) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -46,8 +45,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getAllGroupsWithoutEmailListByDomainName(
-			String domainName) throws Exception {
+	public List<Group> getAllGroupsWithoutEmailListByDomainName(String domainName) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -70,8 +68,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public Group getGroupByNameAndDomainName(String groupName, String domainName)
-			throws Exception {
+	public Group getGroupByNameAndDomainName(String groupName, String domainName) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -93,8 +90,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByDescription(String description)
-			throws Exception {
+	public List<Group> getGroupsByDescription(String description) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -106,8 +102,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			String name) throws Exception {
+	public List<Group> getGroupsByDescriptionAndName(String description, String name) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -119,8 +114,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			List<String> names) throws Exception {
+	public List<Group> getGroupsByDescriptionAndName(String description, List<String> names) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -133,8 +127,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getPageByDomainName(String domainName, int first,
-			int offset) throws Exception {
+	public List<Group> getPageByDomainName(String domainName, int first, int offset) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -147,8 +140,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(
-			String domainName, int first, int offset) throws Exception {
+	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(String domainName, int first, int offset) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -157,7 +149,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 */
 	@Override
 	public void delete(Group row) throws Exception {
-		throw new Exception(MSG);		
+		throw new Exception(MSG);
 	}
 
 	/**
@@ -197,7 +189,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 */
 	@Override
 	public void save(Group row) throws Exception {
-		throw new Exception(MSG);		
+		throw new Exception(MSG);
 	}
 
 	/**
@@ -207,11 +199,9 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByPiecesOfNames(List<String> names)
-			throws Exception {
+	public List<Group> getGroupsByPiecesOfNames(List<String> names) throws Exception {
 		throw new Exception(MSG);
 	}
-
 
 	/**
 	 * 
@@ -220,7 +210,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByOwner(Person owner) throws Exception  {		
+	public List<Group> getGroupsByOwner(Person owner) throws Exception {
 		throw new Exception(MSG);
 	}
 
@@ -241,7 +231,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 */
 	@Override
 	public void closeSession() {
-		throw new RuntimeException(MSG);		
+		throw new RuntimeException(MSG);
 	}
 
 	/**
@@ -249,7 +239,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 */
 	@Override
 	public void openSession() {
-		throw new RuntimeException(MSG);		
+		throw new RuntimeException(MSG);
 	}
 
 	/**
@@ -259,9 +249,7 @@ public class GroupDaoJDBCAdapter implements GroupDao {
 	 * @throws Exception
 	 */
 	@Override
-	public List<Group> getGroupsByParticipant(Person participant)
-			throws Exception {
+	public List<Group> getGroupsByParticipant(Person participant) throws Exception {
 		throw new Exception(MSG);
-	}	
-	
+	}
 }

@@ -13,32 +13,29 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Custom property editor for {@link PageRedirectDefinition} on Spring Acegi's context
- * definition
+ * Custom property editor for {@link PageRedirectDefinition} on Spring Acegi's
+ * context definition
  * 
  * @created 27/02/2008
- * @author Thiago Athouguia Gama * 
+ * @author Thiago Athouguia Gama *
  * @version 1.0
  */
 public class PageRedirectDefinitionSourceEditor extends PropertyEditorSupport {
-	
-	private static final Log logger = LogFactory
-			.getLog(PageRedirectDefinitionSourceEditor.class);
-	
+	private static final Log logger = LogFactory.getLog(PageRedirectDefinitionSourceEditor.class);
+
 	/**
 	 * <b>Description copied from {@link PropertyEditor#setAsText(String)}</b><br/>
-     * Set the property value by parsing a given String.  May raise
-     * java.lang.IllegalArgumentException if either the String is
-     * badly formatted or if this kind of property can't be expressed
-     * as text.
-     * @param text  The string to be parsed.
-     * 
-     */
+	 * Set the property value by parsing a given String. May raise
+	 * java.lang.IllegalArgumentException if either the String is badly
+	 * formatted or if this kind of property can't be expressed as text.
+	 * 
+	 * @param text
+	 *            The string to be parsed.
+	 * 
+	 */
 	public void setAsText(String text) throws IllegalArgumentException {
 		PageRedirectDefinitionSource definitionSource = new PageRedirectDefinitionSource();
-
 		List<PageRedirectDefinition> definitionsList = new ArrayList<PageRedirectDefinition>();
-
 		if (StringUtils.isNotEmpty(text)) {
 			BufferedReader br = new BufferedReader(new StringReader(text));
 			int counter = 0;
@@ -66,27 +63,18 @@ public class PageRedirectDefinitionSourceEditor extends PropertyEditorSupport {
 				int equalsPos = line.indexOf("=");
 				String roleNamesString = line.substring(0, equalsPos);
 				String pageName = line.substring(equalsPos + 1);
-				if (StringUtils.isEmpty(pageName)
-						|| StringUtils.isEmpty(roleNamesString)) {
-					throw new IllegalArgumentException(
-							"Failed to parse a valid name/value pair from "
-									+ line);
+				if (StringUtils.isEmpty(pageName) || StringUtils.isEmpty(roleNamesString)) {
+					throw new IllegalArgumentException("Failed to parse a valid name/value pair from " + line);
 				}
-
 				if (logger.isDebugEnabled()) {
 					logger.debug("roleNamesString :" + roleNamesString);
 					logger.debug("pageName :" + pageName);
 				}
-
-				String[] roleName = org.springframework.util.StringUtils
-						.delimitedListToStringArray(roleNamesString, ",");
-
+				String[] roleName = org.springframework.util.StringUtils.delimitedListToStringArray(roleNamesString, ",");
 				for (int i = 0; i < roleName.length; i++) {
-					PageRedirectDefinition definition = new PageRedirectDefinition(
-							roleName[i], pageName);
+					PageRedirectDefinition definition = new PageRedirectDefinition(roleName[i], pageName);
 					definitionsList.add(definition);
 				}
-
 			}
 		}
 		definitionSource.setDefinitionsList(definitionsList);

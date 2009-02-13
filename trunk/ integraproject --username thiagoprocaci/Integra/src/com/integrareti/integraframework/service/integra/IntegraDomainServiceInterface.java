@@ -6,11 +6,11 @@ import com.integrareti.integraframework.valueobject.SectorVO;
 
 /**
  * This interface offers services to manipulates a domain
+ * 
  * @author Thiago
- *
+ * 
  */
-public interface IntegraDomainServiceInterface extends IntegraServiceInterface<Domain, Integer>{
-	
+public interface IntegraDomainServiceInterface extends IntegraServiceInterface<Domain, Integer> {
 	/**
 	 * 
 	 * @param domainName
@@ -18,15 +18,16 @@ public interface IntegraDomainServiceInterface extends IntegraServiceInterface<D
 	 * @throws Exception
 	 */
 	public Login getGoogleDomainAdminLogin(String domainName) throws Exception;
-	
+
 	/**
 	 * Returns a domain by a sectorVO
+	 * 
 	 * @param sectorVO
 	 * @return
 	 * @throws Exception
 	 */
 	public Domain getDomain(SectorVO sectorVO) throws Exception;
-	
+
 	/**
 	 * 
 	 * @param domainName
@@ -34,5 +35,4 @@ public interface IntegraDomainServiceInterface extends IntegraServiceInterface<D
 	 * @throws Exception
 	 */
 	public Domain getDomainByName(String domainName) throws Exception;
-	
 }

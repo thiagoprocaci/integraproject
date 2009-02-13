@@ -17,7 +17,6 @@ import com.integrareti.integraframework.business.Person;
  * 
  */
 public class PersonDaoJDBC extends PersonDaoJDBCAdapter {
-
 	private Connection connection = null;
 	private DataSource dataSource;
 
@@ -31,8 +30,7 @@ public class PersonDaoJDBC extends PersonDaoJDBCAdapter {
 	@Override
 	public Integer isPersonSaved(String registry) throws Exception {
 		Statement st = connection.createStatement();
-		String query = "select personID from person where registry = '"
-				+ registry + "'";
+		String query = "select personID from person where registry = '" + registry + "'";
 		ResultSet rs = (ResultSet) st.executeQuery(query);
 		if (rs.next())
 			return Integer.parseInt(rs.getString("personID"));
@@ -47,9 +45,7 @@ public class PersonDaoJDBC extends PersonDaoJDBCAdapter {
 	 * @throws InstantiationException
 	 * @throws SQLException
 	 */
-
-	public void openConnection() throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, SQLException {
+	public void openConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		connection = dataSource.getConnection();
 	}
 
@@ -58,7 +54,6 @@ public class PersonDaoJDBC extends PersonDaoJDBCAdapter {
 	 * 
 	 * @throws SQLException
 	 */
-
 	public void closeConnection() throws SQLException {
 		if (connection != null) {
 			connection.close();
@@ -110,10 +105,10 @@ public class PersonDaoJDBC extends PersonDaoJDBCAdapter {
 
 	/**
 	 * Sets dataSource
+	 * 
 	 * @param dataSource
 	 */
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-
 }

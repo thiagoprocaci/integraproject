@@ -22,7 +22,6 @@ import com.integrareti.integraframework.valueobject.PersonVO;
  */
 @SuppressWarnings("serial")
 public class CreateAccountWindow extends AnnotateDataBinderWindow {
-
 	private GoogleAccountController googleAccountController;
 	private List<String> list;
 	private PersonVO personVO;
@@ -30,16 +29,12 @@ public class CreateAccountWindow extends AnnotateDataBinderWindow {
 
 	@Override
 	public void doOnCreate() {
-		googleAccountController = (GoogleAccountController) SpringUtil
-				.getBean("googleAccountController");
+		googleAccountController = (GoogleAccountController) SpringUtil.getBean("googleAccountController");
 		personVO = (PersonVO) Sessions.getCurrent().getAttribute("personVO");
 		try {
 			// setting domain
-			personVO.setDomain(googleAccountController.getDomain(personVO
-					.getSector()));			
-			this.list = googleAccountController.validUsernames(
-					googleAccountController.getPossiblesUsernames(personVO),
-					personVO.getDomain().getName());
+			personVO.setDomain(googleAccountController.getDomain(personVO.getSector()));
+			this.list = googleAccountController.validUsernames(googleAccountController.getPossiblesUsernames(personVO), personVO.getDomain().getName());
 		} catch (Exception e) {
 			setPermanentWarnning("Erro. Tente novamente mais tarde");
 			e.printStackTrace();
@@ -57,16 +52,13 @@ public class CreateAccountWindow extends AnnotateDataBinderWindow {
 	 */
 	public void save() {
 		if (selectedUsername == null)
-			throw new WrongValueException(getFellow("usernamesWindow")
-					.getFellow("usernames"), "Escolha um nome de usuário.");
+			throw new WrongValueException(getFellow("usernamesWindow").getFellow("usernames"), "Escolha um nome de usuário.");
 		personVO.setGoogleAccount(getSelectedUsername());
 		try {
 			googleAccountController.save(personVO);
 		} catch (AppsForYourDomainException e) {
-			if (e.getErrorCode()
-					.equals(AppsForYourDomainErrorCode.EntityExists))
-				setPermanentWarnning("Ocorreu um erro [" + e.getErrorCode()
-						+ "]. O usuário selecionado já foi cadastrado.");
+			if (e.getErrorCode().equals(AppsForYourDomainErrorCode.EntityExists))
+				setPermanentWarnning("Ocorreu um erro [" + e.getErrorCode() + "]. O usuário selecionado já foi cadastrado.");
 			return;
 		} catch (Exception e) {
 			setPermanentWarnning("Erro ao tentar salvar. Tente novamente mais tarde");
@@ -75,9 +67,7 @@ public class CreateAccountWindow extends AnnotateDataBinderWindow {
 		}
 		AcsForm acsFrom = (AcsForm) getRoot().getFellow("acsFrom");
 		try {
-			acsFrom.setSamlResponseTextAreaValue(SingleSignOn.getInstance()
-					.getAuthSSO(personVO.getDomain().getName(),
-							selectedUsername));
+			acsFrom.setSamlResponseTextAreaValue(SingleSignOn.getInstance().getAuthSSO(personVO.getDomain().getName(), selectedUsername));
 		} catch (Exception e) {
 			setPermanentWarnning("Erro. Tente novamente mais tarde");
 			e.printStackTrace();
@@ -111,5 +101,4 @@ public class CreateAccountWindow extends AnnotateDataBinderWindow {
 	public List<String> getUsernames() {
 		return (List<String>) getBindObjects().get("usernames");
 	}
-
 }

@@ -16,7 +16,6 @@ import com.integrareti.integraframework.business.Identifiable;
  * @param <ID>
  */
 public interface GenericDao<Reg extends Identifiable<ID>, ID extends Serializable> {
-
 	/**
 	 * Saves an object
 	 * 
@@ -29,7 +28,7 @@ public interface GenericDao<Reg extends Identifiable<ID>, ID extends Serializabl
 	 * @return Returns all
 	 */
 	public List<Reg> getAll() throws Exception;
-	
+
 	/**
 	 * 
 	 * @return Returns all by domainName
@@ -49,22 +48,20 @@ public interface GenericDao<Reg extends Identifiable<ID>, ID extends Serializabl
 	 * @return Returns a object by id
 	 */
 	public Reg getById(ID id) throws Exception;
-	
+
 	/**
 	 * 
 	 * @return Returns hibernate session
 	 */
 	public Session getHibernateSession();
-	
+
 	/**
 	 * Open hibernate session
 	 */
 	public void openSession();
-	
+
 	/**
 	 * Closed hibernate session
 	 */
 	public void closeSession();
-	
-	
 }

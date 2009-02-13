@@ -10,7 +10,6 @@ import java.util.Calendar;
  */
 @SuppressWarnings("serial")
 public class DeletedGoogleUser implements Identifiable<Integer> {
-
 	private Integer id;
 	private String deletedGoogleAccount;
 	private Calendar exclusionDate;
@@ -90,5 +89,4 @@ public class DeletedGoogleUser implements Identifiable<Integer> {
 	public String getEmailDeleted() {
 		return deletedGoogleAccount + "@" + domain.getName();
 	}
-
 }

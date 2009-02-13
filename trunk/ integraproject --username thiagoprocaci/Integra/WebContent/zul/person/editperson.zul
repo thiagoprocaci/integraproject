@@ -18,23 +18,23 @@
 				<textbox />
 			</row>
 			<row>
-			Sobrenome:
+				Sobrenome:
 				<a:bind value="object.familyName" />
 				<textbox />
 			</row>
-			
+
 			<row>
 				Google Account :
 				<a:bind value="object.googleAccount" />
 				<textbox />
 			</row>
-			
+
 			<row>
 				Registry :
 				<a:bind value="object.registry" />
 				<textbox />
 			</row>
-			
+
 			<row>
 				Password :
 				<a:bind value="object.password" />

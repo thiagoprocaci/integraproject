@@ -20,7 +20,6 @@ import com.google.gdata.data.extensions.Where;
  */
 @SuppressWarnings("serial")
 public class Calendar implements Identifiable<Integer>, Serializable {
-
 	private Group group;
 	private Integer id;
 	private CalendarEntry calendarEntry;
@@ -190,5 +189,4 @@ public class Calendar implements Identifiable<Integer>, Serializable {
 		getCalendarEntry().addLocation(where);
 		// TODO: Terminar de comentar o calendário
 	}
-
 }

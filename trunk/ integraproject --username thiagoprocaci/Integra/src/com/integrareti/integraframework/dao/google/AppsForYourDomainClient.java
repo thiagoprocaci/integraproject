@@ -12,7 +12,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.integrareti.integraframework.dao.google;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
  * nicknames. Also included is sample usage of the client library.
  * 
  */
-
 @Transactional
 public class AppsForYourDomainClient {
-
-
 }

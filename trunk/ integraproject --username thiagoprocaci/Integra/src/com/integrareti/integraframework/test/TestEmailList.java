@@ -4,16 +4,14 @@ import com.integrareti.integraframework.business.EmailList;
 import com.integrareti.integraframework.service.google.GoogleEmailListServiceInterface;
 
 public class TestEmailList extends BasicIntegraTestCase {
-
 	private GoogleEmailListServiceInterface service;
 
 	// private GoogleUserAccountServiceInterface userService;
-
 	protected void setUp() throws Exception {
 		super.setUp();
 		service = (GoogleEmailListServiceInterface) getBean("googleEmailListService");
-		//userService = (GoogleUserAccountServiceInterface) getBean("personService");
-
+		// userService = (GoogleUserAccountServiceInterface)
+		// getBean("personService");
 	}
 
 	public void testSaveEmailList() {
@@ -27,7 +25,5 @@ public class TestEmailList extends BasicIntegraTestCase {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

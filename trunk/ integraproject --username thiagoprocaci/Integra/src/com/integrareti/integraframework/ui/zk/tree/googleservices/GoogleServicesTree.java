@@ -15,7 +15,6 @@ import org.zkoss.zul.Treeitem;
  */
 @SuppressWarnings("serial")
 public class GoogleServicesTree extends Tree implements AfterCompose {
-
 	/**
 	 * On select action
 	 */
@@ -40,12 +39,10 @@ public class GoogleServicesTree extends Tree implements AfterCompose {
 			} catch (ComponentNotFoundException ex) { // ignore
 			}
 		}
-
 		if (item == null)
 			item = (Treeitem) getSpaceOwner().getFellow("googleServices");
 		// so index.zul know which page to load based on the id parameter
 		exec.setAttribute("contentSrc", (String) item.getValue());
 		selectItem(item);
 	}
-
 }

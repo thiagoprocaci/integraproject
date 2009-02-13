@@ -8,7 +8,6 @@ import com.integrareti.integraframework.dao.integra.GroupDao;
 import com.integrareti.integraframework.dao.integra.GroupDaoJDBC;
 
 public class TestGroupDao extends BasicIntegraTestCase {
-
 	private GroupDao groupDao;
 	private GroupDao groupDaoJDBC;
 
@@ -24,14 +23,14 @@ public class TestGroupDao extends BasicIntegraTestCase {
 		try {
 			System.out.println("Hibernate");
 			double time = System.currentTimeMillis();
-			for (int i = 0; i < 1; i++) 
+			for (int i = 0; i < 1; i++)
 				groupDao.getGroupIdByName(i + "ss");
-			System.out.println((System.currentTimeMillis() - time) / 1000);			
+			System.out.println((System.currentTimeMillis() - time) / 1000);
 			System.out.println("JDBC");
 			time = System.currentTimeMillis();
 			((GroupDaoJDBC) groupDaoJDBC).openConnection();
-			for (int i = 0; i < 1; i++) 
-				groupDaoJDBC.getGroupIdByName(i + "ss");			
+			for (int i = 0; i < 1; i++)
+				groupDaoJDBC.getGroupIdByName(i + "ss");
 			((GroupDaoJDBC) groupDaoJDBC).closeConnection();
 			System.out.println((System.currentTimeMillis() - time) / 1000);
 		} catch (Exception e) {
@@ -41,8 +40,7 @@ public class TestGroupDao extends BasicIntegraTestCase {
 		assertEquals(true, b);
 	}
 
-	
-	public void testGetByPiecesOfNames(){
+	public void testGetByPiecesOfNames() {
 		boolean b = true;
 		List<String> list = new ArrayList<String>();
 		list.add("fis");
@@ -55,7 +53,7 @@ public class TestGroupDao extends BasicIntegraTestCase {
 		}
 		assertEquals(true, b);
 	}
-	
+
 	public void testDeleteAll() {
 		boolean b = true;
 		try {
@@ -68,5 +66,4 @@ public class TestGroupDao extends BasicIntegraTestCase {
 		}
 		assertEquals(true, b);
 	}
-
 }

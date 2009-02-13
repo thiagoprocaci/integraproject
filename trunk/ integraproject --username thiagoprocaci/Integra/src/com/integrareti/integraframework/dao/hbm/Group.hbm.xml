@@ -8,28 +8,31 @@
 		<id name="id" type="int">
 			<column name="groupID" />
 			<generator class="native" />
-		</id>		
-		<property name="active" type="boolean" column="active" />		
-		<property name="manuallyCreated" type="boolean" column="manuallyCreated" />
-		<property name="name" type="string" column="name" unique="true" />		
-		<property name="description" type="string" column="description" />		
-		<many-to-one name="domain" class="Domain" column="domainID" lazy="false" />
+		</id>
+		<property name="active" type="boolean" column="active" />
+		<property name="manuallyCreated" type="boolean"
+			column="manuallyCreated" />
+		<property name="name" type="string" column="name" unique="true" />
+		<property name="description" type="string" column="description" />
+		<many-to-one name="domain" class="Domain" column="domainID"
+			lazy="false" />
 		<set name="participants" table="person_group"
-			cascade="save-update"  lazy="true">
+			cascade="save-update" lazy="true">
 			<key column="groupID" />
-			<many-to-many class="Person" column="PersonID"  />
+			<many-to-many class="Person" column="PersonID" />
 		</set>
 		<set name="owners" table="`owner_group`" cascade="save-update"
-			lazy="true" >
+			lazy="true">
 			<key column="groupID" />
 			<many-to-many class="Person" column="personID" />
 		</set>
-		<set name="emailLists" cascade="save-update"
-			inverse="true" lazy="false" batch-size="50" >
+		<set name="emailLists" cascade="save-update" inverse="true"
+			lazy="false" batch-size="50">
 			<key column="groupID" />
 			<one-to-many class="EmailList" />
 		</set>
-		<set name="subGroups" cascade="save-update" batch-size="100" lazy="true">
+		<set name="subGroups" cascade="save-update" batch-size="100"
+			lazy="true">
 			<key column="superGroupID" />
 			<one-to-many class="Group" />
 		</set>

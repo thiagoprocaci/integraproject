@@ -11,14 +11,10 @@ import com.integrareti.integraframework.dao.integra.DeletedGoogleUserDao;
  * @author Thiago Baesso Procaci
  * 
  */
-public class IntegraDeletedGoogleUserImpl extends
-		IntegraServiceImpl<DeletedGoogleUser, Integer> implements
-		IntegraDeletedGoogleUserInterface {
-
+public class IntegraDeletedGoogleUserImpl extends IntegraServiceImpl<DeletedGoogleUser, Integer> implements IntegraDeletedGoogleUserInterface {
 	private DeletedGoogleUserDao deletedGoogleUserDao;
-	
-	public IntegraDeletedGoogleUserImpl(
-			DeletedGoogleUserDao deletedGoogleUserDao) {
+
+	public IntegraDeletedGoogleUserImpl(DeletedGoogleUserDao deletedGoogleUserDao) {
 		super(deletedGoogleUserDao);
 		this.deletedGoogleUserDao = deletedGoogleUserDao;
 	}
@@ -30,8 +26,7 @@ public class IntegraDeletedGoogleUserImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public List<DeletedGoogleUser> getDeletedGoogleUserUntilFiveDaysAgoByDomainName(
-			String domainName) throws Exception {
+	public List<DeletedGoogleUser> getDeletedGoogleUserUntilFiveDaysAgoByDomainName(String domainName) throws Exception {
 		return deletedGoogleUserDao.getDeletedGoogleUserUntilFiveDaysAgoByDomainName(domainName);
 	}
 
@@ -40,9 +35,7 @@ public class IntegraDeletedGoogleUserImpl extends
 	 * @return Returns all deleted Google account until five days ago
 	 */
 	@Override
-	public List<String> getDeletedGoogleAccountUntilFiveDaysAgoByDomainName(
-			String domainName) throws Exception {
+	public List<String> getDeletedGoogleAccountUntilFiveDaysAgoByDomainName(String domainName) throws Exception {
 		return deletedGoogleUserDao.getDeletedGoogleAccountUntilFiveDaysAgoByDomainName(domainName);
 	}
-	
 }

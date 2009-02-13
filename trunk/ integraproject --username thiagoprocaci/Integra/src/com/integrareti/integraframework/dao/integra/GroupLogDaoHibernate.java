@@ -14,18 +14,14 @@ import com.integrareti.integraframework.util.CalendarUtil;
  * @author Thiago Baesso Procaci
  * 
  */
-public class GroupLogDaoHibernate extends
-		GenericDaoHibernate<GroupLog, Integer> implements GroupLogDao {
-
+public class GroupLogDaoHibernate extends GenericDaoHibernate<GroupLog, Integer> implements GroupLogDao {
 	/**
 	 * @return Returns groupLog by domain
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<GroupLog> getAllByDomainName(String domainName)
-			throws Exception {
-		List<GroupLog> list = (List<GroupLog>) getHibernateTemplate().find(
-				"from GroupLog g where g.domain.name =?", domainName);
+	public List<GroupLog> getAllByDomainName(String domainName) throws Exception {
+		List<GroupLog> list = (List<GroupLog>) getHibernateTemplate().find("from GroupLog g where g.domain.name =?", domainName);
 		return list;
 	}
 
@@ -48,10 +44,8 @@ public class GroupLogDaoHibernate extends
 	@Override
 	public List<GroupLog> getByPeriod(Date begin, Date end) throws Exception {
 		Calendar beginTime = CalendarUtil.getFirstInstant(begin);
-		Calendar endTime = CalendarUtil.getLastInstant(end);  
-		List<GroupLog> list = (List<GroupLog>) getHibernateTemplate().find(
-				"from GroupLog g where g.beginTime between  ? and ? order by g.beginTime desc",
-				new Calendar[] { beginTime, endTime });
+		Calendar endTime = CalendarUtil.getLastInstant(end);
+		List<GroupLog> list = (List<GroupLog>) getHibernateTemplate().find("from GroupLog g where g.beginTime between  ? and ? order by g.beginTime desc", new Calendar[] { beginTime, endTime });
 		return list;
 	}
 
@@ -63,15 +57,10 @@ public class GroupLogDaoHibernate extends
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<GroupLog> getByPeriodWithErrors(Date begin, Date end)
-			throws Exception {
+	public List<GroupLog> getByPeriodWithErrors(Date begin, Date end) throws Exception {
 		Calendar beginTime = CalendarUtil.getFirstInstant(begin);
-		Calendar endTime = CalendarUtil.getLastInstant(end);  
-		List<GroupLog> list = (List<GroupLog>) getHibernateTemplate()
-				.find(
-						"select g from GroupLog g, SystemGroupTask t , SystemGroupError e where (g.beginTime between ? and ?) and t in elements(g.tasks) and e in elements(t.errors) order by g.beginTime desc",
-						new Calendar[] { beginTime, endTime });
+		Calendar endTime = CalendarUtil.getLastInstant(end);
+		List<GroupLog> list = (List<GroupLog>) getHibernateTemplate().find("select g from GroupLog g, SystemGroupTask t , SystemGroupError e where (g.beginTime between ? and ?) and t in elements(g.tasks) and e in elements(t.errors) order by g.beginTime desc", new Calendar[] { beginTime, endTime });
 		return list;
 	}
-
 }

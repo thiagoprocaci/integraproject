@@ -24,10 +24,7 @@ import com.integrareti.integraframework.service.integra.IntegraServiceImpl;
  * 
  */
 @Transactional
-public class GoogleEmailListServiceImpl extends
-		IntegraServiceImpl<EmailList, Integer> implements
-		GoogleEmailListServiceInterface {
-
+public class GoogleEmailListServiceImpl extends IntegraServiceImpl<EmailList, Integer> implements GoogleEmailListServiceInterface {
 	private EmailListDao emailListDao;
 	private GoogleEmailListDaoImpl googleEmailListDao;
 
@@ -36,8 +33,7 @@ public class GoogleEmailListServiceImpl extends
 	 * 
 	 * @param emailListDao
 	 */
-	public GoogleEmailListServiceImpl(EmailListDao emailListDao,
-			GoogleEmailListDaoImpl googleEmailListDao) {
+	public GoogleEmailListServiceImpl(EmailListDao emailListDao, GoogleEmailListDaoImpl googleEmailListDao) {
 		super(emailListDao);
 		this.emailListDao = emailListDao;
 		this.googleEmailListDao = googleEmailListDao;
@@ -51,10 +47,8 @@ public class GoogleEmailListServiceImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public EmailList getEmailListByNameAndDomain(String name, String domainName)
-			throws Exception {
-		EmailList emailList = emailListDao.getEmailListByNameAndDomain(name,
-				domainName);
+	public EmailList getEmailListByNameAndDomain(String name, String domainName) throws Exception {
+		EmailList emailList = emailListDao.getEmailListByNameAndDomain(name, domainName);
 		return emailList;
 	}
 
@@ -70,8 +64,7 @@ public class GoogleEmailListServiceImpl extends
 		// deleting the emailList at integra database
 		super.delete(emailList);
 		// deleting the emailList at google
-		googleEmailListDao.deleteEmailList(emailList.getName(), emailList
-				.getDomain().getName());
+		googleEmailListDao.deleteEmailList(emailList.getName(), emailList.getDomain().getName());
 	}
 
 	/**
@@ -79,11 +72,10 @@ public class GoogleEmailListServiceImpl extends
 	 * 
 	 * @param emailList
 	 * @param recipients
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Override
-	public List<Person> removeRecipients(EmailList emailList,
-			List<Person> recipients) throws Exception {
+	public List<Person> removeRecipients(EmailList emailList, List<Person> recipients) throws Exception {
 		List<Person> notRemovedOnes = new ArrayList<Person>();
 		for (Person person : recipients) {
 			Person p2 = removeRecipient(emailList, person);
@@ -100,11 +92,10 @@ public class GoogleEmailListServiceImpl extends
 	 * 
 	 * @param emailList
 	 * @param recipients
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Override
-	public List<Person> removeRecipients(EmailList emailList,
-			Set<Person> recipients) throws Exception {
+	public List<Person> removeRecipients(EmailList emailList, Set<Person> recipients) throws Exception {
 		List<Person> notRemovedOnes = new ArrayList<Person>();
 		for (Person person : recipients) {
 			Person p2 = removeRecipient(emailList, person);
@@ -125,12 +116,10 @@ public class GoogleEmailListServiceImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public Person removeRecipient(EmailList emailList, Person recipient)
-			throws Exception {
+	public Person removeRecipient(EmailList emailList, Person recipient) throws Exception {
 		emailList.removeRecipient(recipient);
 		emailListDao.getHibernateSession().merge(emailList);
-		googleEmailListDao.removeRecipientFromEmailList(recipient.getEmail(),
-				emailList.getName(), emailList.getDomain().getName());
+		googleEmailListDao.removeRecipientFromEmailList(recipient.getEmail(), emailList.getName(), emailList.getDomain().getName());
 		return recipient;
 	}
 
@@ -142,14 +131,10 @@ public class GoogleEmailListServiceImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public Person addRecipient(EmailList emailList, Person recipient)
-			throws Exception {
-
-		emailList.addRecipient(recipient);		
+	public Person addRecipient(EmailList emailList, Person recipient) throws Exception {
+		emailList.addRecipient(recipient);
 		emailListDao.getHibernateSession().merge(emailList);
-
-		googleEmailListDao.addRecipientToEmailList(recipient.getEmail(),
-				emailList.getName(), emailList.getDomain().getName());
+		googleEmailListDao.addRecipientToEmailList(recipient.getEmail(), emailList.getName(), emailList.getDomain().getName());
 		return recipient;
 	}
 
@@ -162,8 +147,7 @@ public class GoogleEmailListServiceImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public List<Person> addRecipients(EmailList emailList,
-			Set<Person> recipients) throws Exception {
+	public List<Person> addRecipients(EmailList emailList, Set<Person> recipients) throws Exception {
 		List<Person> notAddedOnes = new ArrayList<Person>();
 		for (Person person : recipients) {
 			Person p2 = addRecipient(emailList, person);
@@ -194,15 +178,11 @@ public class GoogleEmailListServiceImpl extends
 			create = true;
 		// Checking if the email list name is valid
 		if (!validateEmailListName(emailList))
-			throw new EmailListException(
-					emailList.getName()
-							+ ": Nome de lista inválido. Lista de e-mail já definida para domínio "
-							+ emailList.getDomain().getName());
+			throw new EmailListException(emailList.getName() + ": Nome de lista inválido. Lista de e-mail já definida para domínio " + emailList.getDomain().getName());
 		// saving the emailList at integra database
 		super.save(emailList);
 		if (create) // creating the emailList at google
-			googleEmailListDao.createEmailList(emailList.getName(), emailList
-					.getDomain().getName());
+			googleEmailListDao.createEmailList(emailList.getName(), emailList.getDomain().getName());
 	}
 
 	/**
@@ -210,13 +190,11 @@ public class GoogleEmailListServiceImpl extends
 	 * 
 	 * @param emailList
 	 * @return saved emailList
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Override
-	public void saveEmailListOnlyAtGoogle(EmailList emailList)
-			throws Exception {
-		googleEmailListDao.createEmailList(emailList.getName(), emailList
-				.getDomain().getName());
+	public void saveEmailListOnlyAtGoogle(EmailList emailList) throws Exception {
+		googleEmailListDao.createEmailList(emailList.getName(), emailList.getDomain().getName());
 	}
 
 	/**
@@ -224,11 +202,10 @@ public class GoogleEmailListServiceImpl extends
 	 * 
 	 * @param emailList
 	 * @return saved emailList
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Override
-	public void saveOnlyAtIntegra(EmailList emailList)
-			throws Exception {
+	public void saveOnlyAtIntegra(EmailList emailList) throws Exception {
 		emailListDao.save(emailList);
 	}
 
@@ -237,15 +214,14 @@ public class GoogleEmailListServiceImpl extends
 	 * 
 	 * @param emailList
 	 * @return true if is valid
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Override
 	public boolean validateEmailListName(EmailList emailList) throws Exception {
 		// checking if exist
 		if (emailList.getId() == null) {
 			// Checking if the email list name is valid
-			EmailList emailListAux = emailListDao.getEmailListByNameAndDomain(
-					emailList.getName(), emailList.getDomain().getName());
+			EmailList emailListAux = emailListDao.getEmailListByNameAndDomain(emailList.getName(), emailList.getDomain().getName());
 			if (emailListAux != null)
 				return false;
 		}
@@ -254,27 +230,25 @@ public class GoogleEmailListServiceImpl extends
 
 	/**
 	 * Deletes an email list only at google
+	 * 
 	 * @param emailList
 	 * @throws Exception
 	 */
 	@Override
-	public void deleteEmailListOnlyAtGoogle(EmailList emailList)
-			throws Exception {
+	public void deleteEmailListOnlyAtGoogle(EmailList emailList) throws Exception {
 		// deleting the emailList at integra database
-		super.delete(emailList);	
+		super.delete(emailList);
 	}
 
 	/**
 	 * Deletes an email list only at integra database
+	 * 
 	 * @param emailList
 	 * @throws Exception
 	 */
 	@Override
-	public void deleteEmailListOnlyAtIntegra(EmailList emailList)
-			throws Exception {
+	public void deleteEmailListOnlyAtIntegra(EmailList emailList) throws Exception {
 		// deleting the emailList at google
-		googleEmailListDao.deleteEmailList(emailList.getName(), emailList
-				.getDomain().getName());		
+		googleEmailListDao.deleteEmailList(emailList.getName(), emailList.getDomain().getName());
 	}
-
 }

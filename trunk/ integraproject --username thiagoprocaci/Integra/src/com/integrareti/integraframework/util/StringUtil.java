@@ -14,8 +14,6 @@ import sun.misc.BASE64Encoder;
  * 
  */
 public class StringUtil {
-
-		
 	/**
 	 * Removes an accent character of a string and replace it with character
 	 * without accent. Example: João --> Joao
@@ -68,7 +66,7 @@ public class StringUtil {
 	 * @param string
 	 * @return Returns true if a string can be a integer number. However false.
 	 */
-	public static boolean isInteger(String string){
+	public static boolean isInteger(String string) {
 		try {
 			Integer.parseInt(string);
 		} catch (NumberFormatException e) {
@@ -76,15 +74,14 @@ public class StringUtil {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * 
 	 * @param string
 	 * @return An encrypt string (MD5)
 	 * @throws NoSuchAlgorithmException
 	 */
-	public static String MD5Encrypt(String string)
-			throws NoSuchAlgorithmException {
+	public static String MD5Encrypt(String string) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		BigInteger hash = null;
 		hash = new BigInteger(1, md.digest(string.getBytes()));
@@ -111,7 +108,6 @@ public class StringUtil {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-
 		byte[] sha1Bytes = hash.digest(bytes);
 		return encodeBase16(sha1Bytes);
 	}
@@ -119,8 +115,7 @@ public class StringUtil {
 	/**
 	 * Base64 encoding. Charset ISO-8859-1 is assumed.
 	 */
-	public static String encodeBase64(byte[] bytes)
-			throws UnsupportedEncodingException {
+	public static String encodeBase64(byte[] bytes) throws UnsupportedEncodingException {
 		BASE64Encoder enc = new BASE64Encoder();
 		return enc.encode(bytes);
 	}
@@ -149,7 +144,4 @@ public class StringUtil {
 		}
 		return sb.toString();
 	}
-	
-	
-
 }

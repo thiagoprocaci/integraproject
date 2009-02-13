@@ -10,8 +10,7 @@ import com.google.gdata.data.extensions.EventEntry;
  * @created 06-Aug-2007 18:07:58
  * @author Thiago Athouguia Gama
  */
-public class Event{
-
+public class Event {
 	private EventEntry eventEntry;
 
 	/**
@@ -52,5 +51,4 @@ public class Event{
 	public void setEventEntry(EventEntry eventEntry) {
 		this.eventEntry = eventEntry;
 	}
-
 }

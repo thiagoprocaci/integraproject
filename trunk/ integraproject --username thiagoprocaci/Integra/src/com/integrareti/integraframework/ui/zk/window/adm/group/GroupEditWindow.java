@@ -43,17 +43,14 @@ import com.integrareti.integraframework.valueobject.NameVO;
  */
 @SuppressWarnings("serial")
 public class GroupEditWindow extends AnnotateDataBinderWindow {
-
 	// controller
 	private GroupManagerController groupManagerController;
 	private DomainController domainController;
-
 	// bind - group
 	private List<Group> groups;
 	private Group selectedGroup;
 	private List<Component> gridBindComponents;
 	private Listbox groupsListBox;
-
 	// bind - person
 	private Person ownerSearched;
 	private Person personSearched;
@@ -63,26 +60,21 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	private Set<NameVO> allNameVOsParticipantsNotAdded;
 	private Set<NameVO> allNameVOsOwnersAdded;
 	private Set<NameVO> allNameVOsOwnersNotAdded;
-
 	// boxes
 	private Vbox vBoxParticipant;
 	private Vbox vBoxOwner;
 	private Hbox hBoxButtons, hbxSearch;
-
 	// group descritor grid
 	private Grid groupDescriptorGrid;
-
 	// textBoxes
 	private Textbox searchGroupTextbox;
 	private Textbox searchFilterTextBox;
 	private Textbox participantSearchTextBox;
 	private Textbox ownerSearchTextBox;
 	private Textbox tbxGroupName;
-
 	// label
 	private Label lblGroupName;
 	private Label lblGroupPrefix;
-
 	// others
 	private Set<Person> participantsAdded;
 	private Set<Person> participantsRemoved;
@@ -98,18 +90,13 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	@Override
 	public void doOnCreate() {
 		// getting controller from context
-		groupManagerController = (GroupManagerController) SpringUtil
-				.getBean("groupManagerController");
-		domainController = (DomainController) SpringUtil
-				.getBean("domainController");
-
+		groupManagerController = (GroupManagerController) SpringUtil.getBean("groupManagerController");
+		domainController = (DomainController) SpringUtil.getBean("domainController");
 		newGroup = (Executions.getCurrent().getParameter("new") != null);
 		groups = null;
-
 		// initializing the viewer components
 		groupsListBox = (Listbox) getFellow("lbxGroups");
 		lblGroupName = (Label) getFellow("lblGroupName");
-
 		// textbox - group name (code)
 		tbxGroupName = (Textbox) getFellow("tbxGroupName");
 		// textBoxes - search
@@ -117,39 +104,29 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		searchGroupTextbox = (Textbox) getFellow("descriptionTextBox");
 		participantSearchTextBox = (Textbox) getFellow("searchParticipant");
 		ownerSearchTextBox = (Textbox) getFellow("searchOwner");
-
 		groupDescriptorGrid = (Grid) getFellow("groupDescriptorGrid");
 		gridBindComponents = new ArrayList<Component>(3);
 		gridBindComponents.add((Textbox) getFellow("groupDescription"));
 		gridBindComponents.add(lblGroupName);
 		gridBindComponents.add((Label) getFellow("groupNumberParticipants"));
 		gridBindComponents.add((Label) getFellow("groupNumberEmailLists"));
-		gridBindComponents
-				.add((Label) ((Window) getFellow("deleteWinConfimation"))
-						.getFellow("lbldeleteWin"));
-
+		gridBindComponents.add((Label) ((Window) getFellow("deleteWinConfimation")).getFellow("lbldeleteWin"));
 		personBindComponents = new ArrayList<Component>(2);
 		personBindComponents.add((Label) getFellow("lblPersonRegistry"));
 		personBindComponents.add((Label) getFellow("lblPersonName"));
-
 		ownerBindComponents = new ArrayList<Component>(2);
 		ownerBindComponents.add((Label) getFellow("lblOwnerRegistry"));
 		ownerBindComponents.add((Label) getFellow("lblOwnerName"));
-
 		// vBoxes
 		vBoxParticipant = (Vbox) getFellow("participantDataVBox");
 		vBoxOwner = (Vbox) getFellow("ownerDataVBox");
-
 		// hBoxes
 		hBoxButtons = (Hbox) getFellow("hBoxButtons");
 		hbxSearch = (Hbox) getFellow("hbxSearch");
-
 		// label
 		lblGroupPrefix = (Label) getFellow("lblGrupoPrefix");
-
 		// Buttons
 		btnAtAutomatica = (Button) getFellow("btnAtAutomatica");
-
 		if (newGroup) {
 			this.setTitle("Novo Grupo");
 			btnAtAutomatica.setVisible(false);
@@ -157,21 +134,16 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 			tbxGroupName.setVisible(true);
 			hbxSearch.setVisible(false);
 			hBoxButtons.setVisible(true);
-
 			// delete button. it`s not necessary on create new group
 			getFellow("btnExcluir").setVisible(false);
 			// label that will be added to group name
 			lblGroupPrefix.setVisible(true);
-
 			groupDescriptorGrid.setVisible(true);
 			selectedGroup = new Group();
 			selectedGroup.setManuallyCreated(true);
 			selectedGroup.setActive(true);
 			try {
-				selectedGroup.setDomain(domainController
-						.getDomainByName(((Person) SecurityContextHolder
-								.getContext().getAuthentication()
-								.getPrincipal()).getDomain().getName()));
+				selectedGroup.setDomain(domainController.getDomainByName(((Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getDomain().getName()));
 			} catch (Exception e) {
 				e.printStackTrace();
 				showDataBaseMessageError();
@@ -198,13 +170,10 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		getBindObjects().put("group", selectedGroup);
 		getBindObjects().put("searchedPerson", personSearched);
 		getBindObjects().put("searchedOwner", ownerSearched);
-		getBindObjects().put("allNameVOsParticipantsAdded",
-				allNameVOsParticipantsAdded);
-		getBindObjects().put("allNameVOsParticipantsNotAdded",
-				allNameVOsParticipantsNotAdded);
+		getBindObjects().put("allNameVOsParticipantsAdded", allNameVOsParticipantsAdded);
+		getBindObjects().put("allNameVOsParticipantsNotAdded", allNameVOsParticipantsNotAdded);
 		getBindObjects().put("allNameVOsOwnersAdded", allNameVOsOwnersAdded);
-		getBindObjects().put("allNameVOsOwnersNotAdded",
-				allNameVOsOwnersNotAdded);
+		getBindObjects().put("allNameVOsOwnersNotAdded", allNameVOsOwnersNotAdded);
 	}
 
 	/**
@@ -241,8 +210,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				while (sc.hasNext())
 					list.add(sc.next());
 				try {
-					groups = groupManagerController
-							.getGroupsByDescriptionAndName(description, list);
+					groups = groupManagerController.getGroupsByDescriptionAndName(description, list);
 				} catch (Exception e) {
 					e.printStackTrace();
 					showDataBaseMessageError();
@@ -251,8 +219,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 			} else
 				try {
 					// search with no filter - only description
-					groups = groupManagerController
-							.getGroupsByDescription(description);
+					groups = groupManagerController.getGroupsByDescription(description);
 				} catch (Exception e) {
 					e.printStackTrace();
 					showDataBaseMessageError();
@@ -261,11 +228,9 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 			if (groups.isEmpty()) {
 				// results not found
 				groupsListBox.setVisible(false);
-				addHtmlWarning("warning", "Nenhum resultado encontrado", "",
-						HtmlWarning.WARNING);
+				addHtmlWarning("warning", "Nenhum resultado encontrado", "", HtmlWarning.WARNING);
 			} else {
-				addHtmlWarning("warning", "Foram encontrados " + groups.size()
-						+ " resultado(s)", "", HtmlWarning.INFORMATION);
+				addHtmlWarning("warning", "Foram encontrados " + groups.size() + " resultado(s)", "", HtmlWarning.INFORMATION);
 				groupsListBox.setVisible(true);
 			}
 		} else {
@@ -276,8 +241,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				while (sc.hasNext())
 					list.add(sc.next());
 				try {
-					groups = groupManagerController
-							.getGroupsByPiecesOfNames(list);
+					groups = groupManagerController.getGroupsByPiecesOfNames(list);
 				} catch (Exception e) {
 					e.printStackTrace();
 					showDataBaseMessageError();
@@ -286,33 +250,26 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				if (groups.isEmpty()) {
 					// results not found
 					groupsListBox.setVisible(false);
-					addHtmlWarning("warning", "Nenhum resultado encontrado",
-							"", HtmlWarning.WARNING);
+					addHtmlWarning("warning", "Nenhum resultado encontrado", "", HtmlWarning.WARNING);
 				} else {
-					addHtmlWarning("warning", "Foram encontrados "
-							+ groups.size() + " resultado(s)", "",
-							HtmlWarning.INFORMATION);
+					addHtmlWarning("warning", "Foram encontrados " + groups.size() + " resultado(s)", "", HtmlWarning.INFORMATION);
 					groupsListBox.setVisible(true);
 				}
 			} else {
 				// search fails - description is empty
 				groups = null;
 				groupsListBox.setVisible(false);
-				addHtmlWarning("warning",
-						"Informe pelo menos a descrição para a busca", "",
-						HtmlWarning.WARNING);
+				addHtmlWarning("warning", "Informe pelo menos a descrição para a busca", "", HtmlWarning.WARNING);
 			}
 		}
 		// bind variable
 		selectedGroup = null;
-
 		participantSearchTextBox.setRawValue(null);
 		ownerSearchTextBox.setRawValue(null);
 		groupDescriptorGrid.setVisible(false);
 		vBoxParticipant.setVisible(false);
 		vBoxOwner.setVisible(false);
 		hBoxButtons.setVisible(false);
-
 		// rebind components
 		List<Component> list = new ArrayList<Component>();
 		list.addAll(personBindComponents);
@@ -375,19 +332,15 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		personSearched = null;
 		if (StringUtils.hasText(registry)) {
 			try {
-				participantAdded = groupManagerController
-						.getPersonByRegistry(registry);
+				participantAdded = groupManagerController.getPersonByRegistry(registry);
 			} catch (Exception e) {
 				e.printStackTrace();
 				showDataBaseMessageError();
 				return;
 			}
-
 			if (participantAdded != null) { // found
 				try {
-					participantAdded.setName(groupManagerController
-							.getPersonName(registry, participantAdded
-									.getUserGroups()));
+					participantAdded.setName(groupManagerController.getPersonName(registry, participantAdded.getUserGroups()));
 				} catch (Exception e) {
 					e.printStackTrace();
 					showDataBaseMessageError();
@@ -396,17 +349,12 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				vBoxParticipant.setVisible(true);
 				clearHtmlWarnings("warning");
 			} else { // not found
-				addHtmlWarning("warning",
-						"Usuário não encontrado: " + registry, "",
-						HtmlWarning.WARNING);
+				addHtmlWarning("warning", "Usuário não encontrado: " + registry, "", HtmlWarning.WARNING);
 				vBoxParticipant.setVisible(false);
 			}
 		} else {
 			// search fails - registry is empty
-			addHtmlWarning(
-					"warning",
-					"Para adicionar um participante, é necessário informar a matrícula do usuário",
-					"", HtmlWarning.WARNING);
+			addHtmlWarning("warning", "Para adicionar um participante, é necessário informar a matrícula do usuário", "", HtmlWarning.WARNING);
 			vBoxParticipant.setVisible(false);
 		}
 		// rebind
@@ -430,9 +378,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 					participantRemoved = person;
 					wasFound = true;
 					try {
-						participantRemoved.setName(groupManagerController
-								.getPersonName(registry, participantRemoved
-										.getUserGroups()));
+						participantRemoved.setName(groupManagerController.getPersonName(registry, participantRemoved.getUserGroups()));
 					} catch (Exception e) {
 						e.printStackTrace();
 						showDataBaseMessageError();
@@ -447,12 +393,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 						participantRemoved = person;
 						if (!StringUtils.hasText(participantRemoved.getName())) {
 							try {
-								participantRemoved
-										.setName(groupManagerController
-												.getPersonName(
-														registry,
-														participantRemoved
-																.getUserGroups()));
+								participantRemoved.setName(groupManagerController.getPersonName(registry, participantRemoved.getUserGroups()));
 							} catch (Exception e) {
 								e.printStackTrace();
 								showDataBaseMessageError();
@@ -465,19 +406,14 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				}
 			}
 			if (!wasFound) { // not found
-				addHtmlWarning("warning", "O usuário " + registry
-						+ " não faz parte do grupo " + selectedGroup.getName(),
-						"", HtmlWarning.WARNING);
+				addHtmlWarning("warning", "O usuário " + registry + " não faz parte do grupo " + selectedGroup.getName(), "", HtmlWarning.WARNING);
 				vBoxParticipant.setVisible(false);
 			} else {
 				vBoxParticipant.setVisible(true);
 				clearHtmlWarnings("warning");
 			}
 		} else { // search fails - registry is empty
-			addHtmlWarning(
-					"warning",
-					"Para remover um participante, é necessário informar a matrícula do usuário",
-					"", HtmlWarning.WARNING);
+			addHtmlWarning("warning", "Para remover um participante, é necessário informar a matrícula do usuário", "", HtmlWarning.WARNING);
 			vBoxParticipant.setVisible(false);
 		}
 		// rebind
@@ -526,8 +462,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		ownerSearched = null;
 		if (StringUtils.hasText(registry)) {
 			try {
-				ownerAdded = groupManagerController
-						.getPersonByRegistry(registry);
+				ownerAdded = groupManagerController.getPersonByRegistry(registry);
 			} catch (Exception e) {
 				e.printStackTrace();
 				showDataBaseMessageError();
@@ -535,8 +470,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 			}
 			if (ownerAdded != null) { // found
 				try {
-					ownerAdded.setName(groupManagerController.getPersonName(
-							registry, ownerAdded.getUserGroups()));
+					ownerAdded.setName(groupManagerController.getPersonName(registry, ownerAdded.getUserGroups()));
 				} catch (Exception e) {
 					e.printStackTrace();
 					showDataBaseMessageError();
@@ -545,17 +479,11 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				vBoxOwner.setVisible(true);
 				clearHtmlWarnings("warning");
 			} else { // not found
-				addHtmlWarning("warning",
-						"Usuário não encontrado: " + registry, "",
-						HtmlWarning.WARNING);
+				addHtmlWarning("warning", "Usuário não encontrado: " + registry, "", HtmlWarning.WARNING);
 				vBoxOwner.setVisible(false);
 			}
-
 		} else { // registry is empty
-			addHtmlWarning(
-					"warning",
-					"Para adicionar um responsável, é necessário informar a matrícula do usuário",
-					"", HtmlWarning.WARNING);
+			addHtmlWarning("warning", "Para adicionar um responsável, é necessário informar a matrícula do usuário", "", HtmlWarning.WARNING);
 			vBoxOwner.setVisible(false);
 		}
 		// rebind
@@ -578,9 +506,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 					ownerRemoved = person;
 					wasFound = true;
 					try {
-						ownerRemoved.setName(groupManagerController
-								.getPersonName(registry, ownerRemoved
-										.getUserGroups()));
+						ownerRemoved.setName(groupManagerController.getPersonName(registry, ownerRemoved.getUserGroups()));
 					} catch (Exception e) {
 						e.printStackTrace();
 						showDataBaseMessageError();
@@ -595,9 +521,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 						ownerRemoved = person;
 						if (!StringUtils.hasText(ownerRemoved.getName())) {
 							try {
-								ownerRemoved.setName(groupManagerController
-										.getPersonName(registry, ownerRemoved
-												.getUserGroups()));
+								ownerRemoved.setName(groupManagerController.getPersonName(registry, ownerRemoved.getUserGroups()));
 							} catch (Exception e) {
 								e.printStackTrace();
 								showDataBaseMessageError();
@@ -609,21 +533,15 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 					}
 				}
 			}
-
 			if (!wasFound) { // not found
-				addHtmlWarning("warning", "O usuário " + registry
-						+ " não faz parte dos responsáveis do grupo "
-						+ selectedGroup.getName(), "", HtmlWarning.WARNING);
+				addHtmlWarning("warning", "O usuário " + registry + " não faz parte dos responsáveis do grupo " + selectedGroup.getName(), "", HtmlWarning.WARNING);
 				vBoxOwner.setVisible(false);
 			} else {
 				vBoxOwner.setVisible(true);
 				clearHtmlWarnings("warning");
 			}
 		} else {
-			addHtmlWarning(
-					"warning",
-					"Para remover um participante, é necessário informar a matrícula do usuário",
-					"", HtmlWarning.WARNING);
+			addHtmlWarning("warning", "Para remover um participante, é necessário informar a matrícula do usuário", "", HtmlWarning.WARNING);
 			vBoxOwner.setVisible(false);
 		}
 		// rebind
@@ -666,24 +584,19 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		if (selectedGroup != null) {
 			// checking description
 			if (!StringUtils.hasText(selectedGroup.getDescription())) {
-				addHtmlWarning("warning",
-						"Especifique uma descrição para o grupo", "",
-						HtmlWarning.WARNING);
+				addHtmlWarning("warning", "Especifique uma descrição para o grupo", "", HtmlWarning.WARNING);
 				return;
 			}
 			if (newGroup) {
 				// checking name
 				if (!StringUtils.hasText(tbxGroupName.getValue())) {
-					addHtmlWarning("warning", "Especifique o codigo do grupo",
-							"", HtmlWarning.WARNING);
+					addHtmlWarning("warning", "Especifique o codigo do grupo", "", HtmlWarning.WARNING);
 					return;
 				}
 				boolean isValid = false;
 				try {
-					selectedGroup.setName(lblGroupPrefix.getValue()
-							+ tbxGroupName.getValue());
-					isValid = groupManagerController
-							.isValidGroupName(selectedGroup.getName());
+					selectedGroup.setName(lblGroupPrefix.getValue() + tbxGroupName.getValue());
+					isValid = groupManagerController.isValidGroupName(selectedGroup.getName());
 				} catch (Exception e) {
 					e.printStackTrace();
 					showDataBaseMessageError();
@@ -691,18 +604,13 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				}
 				// checking name
 				if (!isValid) {
-					addHtmlWarning("warning",
-							"Não é possível criar um grupo com esse código.",
-							"", HtmlWarning.WARNING);
+					addHtmlWarning("warning", "Não é possível criar um grupo com esse código.", "", HtmlWarning.WARNING);
 					return;
 				}
 			}
-
 			Map<String, Group> map = null;
 			try {
-				map = groupManagerController.saveGroup(selectedGroup,
-						participantsAdded, participantsRemoved, ownersAdded,
-						ownersRemoved);
+				map = groupManagerController.saveGroup(selectedGroup, participantsAdded, participantsRemoved, ownersAdded, ownersRemoved);
 			} catch (Exception e) {
 				e.printStackTrace();
 				showDataBaseMessageError();
@@ -715,11 +623,9 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 					String key = (String) keyIterator.next();
 					errorlist.add(map.get(key).getName());
 				}
-				addHtmlWarning("warning", "Erro ao salvar os grupo(s):",
-						errorlist, HtmlWarning.ERROR);
+				addHtmlWarning("warning", "Erro ao salvar os grupo(s):", errorlist, HtmlWarning.ERROR);
 			} else
-				addHtmlWarning("warning", "Grupo " + selectedGroup.getName()
-						+ " salvo com sucesso", "", HtmlWarning.INFORMATION);
+				addHtmlWarning("warning", "Grupo " + selectedGroup.getName() + " salvo com sucesso", "", HtmlWarning.INFORMATION);
 			doAfterSave(selectedGroup);
 		}
 	}
@@ -729,14 +635,11 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	 */
 	public void deleteGroup() {
 		if (selectedGroup != null) {
-			Map<String, Group> map = groupManagerController
-					.deleteGroup(selectedGroup);
+			Map<String, Group> map = groupManagerController.deleteGroup(selectedGroup);
 			if (!map.isEmpty())
-				addHtmlWarning("warning", "Erro ao excluir o grupo: "
-						+ selectedGroup.getName(), "", HtmlWarning.ERROR);
+				addHtmlWarning("warning", "Erro ao excluir o grupo: " + selectedGroup.getName(), "", HtmlWarning.ERROR);
 			else
-				addHtmlWarning("warning", "Grupo " + selectedGroup.getName()
-						+ " excluido com sucesso", "", HtmlWarning.INFORMATION);
+				addHtmlWarning("warning", "Grupo " + selectedGroup.getName() + " excluido com sucesso", "", HtmlWarning.INFORMATION);
 			doAfterDelete(selectedGroup);
 		}
 	}
@@ -755,12 +658,9 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				return;
 			}
 			if (!map.isEmpty())
-				addHtmlWarning("warning", "Erro ao atualizar o grupo: "
-						+ selectedGroup.getName(), "", HtmlWarning.ERROR);
+				addHtmlWarning("warning", "Erro ao atualizar o grupo: " + selectedGroup.getName(), "", HtmlWarning.ERROR);
 			else
-				addHtmlWarning("warning", "Grupo " + selectedGroup.getName()
-						+ " atualizado com sucesso", "",
-						HtmlWarning.INFORMATION);
+				addHtmlWarning("warning", "Grupo " + selectedGroup.getName() + " atualizado com sucesso", "", HtmlWarning.INFORMATION);
 			doAfterSave(selectedGroup);
 		}
 	}
@@ -783,7 +683,6 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	}
 
 	// begin - popupWin participants methods
-
 	/**
 	 * Sets visible false popupWin participants - close the popup window
 	 */
@@ -792,8 +691,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		popupWinParticipants.getFellow("warning").setVisible(false);
 		popupWinParticipants.doEmbedded();
 		popupWinParticipants.setVisible(false);
-		((Textbox) popupWinParticipants
-				.getFellow("popupWinParticipantsTextBox")).setRawValue(null);
+		((Textbox) popupWinParticipants.getFellow("popupWinParticipantsTextBox")).setRawValue(null);
 	}
 
 	/**
@@ -816,11 +714,9 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		allNameVOsParticipantsNotAdded = new HashSet<NameVO>(0);
 		for (Person person : selectedGroup.getParticipants())
 			if (!participantsRemoved.contains(person))
-				allNameVOsParticipantsAdded.add(new NameVO(person.getName(),
-						person.getRegistry()));
+				allNameVOsParticipantsAdded.add(new NameVO(person.getName(), person.getRegistry()));
 		for (Person person : participantsAdded)
-			allNameVOsParticipantsAdded.add(new NameVO(person.getName(), person
-					.getRegistry()));
+			allNameVOsParticipantsAdded.add(new NameVO(person.getName(), person.getRegistry()));
 		Window popupWinParticipants = (Window) getFellow("popupWinParticipants");
 		popupWinParticipants.setWidth("700px");
 		List<Component> components = new ArrayList<Component>(2);
@@ -835,32 +731,28 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	 */
 	public void popupWinParticipantsSearch() {
 		Window popupWinParticipants = (Window) getFellow("popupWinParticipants");
-		String text = ((Textbox) popupWinParticipants
-				.getFellow("popupWinParticipantsTextBox")).getText().trim();
+		String text = ((Textbox) popupWinParticipants.getFellow("popupWinParticipantsTextBox")).getText().trim();
 		allNameVOsParticipantsNotAdded = new HashSet<NameVO>(0);
 		Label warning = ((Label) popupWinParticipants.getFellow("warning"));
 		if (StringUtils.hasText(text)) {
 			try {
-				allNameVOsParticipantsNotAdded.addAll(groupManagerController
-						.getNameAndRegistryByName(text));
+				allNameVOsParticipantsNotAdded.addAll(groupManagerController.getNameAndRegistryByName(text));
 			} catch (Exception e) {
 				e.printStackTrace();
 				showDataBaseMessageError();
 				return;
 			}
-			if (allNameVOsParticipantsNotAdded != null
-					&& allNameVOsParticipantsAdded != null)
+			if (allNameVOsParticipantsNotAdded != null && allNameVOsParticipantsAdded != null)
 				for (NameVO nameVO : allNameVOsParticipantsAdded)
 					if (allNameVOsParticipantsNotAdded.contains(nameVO))
 						allNameVOsParticipantsNotAdded.remove(nameVO);
-			updateBoundComponent(popupWinParticipants
-					.getFellow("participantsNotAdded"));
-			if(allNameVOsParticipantsNotAdded.isEmpty()){
+			updateBoundComponent(popupWinParticipants.getFellow("participantsNotAdded"));
+			if (allNameVOsParticipantsNotAdded.isEmpty()) {
 				warning.setValue("Nenhum resultado encontrado");
 				warning.setVisible(true);
-			}else
+			} else
 				warning.setVisible(false);
-		}else{
+		} else {
 			warning.setValue("Informe um nome para busca");
 			warning.setVisible(true);
 		}
@@ -872,8 +764,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	@SuppressWarnings("unchecked")
 	public void popupWinParticipantsAddPerson() {
 		Window popupWinParticipants = (Window) getFellow("popupWinParticipants");
-		Listbox listBox = (Listbox) popupWinParticipants
-				.getFellow("participantsNotAdded");
+		Listbox listBox = (Listbox) popupWinParticipants.getFellow("participantsNotAdded");
 		Set<Listitem> selectedItens = listBox.getSelectedItems();
 		if (selectedItens != null && !selectedItens.isEmpty()) {
 			if (allNameVOsParticipantsAdded == null)
@@ -881,12 +772,10 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 			// getting the selected nameVOs
 			for (Listitem listitem : selectedItens) {
 				allNameVOsParticipantsAdded.add((NameVO) listitem.getValue());
-				allNameVOsParticipantsNotAdded.remove((NameVO) listitem
-						.getValue());
+				allNameVOsParticipantsNotAdded.remove((NameVO) listitem.getValue());
 			}
 			List<Component> components = new ArrayList<Component>(2);
-			components.add(popupWinParticipants
-					.getFellow("participantsNotAdded"));
+			components.add(popupWinParticipants.getFellow("participantsNotAdded"));
 			components.add(popupWinParticipants.getFellow("participantsAdded"));
 			updateBoundComponents(components);
 		}
@@ -898,22 +787,18 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	@SuppressWarnings("unchecked")
 	public void popupWinParticipantsRemovePerson() {
 		Window popupWinParticipants = (Window) getFellow("popupWinParticipants");
-		Listbox listBox = (Listbox) popupWinParticipants
-				.getFellow("participantsAdded");
+		Listbox listBox = (Listbox) popupWinParticipants.getFellow("participantsAdded");
 		Set<Listitem> selectedItens = listBox.getSelectedItems();
 		if (selectedItens != null && !selectedItens.isEmpty()) {
 			if (allNameVOsParticipantsNotAdded == null)
 				allNameVOsParticipantsNotAdded = new HashSet<NameVO>();
 			for (Listitem listitem : selectedItens) {
-				allNameVOsParticipantsAdded
-						.remove((NameVO) listitem.getValue());
-				allNameVOsParticipantsNotAdded
-						.add((NameVO) listitem.getValue());
+				allNameVOsParticipantsAdded.remove((NameVO) listitem.getValue());
+				allNameVOsParticipantsNotAdded.add((NameVO) listitem.getValue());
 			}
 			List<Component> components = new ArrayList<Component>(2);
 			components.add(popupWinParticipants.getFellow("participantsAdded"));
-			components.add(popupWinParticipants
-					.getFellow("participantsNotAdded"));
+			components.add(popupWinParticipants.getFellow("participantsNotAdded"));
 			updateBoundComponents(components);
 		}
 	}
@@ -926,8 +811,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		participantsRemoved = new HashSet<Person>();
 		participantsAdded = new HashSet<Person>();
 		for (Person person : selectedGroup.getParticipants()) {
-			if (!allNameVOsParticipantsAdded.contains(new NameVO(null, person
-					.getRegistry()))) {
+			if (!allNameVOsParticipantsAdded.contains(new NameVO(null, person.getRegistry()))) {
 				participantsRemoved.add(person);
 				ownersAdded.remove(person);
 				if (selectedGroup.getOwners().contains(person))
@@ -943,8 +827,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				}
 			if (!contains) {
 				try {
-					participantsAdded.add(groupManagerController
-							.getPersonByRegistry(nameVO.getRegistry()));
+					participantsAdded.add(groupManagerController.getPersonByRegistry(nameVO.getRegistry()));
 				} catch (Exception e) {
 					e.printStackTrace();
 					showDataBaseMessageError();
@@ -952,20 +835,16 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 				}
 			}
 		}
-		for (Iterator<Person> iterator = ownersAdded.iterator(); iterator
-				.hasNext();) {
+		for (Iterator<Person> iterator = ownersAdded.iterator(); iterator.hasNext();) {
 			Person person = iterator.next();
-			if (!allNameVOsParticipantsAdded.contains(new NameVO(null, person
-					.getRegistry())))
+			if (!allNameVOsParticipantsAdded.contains(new NameVO(null, person.getRegistry())))
 				iterator.remove();
 		}
 		popupWinParticipantsOnCancel();
 	}
 
 	// end - popupWin participants methods
-
 	// begin - popupWin Owners methods
-
 	/**
 	 * Sets visible false popupWin owners - close the popup window
 	 */
@@ -974,8 +853,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		popupWinOwners.getFellow("warning").setVisible(false);
 		popupWinOwners.doEmbedded();
 		popupWinOwners.setVisible(false);
-		((Textbox) popupWinOwners.getFellow("popupWinOwnersTextBox"))
-				.setRawValue(null);
+		((Textbox) popupWinOwners.getFellow("popupWinOwnersTextBox")).setRawValue(null);
 	}
 
 	/**
@@ -998,12 +876,10 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		allNameVOsOwnersNotAdded = new HashSet<NameVO>();
 		for (Person person : selectedGroup.getOwners()) {
 			if (!ownersRemoved.contains(person))
-				allNameVOsOwnersAdded.add(new NameVO(person.getName(), person
-						.getRegistry()));
+				allNameVOsOwnersAdded.add(new NameVO(person.getName(), person.getRegistry()));
 		}
 		for (Person person : ownersAdded)
-			allNameVOsOwnersAdded.add(new NameVO(person.getName(), person
-					.getRegistry()));
+			allNameVOsOwnersAdded.add(new NameVO(person.getName(), person.getRegistry()));
 		Window popupWinOwners = (Window) getFellow("popupWinOwners");
 		popupWinOwners.setWidth("700px");
 		List<Component> components = new ArrayList<Component>(2);
@@ -1018,31 +894,28 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	 */
 	public void popupWinOwnersSearch() {
 		Window popupWinOwners = (Window) getFellow("popupWinOwners");
-		String text = ((Textbox) popupWinOwners
-				.getFellow("popupWinOwnersTextBox")).getText().trim();
+		String text = ((Textbox) popupWinOwners.getFellow("popupWinOwnersTextBox")).getText().trim();
 		Label warning = ((Label) popupWinOwners.getFellow("warning"));
 		allNameVOsOwnersNotAdded = new HashSet<NameVO>();
 		if (StringUtils.hasText(text)) {
 			try {
-				allNameVOsOwnersNotAdded.addAll(groupManagerController
-						.getNameAndRegistryByName(text));
+				allNameVOsOwnersNotAdded.addAll(groupManagerController.getNameAndRegistryByName(text));
 			} catch (Exception e) {
 				e.printStackTrace();
 				showDataBaseMessageError();
 				return;
 			}
-			if (allNameVOsOwnersNotAdded != null
-					&& allNameVOsOwnersAdded != null)
+			if (allNameVOsOwnersNotAdded != null && allNameVOsOwnersAdded != null)
 				for (NameVO nameVO : allNameVOsOwnersAdded)
 					if (allNameVOsOwnersNotAdded.contains(nameVO))
 						allNameVOsOwnersNotAdded.remove(nameVO);
 			updateBoundComponent(popupWinOwners.getFellow("ownersNotAdded"));
-			if(allNameVOsOwnersNotAdded.isEmpty()){
+			if (allNameVOsOwnersNotAdded.isEmpty()) {
 				warning.setValue("Nenhum resultado encontrado");
 				warning.setVisible(true);
-			}else
+			} else
 				warning.setVisible(false);
-		}else{
+		} else {
 			warning.setValue("Informe um nome para busca");
 			warning.setVisible(true);
 		}
@@ -1101,8 +974,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 		ownersRemoved = new HashSet<Person>();
 		ownersAdded = new HashSet<Person>();
 		for (Person person : selectedGroup.getOwners())
-			if (!allNameVOsOwnersAdded.contains(new NameVO(null, person
-					.getRegistry())))
+			if (!allNameVOsOwnersAdded.contains(new NameVO(null, person.getRegistry())))
 				ownersRemoved.add(person);
 		for (NameVO nameVO : allNameVOsOwnersAdded) {
 			boolean contain = false;
@@ -1111,8 +983,7 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 					contain = true;
 			if (!contain) {
 				try {
-					Person p = groupManagerController
-							.getPersonByRegistry(nameVO.getRegistry());
+					Person p = groupManagerController.getPersonByRegistry(nameVO.getRegistry());
 					ownersAdded.add(p);
 					participantsAdded.add(p);
 				} catch (Exception e) {
@@ -1128,7 +999,8 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	// end - popupWin Owner methods
 	/**
 	 * After save action
-	 * @param selectedGroup 
+	 * 
+	 * @param selectedGroup
 	 */
 	private void doAfterSave(Group selectedGroup) {
 		groupDescriptorGrid.setVisible(false);
@@ -1157,28 +1029,20 @@ public class GroupEditWindow extends AnnotateDataBinderWindow {
 	 * Shows a dataBase message error
 	 */
 	private void showDataBaseMessageError() {
-		addHtmlWarning(
-				"warning",
-				"O sistema identificou uma falha de banco de dados. Tente novamente mais tarde ou aguarde por reparos",
-				"", HtmlWarning.ERROR);
+		addHtmlWarning("warning", "O sistema identificou uma falha de banco de dados. Tente novamente mais tarde ou aguarde por reparos", "", HtmlWarning.ERROR);
 	}
-	
+
 	/**
 	 * Includes new group page
 	 */
-	private void includeNewGroupPage(){
-		((Include) Executions.getCurrent().getDesktop().getPage("main")
-				.getFellow("include"))
-				.setSrc("/zul/secure/adm/group/groupEditWindow.zul?new=1");
+	private void includeNewGroupPage() {
+		((Include) Executions.getCurrent().getDesktop().getPage("main").getFellow("include")).setSrc("/zul/secure/adm/group/groupEditWindow.zul?new=1");
 	}
-	
+
 	/**
 	 * Includes edit group page
 	 */
-	private void includeEditGroupPage(){
-		((Include) Executions.getCurrent().getDesktop().getPage("main")
-				.getFellow("include"))
-				.setSrc("/zul/secure/adm/group/groupEditWindow.zul");
+	private void includeEditGroupPage() {
+		((Include) Executions.getCurrent().getDesktop().getPage("main").getFellow("include")).setSrc("/zul/secure/adm/group/groupEditWindow.zul");
 	}
-
 }

@@ -16,15 +16,10 @@ import com.google.gdata.data.appsforyourdomain.provisioning.NicknameFeed;
 import com.google.gdata.util.ServiceException;
 
 public class GoogleNicknameDaoImpl {
-	private static final Logger LOGGER = Logger
-			.getLogger(AppsForYourDomainClient.class.getName());
-
+	private static final Logger LOGGER = Logger.getLogger(AppsForYourDomainClient.class.getName());
 	private static final String APPS_FEEDS_URL_BASE = "https://www.google.com/a/feeds/";
-
 	private static final String SERVICE_VERSION = "2.0";
-
 	private String domainUrlBase;
-
 	private NicknameService nicknameService;
 
 	/**
@@ -38,17 +33,11 @@ public class GoogleNicknameDaoImpl {
 	 * @param domain
 	 *            The domain to administer
 	 */
-	public GoogleNicknameDaoImpl(String adminEmail, String adminPassword,
-			String domain) throws Exception {
-
+	public GoogleNicknameDaoImpl(String adminEmail, String adminPassword, String domain) throws Exception {
 		domainUrlBase = APPS_FEEDS_URL_BASE + domain + "/";
-
 		// Configure all of the different Provisioning services
-
-		nicknameService = new NicknameService(
-				"gdata-sample-AppsForYourDomain-NicknameService");
+		nicknameService = new NicknameService("gdata-sample-AppsForYourDomain-NicknameService");
 		nicknameService.setUserCredentials(adminEmail, adminPassword);
-
 	}
 
 	/**
@@ -66,21 +55,15 @@ public class GoogleNicknameDaoImpl {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public NicknameEntry createNickname(String username, String nickname)
-			throws AppsForYourDomainException, ServiceException, IOException {
-
-		LOGGER.log(Level.INFO, "Creating nickname '" + nickname
-				+ "' for user '" + username + "'.");
-
+	public NicknameEntry createNickname(String username, String nickname) throws AppsForYourDomainException, ServiceException, IOException {
+		LOGGER.log(Level.INFO, "Creating nickname '" + nickname + "' for user '" + username + "'.");
 		NicknameEntry entry = new NicknameEntry();
 		Nickname nicknameExtension = new Nickname();
 		nicknameExtension.setName(nickname);
 		entry.addExtension(nicknameExtension);
-
 		Login login = new Login();
 		login.setUserName(username);
 		entry.addExtension(login);
-
 		URL insertUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION);
 		return nicknameService.insert(insertUrl, entry);
 	}
@@ -98,12 +81,9 @@ public class GoogleNicknameDaoImpl {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public NicknameEntry retrieveNickname(String nickname)
-			throws AppsForYourDomainException, ServiceException, IOException {
+	public NicknameEntry retrieveNickname(String nickname) throws AppsForYourDomainException, ServiceException, IOException {
 		LOGGER.log(Level.INFO, "Retrieving nickname '" + nickname + "'.");
-
-		URL retrieveUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION
-				+ "/" + nickname);
+		URL retrieveUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION + "/" + nickname);
 		return nicknameService.getEntry(retrieveUrl, NicknameEntry.class);
 	}
 
@@ -120,11 +100,8 @@ public class GoogleNicknameDaoImpl {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public NicknameFeed retrieveNicknames(String username)
-			throws AppsForYourDomainException, ServiceException, IOException {
-		LOGGER.log(Level.INFO, "Retrieving nicknames for user '" + username
-				+ "'.");
-
+	public NicknameFeed retrieveNicknames(String username) throws AppsForYourDomainException, ServiceException, IOException {
+		LOGGER.log(Level.INFO, "Retrieving nicknames for user '" + username + "'.");
 		URL feedUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION);
 		AppsForYourDomainQuery query = new AppsForYourDomainQuery(feedUrl);
 		query.setUsername(username);
@@ -150,16 +127,9 @@ public class GoogleNicknameDaoImpl {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public NicknameFeed retrievePageOfNicknames(String startNickname)
-			throws AppsForYourDomainException, ServiceException, IOException {
-
-		LOGGER.log(Level.INFO,
-				"Retrieving one page of nicknames"
-						+ (startNickname != null ? " starting at "
-								+ startNickname : "") + ".");
-
-		URL retrieveUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION
-				+ "/");
+	public NicknameFeed retrievePageOfNicknames(String startNickname) throws AppsForYourDomainException, ServiceException, IOException {
+		LOGGER.log(Level.INFO, "Retrieving one page of nicknames" + (startNickname != null ? " starting at " + startNickname : "") + ".");
+		URL retrieveUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION + "/");
 		AppsForYourDomainQuery query = new AppsForYourDomainQuery(retrieveUrl);
 		query.setStartNickname(startNickname);
 		return nicknameService.query(query, NicknameFeed.class);
@@ -179,27 +149,20 @@ public class GoogleNicknameDaoImpl {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public NicknameFeed retrieveAllNicknames()
-			throws AppsForYourDomainException, ServiceException, IOException {
-
+	public NicknameFeed retrieveAllNicknames() throws AppsForYourDomainException, ServiceException, IOException {
 		LOGGER.log(Level.INFO, "Retrieving all nicknames.");
-
-		URL retrieveUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION
-				+ "/");
+		URL retrieveUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION + "/");
 		NicknameFeed allNicknames = new NicknameFeed();
 		NicknameFeed currentPage;
 		Link nextLink;
-
 		do {
-			currentPage = nicknameService.getFeed(retrieveUrl,
-					NicknameFeed.class);
+			currentPage = nicknameService.getFeed(retrieveUrl, NicknameFeed.class);
 			allNicknames.getEntries().addAll(currentPage.getEntries());
 			nextLink = currentPage.getLink(Link.Rel.NEXT, Link.Type.ATOM);
 			if (nextLink != null) {
 				retrieveUrl = new URL(nextLink.getHref());
 			}
 		} while (nextLink != null);
-
 		return allNicknames;
 	}
 
@@ -215,14 +178,9 @@ public class GoogleNicknameDaoImpl {
 	 * @throws IOException
 	 *             If an error occurs communicating with the GData service.
 	 */
-	public void deleteNickname(String nickname)
-			throws AppsForYourDomainException, ServiceException, IOException {
-
+	public void deleteNickname(String nickname) throws AppsForYourDomainException, ServiceException, IOException {
 		LOGGER.log(Level.INFO, "Deleting nickname '" + nickname + "'.");
-
-		URL deleteUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION
-				+ "/" + nickname);
+		URL deleteUrl = new URL(domainUrlBase + "nickname/" + SERVICE_VERSION + "/" + nickname);
 		nicknameService.delete(deleteUrl);
 	}
-
 }

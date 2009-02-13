@@ -24,7 +24,6 @@ import com.integrareti.integraframework.valueobject.NameVO;
  * 
  */
 public class GroupImportController {
-
 	private SigaService sigaService;
 	private IntegraGroupServiceInterface integraGroupServi;
 	private IntegraDomainServiceInterface integraDomainService;
@@ -37,10 +36,7 @@ public class GroupImportController {
 	 * @param integraGroupService
 	 * @param googleEmailListService
 	 */
-	public GroupImportController(SigaService sigaService,
-			IntegraGroupServiceInterface integraGroupService,
-			GoogleUserAccountServiceInterface googleUserAccountService,
-			IntegraDomainServiceInterface integraDomainService) {
+	public GroupImportController(SigaService sigaService, IntegraGroupServiceInterface integraGroupService, GoogleUserAccountServiceInterface googleUserAccountService, IntegraDomainServiceInterface integraDomainService) {
 		this.sigaService = sigaService;
 		this.integraGroupServi = integraGroupService;
 		this.googleUserAccountService = googleUserAccountService;
@@ -65,14 +61,10 @@ public class GroupImportController {
 	 * @return Returns a list of groupVO
 	 * @throws Exception
 	 */
-	public List<GroupVO> getSubjectByPeriodAndSector(String year,
-			String semester, String sector) throws Exception {
-		List<GroupVO> list = sigaService.getSubjectByPeriodAndSector(year,
-				semester, sector);
+	public List<GroupVO> getSubjectByPeriodAndSector(String year, String semester, String sector) throws Exception {
+		List<GroupVO> list = sigaService.getSubjectByPeriodAndSector(year, semester, sector);
 		return getGroupsNotCreated(list, year, semester);
 	}
-
-
 
 	/**
 	 * Imports the possibles groups
@@ -84,11 +76,8 @@ public class GroupImportController {
 	 * @return Returns all subject of a period , sector and departament
 	 * @throws Exception
 	 */
-	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year,
-			String semester, String sector, String department) throws Exception {
-		List<GroupVO> list = sigaService
-				.getSubjectByPeriodAndSectorAndDepartment(year, semester,
-						sector, department);
+	public List<GroupVO> getSubjectByPeriodAndSectorAndDepartment(String year, String semester, String sector, String department) throws Exception {
+		List<GroupVO> list = sigaService.getSubjectByPeriodAndSectorAndDepartment(year, semester, sector, department);
 		return getGroupsNotCreated(list, year, semester);
 	}
 
@@ -101,12 +90,8 @@ public class GroupImportController {
 	 *         subject code
 	 * @throws Exception
 	 */
-	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year,
-			String semester, String subjectCode, String sector)
-			throws Exception {
-		List<GroupVO> list = sigaService
-				.getSubjectByPeriodAndSectorAndSubjectCode(year, semester,
-						subjectCode, sector);
+	public List<GroupVO> getSubjectByPeriodAndSectorAndSubjectCode(String year, String semester, String subjectCode, String sector) throws Exception {
+		List<GroupVO> list = sigaService.getSubjectByPeriodAndSectorAndSubjectCode(year, semester, subjectCode, sector);
 		return getGroupsNotCreated(list, year, semester);
 	}
 
@@ -119,16 +104,14 @@ public class GroupImportController {
 	 * @param semester
 	 * @return A map of groups that could not be created
 	 */
-	public Map<String, GroupVO> createGroups(List<GroupVO> groupsVO,
-			Domain domain, String year, String semester) {
+	public Map<String, GroupVO> createGroups(List<GroupVO> groupsVO, Domain domain, String year, String semester) {
 		Map<String, GroupVO> errors = new HashMap<String, GroupVO>();
 		boolean stillOpenConnection = true;
 		int aux = groupsVO.size();
 		for (GroupVO groupVO : groupsVO) {
 			if (aux == 1)
 				stillOpenConnection = false;
-			Map<String, GroupVO> error = createGroup(groupVO, domain, year,
-					semester, stillOpenConnection);
+			Map<String, GroupVO> error = createGroup(groupVO, domain, year, semester, stillOpenConnection);
 			if (!error.isEmpty())
 				errors.putAll(error);
 			aux--;
@@ -145,19 +128,15 @@ public class GroupImportController {
 	 * @param semester
 	 * @return A map of groups that could not be created
 	 */
-	public Map<String, GroupVO> createGroup(GroupVO groupVO, Domain domain,
-			String year, String semester, boolean stillOpenConnection) {
+	public Map<String, GroupVO> createGroup(GroupVO groupVO, Domain domain, String year, String semester, boolean stillOpenConnection) {
 		Map<String, GroupVO> errors = new HashMap<String, GroupVO>();
 		// creating a new group
 		Group group = new Group();
 		group.setDomain(domain);
 		group.setActive(true);
 		group.setManuallyCreated(false);
-		group.setName(groupVO.getSubjectCode().trim() + year.trim()
-				+ semester.trim() + groupVO.getClassroom().trim());
-		group.setDescription(groupVO.getSubjectName().trim() + " - Turma "
-				+ groupVO.getClassroom().trim() + " Semestre: "
-				+ semester.trim() + " Ano: " + year.trim());
+		group.setName(groupVO.getSubjectCode().trim() + year.trim() + semester.trim() + groupVO.getClassroom().trim());
+		group.setDescription(groupVO.getSubjectName().trim() + " - Turma " + groupVO.getClassroom().trim() + " Semestre: " + semester.trim() + " Ano: " + year.trim());
 		Set<Person> participants = new HashSet<Person>();
 		Set<Person> owners = new HashSet<Person>();
 		try {
@@ -165,16 +144,12 @@ public class GroupImportController {
 			if (stillOpenConnection == false)
 				stillOpenConnection = true;
 			// getting the students's registries of a specified subject
-			List<String> registries = sigaService.getRegistriesBySubjectCode(
-					groupVO.getSubjectCode().trim(), year.trim(), semester
-							.trim(), groupVO.getClassroom().trim(),
-					stillOpenConnection);
+			List<String> registries = sigaService.getRegistriesBySubjectCode(groupVO.getSubjectCode().trim(), year.trim(), semester.trim(), groupVO.getClassroom().trim(), stillOpenConnection);
 			if (registries != null && !registries.isEmpty()) {
 				// getting the participants that has already been save at
 				// integra database
 				for (String reg : registries) {
-					Integer id = googleUserAccountService.isPersonSaved(reg,
-							stillOpenConnection);
+					Integer id = googleUserAccountService.isPersonSaved(reg, stillOpenConnection);
 					if (id != null) {
 						Person p = googleUserAccountService.getById(id);
 						participants.add(p);
@@ -182,16 +157,12 @@ public class GroupImportController {
 				}
 			}
 			// defining the owners
-			List<NameVO> ownersNameVO = sigaService.getSubjectOwner(groupVO
-					.getSubjectCode(), year, semester, groupVO.getClassroom(),
-					stillOpenAux);
+			List<NameVO> ownersNameVO = sigaService.getSubjectOwner(groupVO.getSubjectCode(), year, semester, groupVO.getClassroom(), stillOpenAux);
 			if (ownersNameVO != null && !ownersNameVO.isEmpty()) {
 				for (NameVO nameVO : ownersNameVO) {
-					Integer id = googleUserAccountService.isPersonSaved(nameVO
-							.getRegistry(), stillOpenAux);
+					Integer id = googleUserAccountService.isPersonSaved(nameVO.getRegistry(), stillOpenAux);
 					if (id != null) {
 						Person p = googleUserAccountService.getById(id);
-
 						owners.add(p);
 					}
 				}
@@ -199,10 +170,7 @@ public class GroupImportController {
 			if (!stillOpenAux)
 				googleUserAccountService.closeConnection();
 			// saving group
-			Map<String, Group> map = integraGroupServi
-					.saveGroupAndUpDateEmailLists(group, participants,
-							new HashSet<Person>(0), owners,
-							new HashSet<Person>(0));
+			Map<String, Group> map = integraGroupServi.saveGroupAndUpDateEmailLists(group, participants, new HashSet<Person>(0), owners, new HashSet<Person>(0));
 			// getting errors
 			Iterator<String> itKeys = map.keySet().iterator();
 			while (itKeys.hasNext())
@@ -230,10 +198,8 @@ public class GroupImportController {
 	 * @return Returns the groups without email list
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsWithoutEmailList(String domainName)
-			throws Exception {
-		return integraGroupServi
-				.getAllGroupsWithoutEmailListByDomainName(domainName);
+	public List<Group> getGroupsWithoutEmailList(String domainName) throws Exception {
+		return integraGroupServi.getAllGroupsWithoutEmailListByDomainName(domainName);
 	}
 
 	/**
@@ -253,20 +219,16 @@ public class GroupImportController {
 	 * @return Returns the list of groupsVO that was not created
 	 * @throws Exception
 	 */
-	private List<GroupVO> getGroupsNotCreated(List<GroupVO> list, String year,
-			String semester) throws Exception {
+	private List<GroupVO> getGroupsNotCreated(List<GroupVO> list, String year, String semester) throws Exception {
 		if (list != null && !list.isEmpty()) {
 			int aux = list.size();
 			boolean stillOpenConnection = true;
-			for (Iterator<GroupVO> iterator = list.iterator(); iterator
-					.hasNext();) {
+			for (Iterator<GroupVO> iterator = list.iterator(); iterator.hasNext();) {
 				if (aux == 1)
 					stillOpenConnection = false;
 				GroupVO groupVO = (GroupVO) iterator.next();
-				String name = groupVO.getSubjectCode().trim() + year.trim()
-						+ semester.trim() + groupVO.getClassroom().trim();
-				if (integraGroupServi.getGroupIdByName(name,
-						stillOpenConnection) != null)
+				String name = groupVO.getSubjectCode().trim() + year.trim() + semester.trim() + groupVO.getClassroom().trim();
+				if (integraGroupServi.getGroupIdByName(name, stillOpenConnection) != null)
 					iterator.remove();
 				aux--;
 			}
@@ -282,10 +244,8 @@ public class GroupImportController {
 	 * @return Returns a page of groups without emaillist by domain
 	 * @throws Exception
 	 */
-	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(
-			String domainName, int first, int offset) throws Exception {
-		return integraGroupServi.getPageOfGroupsWithoutEmailListByDomainName(
-				domainName, first, offset);
+	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(String domainName, int first, int offset) throws Exception {
+		return integraGroupServi.getPageOfGroupsWithoutEmailListByDomainName(domainName, first, offset);
 	}
 
 	/**
@@ -296,8 +256,7 @@ public class GroupImportController {
 	 * @return Returns a page of groups by domain name
 	 * @throws Exception
 	 */
-	public List<Group> getPageByDomainName(String domainName, int first,
-			int offset) throws Exception {
+	public List<Group> getPageByDomainName(String domainName, int first, int offset) throws Exception {
 		return integraGroupServi.getPageByDomainName(domainName, first, offset);
 	}
 
@@ -317,14 +276,11 @@ public class GroupImportController {
 	 * @return Returns the number of groups without emaillist by domain name
 	 * @throws Exception
 	 */
-	public Long countGroupsWithoutEmailListByDomainName(String domain)
-			throws Exception {
-		return integraGroupServi
-				.countGroupsWithoutEmailListByDomainName(domain);
+	public Long countGroupsWithoutEmailListByDomainName(String domain) throws Exception {
+		return integraGroupServi.countGroupsWithoutEmailListByDomainName(domain);
 	}
 
 	public void reatach(Object o) {
 		integraGroupServi.reattach(o);
 	}
-
 }

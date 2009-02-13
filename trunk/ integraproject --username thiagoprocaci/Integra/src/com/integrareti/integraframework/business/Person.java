@@ -31,11 +31,8 @@ import com.integrareti.integraframework.util.StringUtil;
  * @created 22-May-2007 14:55:58
  * @author Thiago Athouguia Gama
  */
-
 @SuppressWarnings("serial")
-public class Person extends SimpleAclEntry implements Cloneable, UserDetails,
-		Identifiable<Integer> {
-
+public class Person extends SimpleAclEntry implements Cloneable, UserDetails, Identifiable<Integer> {
 	private Integer id;
 	private Domain domain;
 	private String registry;
@@ -296,38 +293,26 @@ public class Person extends SimpleAclEntry implements Cloneable, UserDetails,
 	 * @return Returns a list of possibles usernames for a person
 	 */
 	public List<String> getPossiblesUsernames() throws UsernameException {
-
 		// verifies if an user (person) has a google account
 		if (StringUtils.hasText(getGoogleAccount())) {
-			throw new UsernameException(
-					"This user has already defined a username");
+			throw new UsernameException("This user has already defined a username");
 		}
 		// verifies if an user has a "given name" and "family name"
-		if ((!StringUtils.hasText(getGivenName()))
-				|| (!StringUtils.hasText(getFamilyName()))) {
-			throw new UsernameException(
-					"The given name and family name must be specified");
+		if ((!StringUtils.hasText(getGivenName())) || (!StringUtils.hasText(getFamilyName()))) {
+			throw new UsernameException("The given name and family name must be specified");
 		}
 		// get the complete name of a person
-		String completeName = StringUtil.changeAccent(getGivenName()
-				.toLowerCase())
-				+ " " + StringUtil.changeAccent(getFamilyName().toLowerCase());
+		String completeName = StringUtil.changeAccent(getGivenName().toLowerCase()) + " " + StringUtil.changeAccent(getFamilyName().toLowerCase());
 		completeName = StringUtil.removePoint(completeName);
-
 		// list that will store the possibles usernames
 		List<String> usernames = new ArrayList<String>();
-
-		Scanner nameScanner = new Scanner(completeName)
-				.useDelimiter("\\s* \\s*");
+		Scanner nameScanner = new Scanner(completeName).useDelimiter("\\s* \\s*");
 		List<String> names = new ArrayList<String>();
 		List<String> initials = new ArrayList<String>();
 		while (nameScanner.hasNext()) {
 			String s = nameScanner.next();
 			// discards the invalid words
-			if (!s.equals("da") && !s.equals("de") && !s.equals("di")
-					&& !s.equals("dos") && !s.equals("das") && !s.equals("dus")
-					&& !s.equals("dis") && !s.equals("do") && !s.equals("du")
-					&& (s.length() > 1)) {
+			if (!s.equals("da") && !s.equals("de") && !s.equals("di") && !s.equals("dos") && !s.equals("das") && !s.equals("dus") && !s.equals("dis") && !s.equals("do") && !s.equals("du") && (s.length() > 1)) {
 				names.add(s);
 				initials.add(s.substring(0, 1));
 			}
@@ -349,15 +334,12 @@ public class Person extends SimpleAclEntry implements Cloneable, UserDetails,
 			i++;
 			aux += n.substring(0, 1);
 		}
-
 		if (names.size() > 2) {
 			for (int j = 0; j < names.size(); j++) {
 				if (!names.get(0).equals(names.get(j))) {
 					if (names.size() != j + 1) {
-						usernames.add(names.get(0) + names.get(j)
-								+ names.get(j + 1));
-						usernames.add(names.get(0) + "." + names.get(j) + "."
-								+ names.get(j + 1));
+						usernames.add(names.get(0) + names.get(j) + names.get(j + 1));
+						usernames.add(names.get(0) + "." + names.get(j) + "." + names.get(j + 1));
 					}
 				}
 			}
@@ -396,7 +378,6 @@ public class Person extends SimpleAclEntry implements Cloneable, UserDetails,
 	 * Methods implementations - These methods are used to enable Acegi security
 	 * in the application
 	 */
-
 	/**
 	 * @return an array of <code>GrantedAuthority</code>s, each one described
 	 *         as the name of a <code>UserGroup</code>. Obs.: the prefix
@@ -405,12 +386,10 @@ public class Person extends SimpleAclEntry implements Cloneable, UserDetails,
 	 */
 	@Override
 	public GrantedAuthority[] getAuthorities() {
-		GrantedAuthority[] authorities = new GrantedAuthorityImpl[userGroups
-				.size()];
+		GrantedAuthority[] authorities = new GrantedAuthorityImpl[userGroups.size()];
 		int count = 0;
 		for (UserGroup uGroup : userGroups) {
-			authorities[count] = new GrantedAuthorityImpl("ROLE_"
-					+ uGroup.getName());
+			authorities[count] = new GrantedAuthorityImpl("ROLE_" + uGroup.getName());
 			count++;
 		}
 		return authorities;
@@ -458,8 +437,7 @@ public class Person extends SimpleAclEntry implements Cloneable, UserDetails,
 		Person p = (Person) super.clone();
 		UserEntry uEntry = new UserEntry();
 		Login login = new Login();
-		login.setHashFunctionName(getUserEntry().getLogin()
-				.getHashFunctionName());
+		login.setHashFunctionName(getUserEntry().getLogin().getHashFunctionName());
 		login.setUserName(getGoogleAccount());
 		login.setPassword(getPassword());
 		uEntry.addExtension(login);
@@ -468,5 +446,4 @@ public class Person extends SimpleAclEntry implements Cloneable, UserDetails,
 		p.setUserEntry(uEntry);
 		return p;
 	}
-
 }

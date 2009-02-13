@@ -6,11 +6,11 @@ import com.integrareti.integraframework.authentication.UserGroup;
 
 /**
  * This interface offers methods to manipulates usergroups st integra database
+ * 
  * @author Thiago
- *
+ * 
  */
 public interface UserGroupDao extends GenericDao<UserGroup, Integer> {
-
 	/**
 	 * 
 	 * @param name
@@ -18,5 +18,4 @@ public interface UserGroupDao extends GenericDao<UserGroup, Integer> {
 	 * @throws Exception
 	 */
 	public List<UserGroup> getByName(String... name) throws Exception;
-
 }

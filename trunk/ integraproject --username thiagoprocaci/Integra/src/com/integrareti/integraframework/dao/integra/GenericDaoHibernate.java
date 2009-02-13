@@ -15,22 +15,20 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import com.integrareti.integraframework.business.Identifiable;
 
 /**
- * This class offers the basics operations to access integra database 
+ * This class offers the basics operations to access integra database
+ * 
  * @author Thiago
- *
+ * 
  * @param <E>
  * @param <ID>
  */
-public abstract class GenericDaoHibernate<E extends Identifiable<ID>, ID extends Serializable>
-		extends HibernateDaoSupport implements GenericDao<E, ID> {
-	
+public abstract class GenericDaoHibernate<E extends Identifiable<ID>, ID extends Serializable> extends HibernateDaoSupport implements GenericDao<E, ID> {
 	@SuppressWarnings("unchecked")
 	private Class entityClass;
-	
 	private SessionFactory sessionFactory;
 	private Session session;
 	private ApplicationContext ctx;
-	
+
 	/**
 	 * 
 	 * @return Returns entityClass
@@ -42,6 +40,7 @@ public abstract class GenericDaoHibernate<E extends Identifiable<ID>, ID extends
 
 	/**
 	 * Sets entityClass
+	 * 
 	 * @param entityClass
 	 */
 	@SuppressWarnings("unchecked")
@@ -50,7 +49,8 @@ public abstract class GenericDaoHibernate<E extends Identifiable<ID>, ID extends
 	}
 
 	/**
-	 *  Saves an object
+	 * Saves an object
+	 * 
 	 * @param row
 	 */
 	public void save(E row) throws Exception {
@@ -68,6 +68,7 @@ public abstract class GenericDaoHibernate<E extends Identifiable<ID>, ID extends
 
 	/**
 	 * Deletes an object
+	 * 
 	 * @param row
 	 */
 	public void delete(E row) throws Exception {
@@ -82,40 +83,38 @@ public abstract class GenericDaoHibernate<E extends Identifiable<ID>, ID extends
 	@SuppressWarnings("unchecked")
 	public E getById(ID id) throws Exception {
 		return (E) (getHibernateTemplate().load(getEntityClass(), id));
-	}	
-	
+	}
+
 	/**
 	 * 
 	 * @return Returns hibernate session
 	 */
-	public Session getHibernateSession(){
+	public Session getHibernateSession() {
 		return getHibernateTemplate().getSessionFactory().getCurrentSession();
 	}
 
 	/**
 	 * Open hibernate session
 	 */
-	public void openSession(){
+	public void openSession() {
 		// the following is necessary for lazy loading
-		sessionFactory = (SessionFactory) getAppContext().getBean(
-				"sessionFactory");
+		sessionFactory = (SessionFactory) getAppContext().getBean("sessionFactory");
 		// open and bind the session for this test thread.
 		session = sessionFactory.openSession();
-		TransactionSynchronizationManager.bindResource(sessionFactory,
-				new SessionHolder(session));
+		TransactionSynchronizationManager.bindResource(sessionFactory, new SessionHolder(session));
 		// setup code here
 	}
-	
+
 	/**
 	 * Closed hibernate session
 	 */
-	public void closeSession(){
+	public void closeSession() {
 		session.flush();
-		session.clear();		
+		session.clear();
 		TransactionSynchronizationManager.unbindResource(sessionFactory);
 		SessionFactoryUtils.closeSession(session);
 	}
-	
+
 	/**
 	 * 
 	 * @return Returns ApplicationContext
@@ -124,9 +123,7 @@ public abstract class GenericDaoHibernate<E extends Identifiable<ID>, ID extends
 		String path = getClass().getResource("/WebContent/WEB-INF/integra-data.xml").toString();
 		System.out.println(path);
 		if (ctx == null)
-			ctx = new FileSystemXmlApplicationContext(
-			"/WebContent/WEB-INF/integra-data.xml");
+			ctx = new FileSystemXmlApplicationContext("/WebContent/WEB-INF/integra-data.xml");
 		return ctx;
 	}
-	
 }

@@ -9,7 +9,6 @@ import com.integrareti.integraframework.business.Person;
  * This interface offers method to access the group's data
  */
 public interface GroupDao extends GenericDao<Group, Integer> {
-
 	/**
 	 * 
 	 * @param groupName
@@ -25,8 +24,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @return Returns a group by a name and domain name
 	 * @throws Exception
 	 */
-	public Group getGroupByNameAndDomainName(String groupName, String domainName)
-			throws Exception;
+	public Group getGroupByNameAndDomainName(String groupName, String domainName) throws Exception;
 
 	/**
 	 * 
@@ -42,8 +40,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @return Returns all groups without email list by domain name
 	 * @throws Exception
 	 */
-	public List<Group> getAllGroupsWithoutEmailListByDomainName(
-			String domainName) throws Exception;
+	public List<Group> getAllGroupsWithoutEmailListByDomainName(String domainName) throws Exception;
 
 	/**
 	 * 
@@ -51,8 +48,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @return Returns groups by description
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByDescription(String description)
-			throws Exception;
+	public List<Group> getGroupsByDescription(String description) throws Exception;
 
 	/**
 	 * 
@@ -61,8 +57,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @return Returns groups by description end name (using like)
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			String name) throws Exception;
+	public List<Group> getGroupsByDescriptionAndName(String description, String name) throws Exception;
 
 	/**
 	 * 
@@ -71,8 +66,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @return Returns groups by description and name (using like)
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByDescriptionAndName(String description,
-			List<String> names) throws Exception;
+	public List<Group> getGroupsByDescriptionAndName(String description, List<String> names) throws Exception;
 
 	/**
 	 * 
@@ -82,8 +76,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @return Returns a page of groups without emaillist by domain
 	 * @throws Exception
 	 */
-	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(
-			String domainName, int first, int offset) throws Exception;
+	public List<Group> getPageOfGroupsWithoutEmailListByDomainName(String domainName, int first, int offset) throws Exception;
 
 	/**
 	 * 
@@ -93,8 +86,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @return Returns a page of groups by domain name
 	 * @throws Exception
 	 */
-	public List<Group> getPageByDomainName(String domainName, int first,
-			int offset) throws Exception;
+	public List<Group> getPageByDomainName(String domainName, int first, int offset) throws Exception;
 
 	/**
 	 * 
@@ -110,8 +102,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @return Returns the number of groups without emaillist by domain name
 	 * @throws Exception
 	 */
-	public Long countGroupsWithoutEmailListByDomainName(String domain)
-			throws Exception;
+	public Long countGroupsWithoutEmailListByDomainName(String domain) throws Exception;
 
 	/**
 	 * 
@@ -120,7 +111,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @throws Exception
 	 */
 	public List<Group> getGroupsByOwner(Person owner) throws Exception;
-	
+
 	/**
 	 * 
 	 * @param participant
@@ -135,8 +126,7 @@ public interface GroupDao extends GenericDao<Group, Integer> {
 	 * @return Returns groups by pieces of name - using like primitive
 	 * @throws Exception
 	 */
-	public List<Group> getGroupsByPiecesOfNames(List<String> names)
-			throws Exception;
+	public List<Group> getGroupsByPiecesOfNames(List<String> names) throws Exception;
 
 	/**
 	 * 

@@ -11,10 +11,9 @@ import java.util.Set;
  * @author Thiago Athouguia Gama
  */
 @SuppressWarnings("serial")
-public class Domain implements Identifiable<Integer>{
-
+public class Domain implements Identifiable<Integer> {
 	private Integer id;
-	private String name;	
+	private String name;
 	private Set<Group> groups;
 	private Set<Person> members;
 	private Set<EmailList> emailLists;
@@ -22,7 +21,6 @@ public class Domain implements Identifiable<Integer>{
 	private String googleDomainAdmin;
 	private String googleDomainPassword;
 
-	
 	/**
 	 * Creates a new domain
 	 */
@@ -48,12 +46,13 @@ public class Domain implements Identifiable<Integer>{
 	public void setGroups(Set<Group> domainGroups) {
 		this.groups = domainGroups;
 	}
-	
+
 	/**
 	 * Adds a new group
+	 * 
 	 * @param group
 	 */
-	public void addGroup(Group group){
+	public void addGroup(Group group) {
 		this.groups.add(group);
 	}
 
@@ -72,12 +71,13 @@ public class Domain implements Identifiable<Integer>{
 	public void setMembers(Set<Person> domainMembers) {
 		this.members = domainMembers;
 	}
-	
+
 	/**
 	 * Adds a new member
+	 * 
 	 * @param person
 	 */
-	public void addMembers(Person person){
+	public void addMembers(Person person) {
 		this.members.add(person);
 	}
 
@@ -128,12 +128,13 @@ public class Domain implements Identifiable<Integer>{
 	public void setEmailLists(Set<EmailList> emailLists) {
 		this.emailLists = emailLists;
 	}
-	
+
 	/**
 	 * Adds a new emailList
+	 * 
 	 * @param emailList
 	 */
-	public void addEmailList(EmailList emailList){
+	public void addEmailList(EmailList emailList) {
 		this.emailLists.add(emailList);
 	}
 
@@ -147,17 +148,19 @@ public class Domain implements Identifiable<Integer>{
 
 	/**
 	 * Sets the units
+	 * 
 	 * @param units
 	 */
 	public void setUnits(Set<Unit> units) {
 		this.units = units;
 	}
-	
+
 	/**
 	 * Adds a new Unit
+	 * 
 	 * @param unit
 	 */
-	public void addUnit(Unit unit){
+	public void addUnit(Unit unit) {
 		this.units.add(unit);
 	}
 
@@ -171,6 +174,7 @@ public class Domain implements Identifiable<Integer>{
 
 	/**
 	 * Sets googleDomainAdmin
+	 * 
 	 * @param googleDomainAdmin
 	 */
 	public void setGoogleDomainAdmin(String googleDomainAdmin) {
@@ -187,6 +191,7 @@ public class Domain implements Identifiable<Integer>{
 
 	/**
 	 * Sets googleDomainPassword
+	 * 
 	 * @param googleDomainPassword
 	 */
 	public void setGoogleDomainPassword(String googleDomainPassword) {
@@ -217,9 +222,4 @@ public class Domain implements Identifiable<Integer>{
 			return false;
 		return true;
 	}
-
-	
-
-	
-
 }

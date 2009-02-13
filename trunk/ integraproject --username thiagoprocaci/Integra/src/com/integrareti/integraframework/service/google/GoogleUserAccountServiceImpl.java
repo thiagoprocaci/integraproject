@@ -27,13 +27,8 @@ import com.integrareti.integraframework.util.StringUtil;
  * 
  * @author Thiago
  */
-@Transactional(rollbackFor = { AppsForYourDomainException.class,
-		AuthenticationException.class, Exception.class, IOException.class,
-		ServiceException.class, DataAccessException.class })
-public class GoogleUserAccountServiceImpl extends
-		IntegraServiceImpl<Person, Integer> implements
-		GoogleUserAccountServiceInterface {
-
+@Transactional(rollbackFor = { AppsForYourDomainException.class, AuthenticationException.class, Exception.class, IOException.class, ServiceException.class, DataAccessException.class })
+public class GoogleUserAccountServiceImpl extends IntegraServiceImpl<Person, Integer> implements GoogleUserAccountServiceInterface {
 	private GoogleUserAccountDaoImpl googlePersonDao;
 	private PersonDao personDao;
 	private PersonDao personDaoJDBC;
@@ -44,8 +39,7 @@ public class GoogleUserAccountServiceImpl extends
 	 * @param googlePersonDao
 	 * @param personDao
 	 */
-	public GoogleUserAccountServiceImpl(
-			GoogleUserAccountDaoImpl googlePersonDao, PersonDao personDao) {
+	public GoogleUserAccountServiceImpl(GoogleUserAccountDaoImpl googlePersonDao, PersonDao personDao) {
 		super(personDao);
 		this.googlePersonDao = googlePersonDao;
 		this.personDao = personDao;
@@ -57,10 +51,8 @@ public class GoogleUserAccountServiceImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public void delete(Person p) throws AppsForYourDomainException,
-			ServiceException, IOException, Exception {
-		Person person = (Person) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+	public void delete(Person p) throws AppsForYourDomainException, ServiceException, IOException, Exception {
+		Person person = (Person) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (person.equals(p))
 			throw new DeleteUserException(p);
 		if (p.getDomain() == null)
@@ -68,16 +60,14 @@ public class GoogleUserAccountServiceImpl extends
 		// remove from Integra's database
 		super.delete(p);
 		// remove from Google's database
-		googlePersonDao.deleteUser(p.getGoogleAccount(), p.getDomain()
-				.getName());
+		googlePersonDao.deleteUser(p.getGoogleAccount(), p.getDomain().getName());
 	}
 
 	/**
 	 * Saves an person
 	 */
 	@Override
-	public void save(Person person) throws AppsForYourDomainException,
-			ServiceException, IOException, Exception {
+	public void save(Person person) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		Person googlePerson = person.clone();
 		// the user already exists (it's an update)
 		if (person.getId() != null)
@@ -90,8 +80,7 @@ public class GoogleUserAccountServiceImpl extends
 			super.save(person);
 			// save in Google's database
 			// reencrypt pass
-			googlePerson.setPassword(StringUtil.SHA1Encrypt(person
-					.getPassword()));
+			googlePerson.setPassword(StringUtil.SHA1Encrypt(person.getPassword()));
 			googlePersonDao.createUser(googlePerson);
 		}
 	}
@@ -106,14 +95,12 @@ public class GoogleUserAccountServiceImpl extends
 	 * @throws IOException
 	 * @throws Exception
 	 */
-	public Person update(Person p) throws AppsForYourDomainException,
-			ServiceException, IOException, Exception {
+	public Person update(Person p) throws AppsForYourDomainException, ServiceException, IOException, Exception {
 		if (p.getDomain() == null)
 			throw new IllegalStateException("person.domain not specified.");
 		// update in Integra's database
 		super.save(p);
-		googlePersonDao.updateUser(p.getGoogleAccount(), p.getUserEntry(), p
-				.getDomain().getName());
+		googlePersonDao.updateUser(p.getGoogleAccount(), p.getUserEntry(), p.getDomain().getName());
 		return p;
 	}
 
@@ -129,15 +116,12 @@ public class GoogleUserAccountServiceImpl extends
 	 * @exception Exception
 	 */
 	@Override
-	public Person getFromGoogleById(Integer objID)
-			throws AppsForYourDomainException, DataAccessException, Exception,
-			ServiceException, IOException {
+	public Person getFromGoogleById(Integer objID) throws AppsForYourDomainException, DataAccessException, Exception, ServiceException, IOException {
 		Person p = null;
 		p = (Person) super.getById(objID);
 		// returns google's data
 		UserEntry uEntry = null;
-		uEntry = getGooglePersonDao().retrieveUser(p.getGoogleAccount(),
-				p.getDomain().getName());
+		uEntry = getGooglePersonDao().retrieveUser(p.getGoogleAccount(), p.getDomain().getName());
 		p.setUserEntry(uEntry);
 		return p;
 	}
@@ -151,17 +135,14 @@ public class GoogleUserAccountServiceImpl extends
 	 * @throws ServiceException
 	 * @throws AppsForYourDomainException
 	 */
-	public List<Person> getAll(String domain)
-			throws AppsForYourDomainException, ServiceException, Exception,
-			IOException {
+	public List<Person> getAll(String domain) throws AppsForYourDomainException, ServiceException, Exception, IOException {
 		List<Person> people = null;
 		List<UserEntry> gPeople = null;
 		people = super.getAll();
 		gPeople = getGooglePersonDao().retrieveAllUsers(domain).getEntries();
 		for (Person person : people) {
 			for (UserEntry entry : gPeople) {
-				if (person.getGoogleAccount().equals(
-						entry.getLogin().getUserName()))
+				if (person.getGoogleAccount().equals(entry.getLogin().getUserName()))
 					person.setUserEntry(entry);
 			}
 		}
@@ -175,8 +156,7 @@ public class GoogleUserAccountServiceImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public Person getByGoogleAccount(String googleAccount, String domainName)
-			throws Exception {
+	public Person getByGoogleAccount(String googleAccount, String domainName) throws Exception {
 		return getPersonDao().getByGoogleAccount(googleAccount, domainName);
 	}
 
@@ -211,8 +191,7 @@ public class GoogleUserAccountServiceImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public Integer isPersonSaved(String registry, boolean stillOpenConnection)
-			throws Exception {
+	public Integer isPersonSaved(String registry, boolean stillOpenConnection) throws Exception {
 		if (!isConnectionOpenJDBC())
 			openConnection();
 		Integer id = personDaoJDBC.isPersonSaved(registry);
@@ -229,8 +208,7 @@ public class GoogleUserAccountServiceImpl extends
 	 * @throws Exception
 	 */
 	@Override
-	public List<Person> arePeopleSaved(List<String> registries)
-			throws Exception {
+	public List<Person> arePeopleSaved(List<String> registries) throws Exception {
 		if (registries == null || registries.isEmpty())
 			return new ArrayList<Person>(0);
 		int aux = registries.size();
@@ -337,5 +315,4 @@ public class GoogleUserAccountServiceImpl extends
 	private boolean isConnectionOpenJDBC() throws SQLException {
 		return ((PersonDaoJDBC) personDaoJDBC).isConnectionOpen();
 	}
-
 }

@@ -19,12 +19,8 @@ import com.integrareti.integraframework.dao.integra.GenericDaoHibernate;
  * @author Thiago Baesso Procaci
  * 
  */
-@Transactional(rollbackFor = { AppsForYourDomainException.class,
-		AuthenticationException.class, ServiceException.class,
-		IOException.class })
-public class IntegraServiceImpl<T extends Identifiable<ID>, ID extends Serializable>
-		implements IntegraServiceInterface<T, ID> {
-
+@Transactional(rollbackFor = { AppsForYourDomainException.class, AuthenticationException.class, ServiceException.class, IOException.class })
+public class IntegraServiceImpl<T extends Identifiable<ID>, ID extends Serializable> implements IntegraServiceInterface<T, ID> {
 	private GenericDao<T, ID> genericDao;
 
 	/**
@@ -119,8 +115,7 @@ public class IntegraServiceImpl<T extends Identifiable<ID>, ID extends Serializa
 	 */
 	@Override
 	public void reattach(Object o) {
-		((GenericDaoHibernate<T, ID>) genericDao).getHibernateTemplate()
-				.update(o);
+		((GenericDaoHibernate<T, ID>) genericDao).getHibernateTemplate().update(o);
 	}
 
 	/**
@@ -130,8 +125,7 @@ public class IntegraServiceImpl<T extends Identifiable<ID>, ID extends Serializa
 	 */
 	@Override
 	public void initialize(Object o) {
-		((GenericDaoHibernate<T, ID>) genericDao).getHibernateTemplate()
-				.initialize(o);
+		((GenericDaoHibernate<T, ID>) genericDao).getHibernateTemplate().initialize(o);
 	}
 
 	/**
@@ -139,7 +133,7 @@ public class IntegraServiceImpl<T extends Identifiable<ID>, ID extends Serializa
 	 */
 	@Override
 	public void closeSession() {
-		genericDao.closeSession();		
+		genericDao.closeSession();
 	}
 
 	/**
@@ -147,7 +141,6 @@ public class IntegraServiceImpl<T extends Identifiable<ID>, ID extends Serializa
 	 */
 	@Override
 	public void openSession() {
-		genericDao.openSession();		
+		genericDao.openSession();
 	}
-
 }

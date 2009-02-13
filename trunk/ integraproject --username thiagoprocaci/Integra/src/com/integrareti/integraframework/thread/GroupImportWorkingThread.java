@@ -23,7 +23,6 @@ import com.integrareti.integraframework.valueobject.GroupVO;
  * @version 1.0
  */
 public class GroupImportWorkingThread extends Thread {
-
 	private final GroupImportController groupImportController;
 	private final List<GroupVO> groups;
 	private final Domain domain;
@@ -32,11 +31,7 @@ public class GroupImportWorkingThread extends Thread {
 	private final TransactionTemplate transactionTemplate;
 	private boolean stop;
 
-	public GroupImportWorkingThread(
-			GroupImportController groupImportController, List<GroupVO> groups,
-			Domain domain, String year, String semester,
-			Map<String, GroupVO> success, Map<String, GroupVO> errors,
-			TransactionTemplate transactionTemplate) {
+	public GroupImportWorkingThread(GroupImportController groupImportController, List<GroupVO> groups, Domain domain, String year, String semester, Map<String, GroupVO> success, Map<String, GroupVO> errors, TransactionTemplate transactionTemplate) {
 		this.groupImportController = groupImportController;
 		this.groups = groups;
 		this.domain = domain;
@@ -63,11 +58,9 @@ public class GroupImportWorkingThread extends Thread {
 			final boolean clConn = closeConnection;
 			final Map<String, GroupVO> error = new HashMap<String, GroupVO>();
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-				protected void doInTransactionWithoutResult(
-						TransactionStatus status) {
+				protected void doInTransactionWithoutResult(TransactionStatus status) {
 					try {
-						errors.putAll(groupImportController.createGroup(group,
-								domain, year, semester, clConn));
+						errors.putAll(groupImportController.createGroup(group, domain, year, semester, clConn));
 					} catch (Exception ex) {
 						error.put("Falha ao criar grupo", group);
 						status.setRollbackOnly();

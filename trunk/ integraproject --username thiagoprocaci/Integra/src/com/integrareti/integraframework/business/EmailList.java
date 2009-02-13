@@ -13,12 +13,9 @@ import com.integrareti.integraframework.util.StringUtil;
  * @created 27-Jul-2007 16:42:51
  * @author Thiago Athouguia Gama
  */
-
 @SuppressWarnings("serial")
 public class EmailList implements Identifiable<Integer> {
-
 	public static Integer LIMIT_RECIPIENTS = 2000;
-
 	private Integer id;
 	private Group group;
 	private Domain domain;
@@ -200,5 +197,4 @@ public class EmailList implements Identifiable<Integer> {
 	public String toString() {
 		return getName() + "@" + getDomain().getName();
 	}
-
 }

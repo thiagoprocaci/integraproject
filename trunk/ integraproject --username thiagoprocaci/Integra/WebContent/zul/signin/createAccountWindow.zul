@@ -8,7 +8,7 @@
 	use="com.integrareti.integraframework.ui.zk.window.signin.CreateAccountWindow"
 	id="createAccountWin">
 
-	<vbox width="100%">	
+	<vbox width="100%">
 		<label id="warnning"
 			style="font-weight:bold; color:white;  align:center; background-color:red;" />
 		<window border="normal" title="Dados do usuário">
@@ -34,7 +34,8 @@
 		</window>
 	</vbox>
 	<n:div style="height:25px" />
-	<window border="normal" title="Selecione o nome de usuário" id="usernamesWindow">
+	<window border="normal" title="Selecione o nome de usuário"
+		id="usernamesWindow">
 		<listbox id="usernames" model="@{createAccountWin.usernames}"
 			multiple="false" checkmark="true"
 			selectedItem="@{createAccountWin.selectedUsername}">

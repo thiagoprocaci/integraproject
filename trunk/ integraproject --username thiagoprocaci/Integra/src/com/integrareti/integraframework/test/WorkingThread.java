@@ -7,11 +7,8 @@ import org.zkoss.zul.Label;
 
 public class WorkingThread extends Thread {
 	private final Desktop _desktop;
-
 	private final Label _info;
-
 	private int _cnt;
-
 	private boolean _ceased;
 
 	public WorkingThread(Label info) {

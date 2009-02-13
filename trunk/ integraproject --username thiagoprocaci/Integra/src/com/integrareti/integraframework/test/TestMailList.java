@@ -8,15 +8,11 @@ import com.integrareti.integraframework.business.Group;
 import com.integrareti.integraframework.business.Person;
 
 public class TestMailList {
-
 	public static void main(String[] args) {
 		new TestMailList();
 	}
 
 	public TestMailList() {
-		
-		
-
 	}
 
 	/**
@@ -41,6 +37,5 @@ public class TestMailList {
 			}
 		}
 		return groups;
-
 	}
 }

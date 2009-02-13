@@ -4,7 +4,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul "
 	use="com.integrareti.integraframework.ui.zk.window.adm.emaillist.EmailListAdmWindow"
-	id="emailListAdmWindow" title="Listas de E-mail" border="normal" Sclass="integra-window">
+	id="emailListAdmWindow" title="Listas de E-mail" border="normal"
+	Sclass="integra-window">
 	<style src="/css/main.css" />
 	<vbox width="100%">
 		<html id="warnings"
@@ -82,10 +83,13 @@
 				</row>
 				<row>
 					Listas:
-					<listbox model="@{selectedGroup.emailLists}"/>
+					<listbox model="@{selectedGroup.emailLists}" />
 				</row>
 				<row align="right" spans="2">
-					<button label="Ok" onClick="details.doEmbedded(); details.visible=false" width="40px"></button>
+					<button label="Ok"
+						onClick="details.doEmbedded(); details.visible=false"
+						width="40px">
+					</button>
 				</row>
 			</rows>
 		</grid>

@@ -15,7 +15,6 @@ import com.integrareti.integraframework.business.Domain;
  */
 @SuppressWarnings("serial")
 public class PersonVO implements Serializable {
-
 	private Integer id = null;
 	private String familyName = null;
 	private String givenName = null;
@@ -27,7 +26,7 @@ public class PersonVO implements Serializable {
 	private List<GroupVO> subjects = new ArrayList<GroupVO>(0);
 	private List<String> userPositionGroups = new ArrayList<String>(0);
 	private Domain domain = null;
-	
+
 	/**
 	 * Creates a new PersonVO
 	 * 
@@ -37,10 +36,7 @@ public class PersonVO implements Serializable {
 	 * @param course
 	 * @param subjects
 	 */
-	public PersonVO(Integer id, String givenName, String familyName,
-			String password, String registry, String googleAccount,
-			String deptoOrCourse, List<GroupVO> subjects,
-			List<String> userGroups, SectorVO sector, Domain domain) {
+	public PersonVO(Integer id, String givenName, String familyName, String password, String registry, String googleAccount, String deptoOrCourse, List<GroupVO> subjects, List<String> userGroups, SectorVO sector, Domain domain) {
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.deptoOrCourse = deptoOrCourse;
@@ -58,7 +54,6 @@ public class PersonVO implements Serializable {
 	 * Creates an empty PersonVO
 	 */
 	public PersonVO() {
-
 	}
 
 	/**
@@ -248,7 +243,7 @@ public class PersonVO implements Serializable {
 	public void addUserGroup(String userGroup) {
 		userPositionGroups.add(userGroup);
 	}
-	
+
 	/**
 	 * 
 	 * @return Returns name
@@ -278,9 +273,9 @@ public class PersonVO implements Serializable {
 					givenName = s;
 					count++;
 				} else {
-					if (familyName == null) 
+					if (familyName == null)
 						familyName = s;
-					 else 
+					else
 						familyName += " " + s;
 				}
 			}
@@ -298,11 +293,11 @@ public class PersonVO implements Serializable {
 	}
 
 	/**
-	 * Sets domain 
+	 * Sets domain
+	 * 
 	 * @param domain
 	 */
 	public void setDomain(Domain domain) {
 		this.domain = domain;
 	}
-
 }

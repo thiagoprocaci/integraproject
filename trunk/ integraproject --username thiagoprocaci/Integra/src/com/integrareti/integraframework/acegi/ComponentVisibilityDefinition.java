@@ -6,18 +6,17 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Defines the zk component visibility (if it is visible) based on the role
+ * 
  * @created 27/02/2008
- * @author Thiago Athouguia Gama * 
+ * @author Thiago Athouguia Gama *
  * @version 1.0
- *
+ * 
  */
 public class ComponentVisibilityDefinition {
-	
 	private String roleName;
 	private String componentId;
 
 	public ComponentVisibilityDefinition() {
-	
 	}
 
 	public ComponentVisibilityDefinition(String roleName, String componentId) {
@@ -52,5 +51,4 @@ public class ComponentVisibilityDefinition {
 	public void setComponentId(String componentId) {
 		this.componentId = componentId;
 	}
-
 }

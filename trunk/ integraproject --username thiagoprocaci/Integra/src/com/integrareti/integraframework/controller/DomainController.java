@@ -13,7 +13,6 @@ import com.integrareti.integraframework.service.integra.IntegraDomainServiceInte
  * 
  */
 public class DomainController {
-
 	private IntegraDomainServiceInterface domainService;
 
 	/**
@@ -36,5 +35,4 @@ public class DomainController {
 			return null;
 		return domains.get(0);
 	}
-
 }

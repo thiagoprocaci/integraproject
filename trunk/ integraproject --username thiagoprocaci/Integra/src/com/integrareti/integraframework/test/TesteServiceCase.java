@@ -17,54 +17,36 @@ import com.integrareti.integraframework.service.integra.IntegraGroupServiceInter
 
 @SuppressWarnings("all")
 public class TesteServiceCase extends TestCase {
-
 	private ApplicationContext ctx;
-
 	private TaskExecutor te;
-
 	private IntegraGroupServiceInterface gService;
-
 	private GoogleEmailListServiceInterface emlService;
-
 	private GoogleUserAccountServiceInterface usrService;
-
 	private Set<Person> people;
-
 	private EmailList eml;
-
 	private Person addPerson;
-
 	private EmailList addEmList;
 
 	protected void setUp() throws Exception {
 		super.setUp();
-
-		ctx = new ClassPathXmlApplicationContext(
-				"com/integrareti/integraframework/test/test-appcontext.xml");
-
+		ctx = new ClassPathXmlApplicationContext("com/integrareti/integraframework/test/test-appcontext.xml");
 		te = (TaskExecutor) ctx.getBean("taskExecutor");
 		gService = (IntegraGroupServiceInterface) ctx.getBean("groupService");
-		emlService = (GoogleEmailListServiceInterface) ctx
-				.getBean("googleEmailListService");
-		usrService = (GoogleUserAccountServiceInterface) ctx
-				.getBean("personService");
-
+		emlService = (GoogleEmailListServiceInterface) ctx.getBean("googleEmailListService");
+		usrService = (GoogleUserAccountServiceInterface) ctx.getBean("personService");
 		// Group group = gService.getById(141);
 		try {
-			people = new HashSet<Person>(usrService
-					.getAllByDomainName("ice.ufjf.br"));
-
-			/*eml = 
-			Hibernate.initialize(eml);*/
-
+			people = new HashSet<Person>(usrService.getAllByDomainName("ice.ufjf.br"));
+			/*
+			 * eml = Hibernate.initialize(eml);
+			 */
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
-	public void testLenha(){
-//		 Set empty = new HashSet<Object>();
+
+	public void testLenha() {
+		// Set empty = new HashSet<Object>();
 		for (Person p : people) {
 			try {
 				te.execute(new TestService(emlService, p, emlService.getEmailListByNameAndDomain("ultimoteste", "ice.ufjf.br")));
@@ -72,8 +54,6 @@ public class TesteServiceCase extends TestCase {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 	}
-
 }

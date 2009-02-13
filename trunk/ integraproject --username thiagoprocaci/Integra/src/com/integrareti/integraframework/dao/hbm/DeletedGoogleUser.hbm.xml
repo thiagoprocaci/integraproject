@@ -8,10 +8,12 @@
 			<column name="deletedgoogleuserID" />
 			<generator class="native" />
 		</id>
-		<property name="deletedGoogleAccount"  column="deletedgoogleaccount"  type="string" />		
-		<property name="exclusionDate" column="exclusiondate" type="java.util.Calendar" />
+		<property name="deletedGoogleAccount"
+			column="deletedgoogleaccount" type="string" />
+		<property name="exclusionDate" column="exclusiondate"
+			type="java.util.Calendar" />
 		<many-to-one name="domain" column="domainID" class="Domain"
 			lazy="false" />
-	</class>	
+	</class>
 </hibernate-mapping>
 

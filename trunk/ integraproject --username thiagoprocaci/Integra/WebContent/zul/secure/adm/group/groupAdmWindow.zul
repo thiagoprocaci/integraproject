@@ -2,16 +2,23 @@
 <window xmlns="http://www.zkoss.org/2005/zul"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul "
-	
 	id="groupAdmWindow">
-	<style src="/css/main.css"/>
+	<style src="/css/main.css" />
 	<vbox width="100%">
 
-	<toolbar>
-		<toolbarbutton label="Importar groupos" image="/img/group-16x16.png"  onClick="inc.src = &quot;/zul/secure/adm/groupImportWindow.zul&quot; "></toolbarbutton>
-		<toolbarbutton label="Editar groupo" image="/img/group-16x16.png" onClick="inc.src = &quot;/zul/secure/adm/groupEditWindow.zul&quot; "></toolbarbutton>
-		<toolbarbutton label="Criar listas" image="/img/email.png" onClick="inc.src = &quot;/zul/secure/adm/emailListAdmWindow.zul&quot; "></toolbarbutton>
-	</toolbar>
-	<include id="inc" src="/zul/secure/adm/groupEditWindow.zul"></include>
+		<toolbar>
+			<toolbarbutton label="Importar groupos"
+				image="/img/group-16x16.png"
+				onClick="inc.src = &quot;/zul/secure/adm/groupImportWindow.zul&quot; ">
+			</toolbarbutton>
+			<toolbarbutton label="Editar groupo"
+				image="/img/group-16x16.png"
+				onClick="inc.src = &quot;/zul/secure/adm/groupEditWindow.zul&quot; ">
+			</toolbarbutton>
+			<toolbarbutton label="Criar listas" image="/img/email.png"
+				onClick="inc.src = &quot;/zul/secure/adm/emailListAdmWindow.zul&quot; ">
+			</toolbarbutton>
+		</toolbar>
+		<include id="inc" src="/zul/secure/adm/groupEditWindow.zul"></include>
 	</vbox>
 </window>

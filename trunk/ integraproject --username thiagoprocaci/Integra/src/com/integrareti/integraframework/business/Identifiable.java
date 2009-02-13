@@ -9,8 +9,7 @@ import java.io.Serializable;
  * 
  * @param <T>
  */
-public interface Identifiable<T extends Serializable> extends Serializable{
-	
+public interface Identifiable<T extends Serializable> extends Serializable {
 	/**
 	 * 
 	 * @return Returns a object by id
