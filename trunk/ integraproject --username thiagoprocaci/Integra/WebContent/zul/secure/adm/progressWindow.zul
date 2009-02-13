@@ -1,0 +1,18 @@
+<?page id="progressWindow"?>
+<window xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul ../../WEB-INF/xsd/zul.xsd "
+	height="25px" id="progressWindow" apply="com.integrareti.integraframework.ui.zk.composer.ProgressWindowComposer">
+	<div align="center">
+		<hbox>
+			<label id="lblInstrucao" />
+			<progressmeter id="progress" visible="false" width="200px" />
+			<toolbarbutton label="Cancelar" forward="onCancel" id="btnCancel" visible="false"/>
+			<toolbarbutton label="Esconder" forward="onHide" id="btnEsconder" visible="false"/>
+		</hbox>
+	</div>
+	<timer id="importInfoTimer" running="false" delay="2000" repeats="true" forward="onTimer=onUpdateImportInfo" >    
+    
+	</timer>
+ 
+</window>

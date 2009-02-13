@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<!-- SERVICE -->
+	<!-- Transaction-->
+	<bean id="sharedTransactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="isolationLevelName"
+			value="ISOLATION_READ_COMMITTED" />
+		<property name="propagationBehaviorName"
+			value="PROPAGATION_REQUIRES_NEW">
+		</property>
+		<property name="timeout" value="60" />
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+		lazy-init="default" autowire="byName"
+		dependency-check="default">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- SERVICE beans -->
+	<bean id="sigaService"
+		class="com.integrareti.integraframework.service.siga.SigaServiceImpl"
+		autowire="byName">
+		<constructor-arg>
+			<ref bean="sigaDao" />
+		</constructor-arg>
+	</bean>
+	
+	<bean id="groupLogService"
+		class="com.integrareti.integraframework.service.integra.IntegraGroupLogServiceImpl"
+		autowire="byName">
+		<constructor-arg>
+			<ref bean="groupLogDao" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="userGroupService"
+		class="com.integrareti.integraframework.service.integra.IntegraUserGroupServiceImpl">
+		<constructor-arg ref="userGroupDao" />
+	</bean>
+
+	<bean id="personService"
+		class="com.integrareti.integraframework.service.google.GoogleUserAccountServiceImpl">
+		<constructor-arg ref="googlePersonDao" />
+		<constructor-arg ref="personDao" />
+		<property name="personDaoJDBC" ref="personDaoJDBC"></property>
+	</bean>
+
+	<bean id="domainService"
+		class="com.integrareti.integraframework.service.integra.IntegraDomainServiceImpl">
+		<constructor-arg ref="domainDao" />
+	</bean>
+
+	<bean id="deletedGoogleUserService"
+		class="com.integrareti.integraframework.service.integra.IntegraDeletedGoogleUserImpl">
+		<constructor-arg ref="deletedGoogleUserDao" />
+	</bean>
+	
+	<bean id="googleEmailListService"
+		class="com.integrareti.integraframework.service.google.GoogleEmailListServiceImpl">
+		<constructor-arg ref="emailListDao" />
+		<constructor-arg ref="googleEmailListDao" />
+	</bean>
+
+	<bean id="groupService"
+		class="com.integrareti.integraframework.service.integra.IntegraGroupServiceImpl">
+		<constructor-arg ref="groupDao" />
+		<constructor-arg ref="googleEmailListService" />
+		<property name="transactionTemplate"
+			ref="sharedTransactionTemplate">
+		</property>
+		<property name="groupDaoJDBC" ref="groupDaoJDBC"></property>
+		<property name="groupLogDao" ref="groupLogDao"></property> 
+	</bean>
+</beans>

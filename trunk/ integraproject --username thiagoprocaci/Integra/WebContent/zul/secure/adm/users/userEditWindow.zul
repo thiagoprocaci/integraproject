@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	xmlns:n="http://www.zkoss.org/2005/zk/native">
+	<style src="/css/main.css" />
+	<window id="userEditAdmManagerWindow"
+		use="com.integrareti.integraframework.ui.zk.window.adm.user.UserEditWindow"
+		title="Gerencia de usuarios" border="normal"
+		Sclass="integra-window">
+		<caption>
+			<toolbarbutton label="Novo Usuario"
+				image="/img/user-group-32x32.png" forward="onNewUser" />
+			<toolbarbutton label="Editar Usuario"
+				image="/img/edit-user-32x32.png" forward="onEditUser" />
+		</caption>
+		<window id="deleteWinConfimation" visible="false"
+			title="Exclusão" width="500px" border="normal">
+			<vbox>
+				<hbox>
+					<label value="Usuário a ser excluido: " />
+					<label id="lbldeleteWin" value="@{person.name}" />
+				</hbox>
+				<label value="Deseja realmente excluir o usuário?" />
+				<hbox>
+					<button label="Sim" width="85px"
+						onClick="userEditAdmManagerWindow.delete()" />
+					<button label="Não" width="85px"
+						onClick="deleteWinConfimation.doEmbedded();deleteWinConfimation.setVisible(false)" />
+				</hbox>
+			</vbox>
+		</window>
+
+		<window id="popupWinGroups" title="Grupos" visible="false"
+			border="normal" width="500px">
+			<vbox>
+				<hbox>
+					<listbox id="lbxGroupsSearched"
+						model="@{groupsSearched}" multiple="true" checkmark="true"
+						mold="paging">
+						<listhead>
+							<listheader label="Nome" />
+							<listheader label="Descrição" />
+						</listhead>
+						<listitem self="@{each=group}"
+							value="@{group}">
+							<listcell label="@{group.name}" />
+							<listcell label="@{group.description}" />
+						</listitem>
+					</listbox>
+				</hbox>
+				<hbox>
+					<button label="Adicionar grupo(s)"
+						onClick="userEditAdmManagerWindow.popupWinGroupsOnOk()" />
+					<button label="Cancelar"
+						onClick="userEditAdmManagerWindow.popupWinGroupsOnCancel()" />
+				</hbox>
+			</vbox>
+		</window>
+		<vbox width="100%">
+			<html id="warning"
+				use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
+			<hbox id="hbxSearch">
+				<groupbox>
+					<caption label="Busca"></caption>
+					<vbox>
+						<hbox>
+							<vbox>
+								Matrícula
+								<textbox id="registryTextBox"
+									width="250px" onOK="userEditAdmManagerWindow.searchPerson()" />
+							</vbox>
+							<vbox>
+								Nome
+								<textbox id="nameTextBox" width="200px"
+									onOK="userEditAdmManagerWindow.searchPerson()" />
+							</vbox>
+						</hbox>
+						<button label="Buscar usuario"
+							onClick="userEditAdmManagerWindow.searchPerson()" />
+					</vbox>
+				</groupbox>
+			</hbox>
+			<separator orient="horizontal"></separator>
+			<listbox id="lbxUsers" model="@{users}" multiple="false"
+				checkmark="true" mold="paging" visible="false"
+				onSelect="userEditAdmManagerWindow.onSelectListBoxUsers()">
+				<auxhead>
+					<auxheader label="Resultado(s)" colspan="4"
+						align="center" />
+				</auxhead>
+				<listhead>
+					<listheader label="Matricula" />
+					<listheader label="Nome" />
+				</listhead>
+				<listitem self="@{each=user}" value="@{user}">
+					<listcell label="@{user.registry}" />
+					<listcell label="@{user.name}" />
+				</listitem>
+			</listbox>
+			<separator orient="horizontal"></separator>
+			<grid id="userGrid" visible="false">
+				<rows>
+					<row>
+						Nome:
+						<label id="name" value="@{person.name}" />
+					</row>
+					<row>
+						Matrícula:
+						<label id="registry" value="@{person.registry}" />
+					</row>
+					<row>
+						Email:
+						<label id="email" value="@{person.email}" />
+					</row>
+					<row>
+						Grupo de usuário:
+						<label id="lblUserGroups"
+							value="@{userGroups}">
+						</label>
+					</row>
+					<row>
+						Administrador:
+						<checkbox id="cbxAdmin" checked="@{admin}" />
+					</row>
+					<row>
+						Incluir pessoa a grupo:
+						<vbox>
+							<hbox>
+								Grupo
+								<textbox id="groupSearchTextBox"
+									onOK="userEditAdmManagerWindow.searchGroups()" />
+								<button label="Buscar"
+									onClick="userEditAdmManagerWindow.searchGroups()" />
+							</hbox>
+						</vbox>
+					</row>
+				</rows>
+			</grid>
+			<separator orient="horizontal"></separator>
+			<listbox id="lbxGroups" model="@{groups}" multiple="true"
+				checkmark="true" mold="paging" visible="false">
+				<auxhead>
+					<auxheader label="Grupos" colspan="4"
+						align="center" />
+				</auxhead>
+				<listhead>
+					<listheader label="Nome" />
+					<listheader label="Descrição" />
+				</listhead>
+				<listitem self="@{each=group}" value="@{group}">
+					<listcell label="@{group.name}" />
+					<listcell label="@{group.description}" />
+				</listitem>
+			</listbox>
+			<vbox id="vBoxButtons" visible="false">
+				<button label="Remover grupo(s)"
+					onClick="userEditAdmManagerWindow.removeGroups()" />
+				<hbox>
+					<button label="Salvar"
+						onClick="userEditAdmManagerWindow.save()" />
+					<button label="Excluir"
+						onClick="deleteWinConfimation.doHighlighted()">
+					</button>
+				</hbox>
+			</vbox>
+		</vbox>
+	</window>
+</zk>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	<bean id="googleAccountController"
+		class="com.integrareti.integraframework.controller.account.GoogleAccountController">
+		<constructor-arg ref="sigaService" />
+		<constructor-arg ref="personService" />
+		<constructor-arg ref="domainService" />
+		<constructor-arg ref="userGroupService" />
+		<constructor-arg ref="deletedGoogleUserService" />
+	</bean>
+	<bean id="groupLogController"
+		class="com.integrareti.integraframework.controller.adm.group.log.GroupLogController">
+		<constructor-arg ref="groupLogService" />
+	</bean>
+	<bean id="userEditController"
+		class="com.integrareti.integraframework.controller.adm.user.UserEditController">
+		<constructor-arg ref="sigaService" />
+		<constructor-arg ref="personService" />
+		<constructor-arg ref="groupService" />
+		<constructor-arg ref="userGroupService" />
+	</bean>
+	<bean id="domainController"
+		class="com.integrareti.integraframework.controller.DomainController">
+		<constructor-arg ref="domainService" />
+	</bean>
+	<bean id="loginController"
+		class="com.integrareti.integraframework.controller.login.LoginController">
+		<constructor-arg ref="sigaService" />
+		<constructor-arg ref="personService" />
+	</bean>
+	<bean id="groupImportController"
+		class="com.integrareti.integraframework.controller.adm.group.GroupImportController">
+		<constructor-arg ref="sigaService" />
+		<constructor-arg ref="personService" />
+		<constructor-arg ref="domainService" />
+		<constructor-arg ref="groupService" />
+	</bean>
+	<bean id="groupManagerController"
+		class="com.integrareti.integraframework.controller.adm.group.GroupManagerController">
+		<constructor-arg ref="sigaService" />
+		<constructor-arg ref="personService" />
+		<constructor-arg ref="groupService" />
+	</bean>
+	<bean id="emailListController"
+		class="com.integrareti.integraframework.controller.emailList.EmailListController">
+		<constructor-arg ref="googleEmailListService" />
+		<constructor-arg ref="groupService" />
+	</bean>
+	<bean id="myGroupsController"
+		class="com.integrareti.integraframework.controller.teacher.MyGroupsController">
+		<constructor-arg ref="sigaService" />
+		<constructor-arg ref="groupService" />
+	</bean>
+	<bean id="iceAppsController"
+		class="com.integrareti.integraframework.controller.teacher.IceAppsController">
+		<constructor-arg ref="sigaService" />
+	</bean>
+</beans>

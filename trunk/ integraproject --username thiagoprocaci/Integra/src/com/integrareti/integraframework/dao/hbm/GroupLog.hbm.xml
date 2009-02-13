@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="com.integrareti.integraframework.business.log">
+	<class name="GroupLog" table="`grouplog`">
+		<comment></comment>
+		<id name="id" type="int">
+			<column name="groupLogID" />
+			<generator class="native" />
+		</id>
+		<property name="groupName" type="string" column="groupName"
+			access="property" />
+		<property name="groupDescription" type="string"
+			column="groupDescription" access="property" />
+		<many-to-one name="domain" column="domainID"
+			class="com.integrareti.integraframework.business.Domain" lazy="false"
+			access="property" />
+		<property name="beginTime" type="java.util.Calendar"
+			column="beginTime" access="property" />
+		<property name="endTime" type="java.util.Calendar"
+			column="endTime" access="property" />
+		<set name="tasks" cascade="all-delete-orphan" batch-size="20"
+			lazy="false" inverse="true" access="property">
+			<key column="groupLogID" />
+			<one-to-many
+				class="com.integrareti.integraframework.business.task.SystemGroupTask" />
+		</set>
+	</class>
+</hibernate-mapping>
+

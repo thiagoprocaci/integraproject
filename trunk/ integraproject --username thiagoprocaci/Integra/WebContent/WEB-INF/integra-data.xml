@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<bean id="personDaoJDBC"
+		class="com.integrareti.integraframework.dao.integra.PersonDaoJDBC"
+		autowire="byName">
+	</bean>
+	<bean id="groupDaoJDBC"
+		class="com.integrareti.integraframework.dao.integra.GroupDaoJDBC"
+		autowire="byName">
+	</bean>
+	<bean id="groupLogDao"
+		class="com.integrareti.integraframework.dao.integra.GroupLogDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.log.GroupLog" />
+	</bean>
+	<bean id="deletedGoogleUserDao"
+		class="com.integrareti.integraframework.dao.integra.DeletedGoogleUserDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.DeletedGoogleUser" />
+	</bean>
+	<bean id="emailListDao"
+		class="com.integrareti.integraframework.dao.integra.EmailListDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.EmailList" />
+	</bean>
+	<bean id="userGroupDao"
+		class="com.integrareti.integraframework.dao.integra.UserGroupDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.authentication.UserGroup" />
+	</bean>
+	<bean id="personDao"
+		class="com.integrareti.integraframework.dao.integra.PersonDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.Person" />
+		<property name="deletedGoogleUserDao"
+			ref="deletedGoogleUserDao" />
+	</bean>
+	<bean id="domainDao"
+		class="com.integrareti.integraframework.dao.integra.DomainDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.Domain" />
+	</bean>
+	<bean id="groupDao"
+		class="com.integrareti.integraframework.dao.integra.GroupDaoHibernate"
+		autowire="autodetect">
+		<property name="entityClass"
+			value="com.integrareti.integraframework.business.Group" />
+	</bean>
+	<bean id="sigaDao"
+		class="com.integrareti.integraframework.dao.siga.SigaDaoJDBC"
+		autowire="autodetect">
+		<property name="dataSource" ref="oracleDataSource" />
+	</bean>
+	<bean id="googlePersonDao"
+		class="com.integrareti.integraframework.dao.google.GoogleUserAccountDaoImpl"
+		autowire="autodetect">
+		<constructor-arg ref="domainDao" />
+	</bean>
+	<bean id="googleCalendarDao"
+		class="com.integrareti.integraframework.dao.google.GoogleCalendarDaoImpl"
+		autowire="autodetect">
+		<constructor-arg ref="domainDao" />
+	</bean>
+	<bean id="googleEmailListDao"
+		class="com.integrareti.integraframework.dao.google.GoogleEmailListDaoImpl"
+		autowire="autodetect">
+		<constructor-arg ref="domainDao" />
+	</bean>
+
+	<!-- ########### SESSION FACTORY ########## 	-->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLInnoDBDialect
+				</prop>
+				<!-- prop key="hibernate.c3p0.min_size">0</prop>
+					<prop key="hibernate.c3p0.max_size">10</prop>
+					<prop key="hibernate.c3p0.timeout">1000</prop>
+					<prop key="hibernate.show_sql">true</prop>
+					<prop key="hibernate.c3p0.numHelperThreads">5</prop>
+					<prop key="hibernate.c3p0.acquire_increment">1</prop>
+					<prop key="hibernate.c3p0.idle_test_period">100</prop>
+					<prop key="hibernate.c3p0.max_statements">0</prop-->
+			</props>
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>
+					classpath:/com/integrareti/integraframework/dao/hbm
+				</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ####### DATASOURCES ########## -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://localhost:3306/integra</value>
+		</property>
+		<property name="username">
+			<value>integrare</value>
+		</property>
+		<property name="password">
+			<value>hewlett2</value>
+		</property>
+	</bean>
+	<!-- <bean id="oracleDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+		<value>oracle.jdbc.driver.OracleDriver</value>
+		</property>
+		<property name="url">
+		<value>
+		jdbc:oracle:thin:@athenas.cpd.ufjf.br:1521:ufjf
+		</value>
+		</property>
+		<property name="username">
+		<value>integrare</value>
+		</property>
+		<property name="password">
+		<value>hewlett2</value>
+		</property>
+		</bean> -->
+
+	<!-- pool de conexoes -->
+	<bean id="oracleDataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" lazy-init="default" autowire="default"
+		dependency-check="default">
+		<property name="driverClass"
+			value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl"
+			value="jdbc:oracle:thin:@rhodes.cpd.ufjf.br:1521:ufjf" />
+		<property name="user" value="integrare" />
+		<property name="password" value="hewlett2" />
+	</bean>
+
+	<!-- 	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" lazy-init="default" autowire="default"
+		dependency-check="default">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl"
+		value="jdbc:mysql://localhost:3306/integra" />
+		<property name="user" value="integrare" />
+		<property name="password" value="hewlett2" />
+		<property name="maxConnectionAge">
+		<value>25000</value>
+		</property>
+		</bean>-->
+</beans>

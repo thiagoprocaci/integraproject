@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul
+	http://www.zkoss.org/2005/zul/zul.xsd"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation"
+	xmlns:n="http://www.zkoss.org/2005/zk/native"
+	use="com.integrareti.integraframework.ui.zk.window.teacher.MyGroupsWindow"
+	id="teacherWindow" title="Meus Grupos" border="normal"
+	Sclass="integra-window">
+	<style src="/css/main.css" />
+	<vbox width="100%">
+		<html id="warning"
+			use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
+		<grid>
+			<rows>
+				<row>
+					Grupo:
+					<label value="@{myGroup.name}" />
+				</row>
+				<row>
+					Descrição:
+					<label value="@{myGroup.description}" />
+				</row>
+				<row>
+					Responsável(ies):
+					 <label value="@{groupOwners}"></label> 
+				</row>
+			</rows>
+		</grid>
+		<listbox id="lbxParticipants" model="@{myGroup.participants}"
+			multiple="true" checkmark="true" mold="paging" visible="true">
+			<auxhead>
+				<auxheader label="Participantes" colspan="3">
+					<separator width="15px" orient="vertical" />
+					<listbox mold="select"
+						onSelect="teacherWindow.onActionSelect()" id="lbxActions">
+						<listitem label="Mais ações..." />
+						<listitem label="Enviar mensagem" />
+						<listitem label="-------" />
+						<listitem label="Enviar mensagem ao grupo" />
+					</listbox>
+				</auxheader>
+			</auxhead>
+			<listhead>
+				<listheader label="Nome" />
+				<listheader label="Matricula" />
+				<listheader label="E-mail" />
+			</listhead>
+			<listitem self="@{each=participant}"
+				value="@{participant}">
+				<listcell label="@{participant.name}" />
+				<listcell label="@{participant.registry}" />
+				<listcell label="@{participant.email}" />
+			</listitem>
+		</listbox>
+	</vbox>
+
+
+</window>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- zk.xml
+	Purpose:
+	
+	Description:
+	
+	History:
+	Sun Mar 26 16:29:07     2006, Created by tomyeh
+	
+	Copyright (C) 2006 Potix Corporation. All Rights Reserved.
+-->
+<zk>
+	<listener>
+		<description>
+			Spring TransactionSynchronizationManager handler
+		</description>
+		<listener-class>
+			org.zkoss.zkplus.spring.SpringTransactionSynchronizationListener
+		</listener-class>
+	</listener>
+	<listener>
+		<description>Acegi SecurityContext Handler</description>
+		<listener-class>
+			org.zkoss.zkplus.acegi.AcegiSecurityContextListener
+		</listener-class>
+	</listener>
+	<desktop-config>
+		<file-check-period>1000</file-check-period>
+		<desktop-timeout>600</desktop-timeout>
+	</desktop-config>
+	<session-config>
+		<timeout-uri></timeout-uri>
+		<session-timeout>700</session-timeout>
+		<max-desktops-per-session>3</max-desktops-per-session>
+	</session-config>
+	<system-config>
+		<disable-event-thread />
+	</system-config>
+</zk>

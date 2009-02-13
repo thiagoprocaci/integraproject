@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<window xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul "
+	use="com.integrareti.integraframework.ui.zk.window.adm.emaillist.EmailListAdmWindow"
+	id="emailListAdmWindow" title="Listas de E-mail" border="normal" Sclass="integra-window">
+	<style src="/css/main.css" />
+	<vbox width="100%">
+		<html id="warnings"
+			use="com.integrareti.integraframework.ui.zk.html.HtmlWarning" />
+		<hbox>
+
+			<groupbox height="37px">
+				<caption label="Mostrar Grupos" />
+				<radiogroup
+					onCheck="emailListAdmWindow.refreshList(self.selectedIndex != emailListAdmWindow.lastSelected)"
+					id="showRG">
+					<radio label="Somente os sem listas"
+						selected="true" />
+					<radio label="Todos" />
+				</radiogroup>
+			</groupbox>
+			<radiogroup>
+
+			</radiogroup>
+			<groupbox>
+				<caption label="Criar listas de e-mail para os grupos" />
+				<hbox>
+					<button label="Criar"
+						onClick="emailListAdmWindow.createEmailLists()" />
+				</hbox>
+			</groupbox>
+			<groupbox>
+				<caption label="Atualizar recipientes" />
+				<hbox>
+					<button label="Atualizar"
+						onClick="emailListAdmWindow.updateRecipients()" />
+				</hbox>
+			</groupbox>
+		</hbox>
+
+		<listbox id="lbxGroups" model="@{groups}" multiple="true"
+			checkmark="true" mold="paging"
+			onPaging="emailListAdmWindow.refreshList(true)">
+			<listhead>
+				<listheader label="Grupo" />
+				<listheader label="Descrição" />
+				<listheader />
+			</listhead>
+			<listitem self="@{each=group}" value="@{group}">
+				<listcell label="@{group.name}" />
+				<listcell label="@{group.description}" />
+				<listcell>
+					<toolbarbutton label="+ detalhes"
+						style="height:24px; width:24px;"
+						onClick="emailListAdmWindow.refreshSelected(self);details.doPopup()" />
+				</listcell>
+			</listitem>
+		</listbox>
+	</vbox>
+
+	<window id="details" visible="false" border="normal"
+		position="center" title="Detalhes" width="500px">
+		<grid>
+			<rows>
+				<row>
+					Código:
+					<label value="@{selectedGroup.name}" />
+				</row>
+				<row>
+					Descrição:
+					<label value="@{selectedGroup.description}" />
+				</row>
+				<row>
+					Domínio:
+					<label value="@{selectedGroup.domain.name}" />
+				</row>
+				<row>
+					Participantes:
+					<label value="@{selectedGroup.participants.size}" />
+				</row>
+				<row>
+					Listas:
+					<listbox model="@{selectedGroup.emailLists}"/>
+				</row>
+				<row align="right" spans="2">
+					<button label="Ok" onClick="details.doEmbedded(); details.visible=false" width="40px"></button>
+				</row>
+			</rows>
+		</grid>
+	</window>
+
+</window>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="com.integrareti.integraframework.business.error">
+	<class name="SystemGroupError" table="`systemgrouperror`">
+		<comment></comment>
+		<id name="id" type="int">
+			<column name="systemErrorID" />
+			<generator class="native" />
+		</id>
+		<property name="time" type="java.util.Calendar" column="time"
+			access="property" />
+		<property name="cause" type="string" column="cause"
+			access="property" />
+		<property name="description" type="string" column="description"
+			access="property" />
+		<many-to-one name="systemGroupTask"
+			class="com.integrareti.integraframework.business.task.SystemGroupTask"
+			column="systemTaskID" />
+	</class>
+</hibernate-mapping>
+
