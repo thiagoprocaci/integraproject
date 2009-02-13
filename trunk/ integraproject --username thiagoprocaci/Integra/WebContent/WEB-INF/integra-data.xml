@@ -138,10 +138,10 @@
 		</value>
 		</property>
 		<property name="username">
-		<value>integrare</value>
+		<value></value>
 		</property>
 		<property name="password">
-		<value>hewlett2</value>
+		<value></value>
 		</property>
 		</bean> -->
 
@@ -165,8 +165,8 @@
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl"
 		value="jdbc:mysql://localhost:3306/integra" />
-		<property name="user" value="integrare" />
-		<property name="password" value="hewlett2" />
+		<property name="user" value="" />
+		<property name="password" value="" />
 		<property name="maxConnectionAge">
 		<value>25000</value>
 		</property>
