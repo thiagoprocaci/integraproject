@@ -1,0 +1,2 @@
+O projeto consiste no desenvolvimento de uma plataforma de
+colaboração, que está sendo desenvolvida em Java, integrada ao sistema acadêmico da Universidade Federal de Juiz de Fora e aos serviços do Google Apps.
